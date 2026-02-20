@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Fêté 2k26</title>
+    <link rel="icon" type="image/png" href="tech_fete_logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Font Assignments */
+        body { font-family: 'Montserrat', sans-serif; }
+        h1, h2, .brand-font { font-family: 'Antonio', sans-serif; }
+
+        /* Animation Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.3)); }
+            50% { filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.6)); }
+        }
+
+        /* Utility Classes */
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-slow { animation: pulse-glow 4s ease-in-out infinite; }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #451a03; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d97706; }
+
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 158, 11, 0.1);
+        }
+        .glass-card:hover {
+            border-color: rgba(245, 158, 11, 0.4);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amber: {
+                            50: '#fffbeb',
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            300: '#fcd34d',
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#050A18] text-slate-100 selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden">
+
+    <!-- Dynamic Background -->
+    <div id="star-container" class="fixed inset-0 pointer-events-none z-0">
+        <!-- Canvas for Realistic Starfield Video Effect -->
+        <canvas id="starfield" class="absolute inset-0 w-full h-full"></canvas>
+        
+        <!-- Nebula Gradients -->
+        <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-900/20 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-900/20 blur-[150px] rounded-full"></div>
+        <div class="absolute top-[40%] left-[50%] -translate-x-1/2 w-[40%] h-[40%] bg-amber-600/5 blur-[100px] rounded-full"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <!-- Navbar Logo -->
+                <div class="w-10 h-10 relative">
+                     <img src="tech_fete_logo.png" alt="TF Logo" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">
+                </div>
+                <div class="flex flex-col leading-none">
+                    <span class="brand-font text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 tracking-wider">TECH FÊTÉ</span>
+                    <span class="text-[10px] font-bold text-amber-500/80 tracking-[0.4em] ml-0.5">2K26</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex space-x-8 font-medium text-sm tracking-wide">
+                <a href="#home" class="hover:text-amber-400 transition-colors">HOME</a>
+                <a href="#events" class="hover:text-amber-400 transition-colors">EVENTS</a>
+                <a href="#about" class="hover:text-amber-400 transition-colors">ABOUT</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors">CONTACT</a>
+            </div>
+            
+            <button class="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-6 py-2 rounded-full font-bold hover:brightness-110 transition-all shadow-lg shadow-amber-900/20 text-sm tracking-wide">
+                REGISTER
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-20 pb-20 md:pt-32 md:pb-32 z-10 min-h-screen flex flex-col justify-center">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            
+            <!-- College Badge -->
+            <div class="inline-block py-3 px-10 rounded-full bg-amber-500/5 text-amber-300 font-bold text-base md:text-2xl mb-8 border border-amber-500/20 backdrop-blur-sm tracking-widest uppercase shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+                Pope John Paul II College of Education
+            </div>
+
+            <!-- Department Info -->
+            <h3 class="text-amber-100/60 font-medium mb-4 tracking-[0.2em] text-xs md:text-base uppercase">
+                Department of Computer Applications Organises
+            </h3>
+            
+            <!-- Flex Container for Logo and Title -->
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-12">
+                <!-- Main Logo -->
+                <div class="animate-pulse-slow shrink-0">
+                    <div class="relative w-52 h-52 md:w-80 md:h-80">
+                        <!-- Try loading Image, fallback to SVG -->
+                        <img src="tech_fete_logo.png" id="hero-img-logo" alt="TF Logo" class="w-full h-full object-contain hidden" onerror="this.style.display='none'; document.getElementById('hero-svg-logo').style.display='block';">
+                        
+                        <!-- SVG Fallback -->
+                        <svg id="hero-svg-logo" viewBox="0 0 100 100" fill="none" class="w-full h-full drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
+                            <defs>
+                                <linearGradient id="gold-grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#FCD34D" />
+                                    <stop offset="50%" stopColor="#F59E0B" />
+                                    <stop offset="100%" stopColor="#B45309" />
+                                </linearGradient>
+                                <filter id="glow-hero">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="url(#gold-grad-hero)" filter="url(#glow-hero)" />
+                            <path d="M 52 15 H 90 V 35 H 70 V 45 H 85 L 80 60 H 70 V 80 L 52 100 V 15 Z" fill="url(#gold-grad-hero)" filter="url(#glow-hero)" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Title Block -->
+                <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                    <h1 class="brand-font text-7xl md:text-[9rem] font-black leading-none tracking-tight">
+                        <span class="block text-transparent bg-clip-text bg-gradient-to-b from-amber-100 via-amber-300 to-amber-600 drop-shadow-2xl">
+                            TECH FÊTÉ
+                        </span>
+                    </h1>
+                    <div class="text-4xl md:text-6xl text-amber-500 font-bold tracking-[0.2em] brand-font mt-2 md:mt-0">2K26</div>
+                </div>
+            </div>
+            
+            <!-- Date -->
+            <div class="flex justify-center items-center gap-3 mb-12 text-xl md:text-2xl font-bold text-amber-100/90 border-y border-amber-500/20 py-4 max-w-2xl mx-auto bg-black/20 backdrop-blur-sm">
+                 <i data-lucide="calendar" class="w-6 h-6 text-amber-500"></i>
+                 <span class="uppercase tracking-widest">Happening On: 28 March 2026</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#events" class="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-10 py-4 rounded-xl font-bold flex items-center justify-center hover:scale-105 transition-all group shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+                    EXPLORE EVENTS <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                <button class="w-full sm:w-auto bg-slate-900/40 backdrop-blur-md border border-amber-500/30 text-amber-400 px-10 py-4 rounded-xl font-bold hover:bg-amber-500/10 transition-all uppercase tracking-wide">
+                    Download Brochure
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-24 relative z-10 bg-[#050A18]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 space-y-6 md:space-y-0 border-b border-amber-500/10 pb-8">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 flex items-center text-white brand-font tracking-wide">
+                        <span class="w-2 h-12 bg-amber-500 mr-6 rounded-full"></span>
+                        EVENT CATEGORIES
+                    </h2>
+                    <p class="text-slate-400 ml-8 text-lg">Filter through our diverse range of competitions.</p>
+                </div>
+                
+                <div class="flex flex-wrap gap-2" id="category-filters">
+                    <button class="filter-btn active px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-amber-500 border-amber-400 text-slate-950" onclick="filterEvents('All', this)">All</button>
+                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="filterEvents('Technical', this)">Technical</button>
+                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="filterEvents('Creative', this)">Creative</button>
+                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="filterEvents('Cultural', this)">Cultural</button>
+                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="filterEvents('Gaming', this)">Gaming</button>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Events will be injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative z-10 bg-[#020617] border-t border-amber-500/10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <!-- Text Content -->
+                <div class="lg:w-1/2">
+                    <div class="inline-block py-2 px-6 rounded-full bg-amber-500/10 text-amber-400 font-bold text-sm mb-6 border border-amber-500/20 tracking-widest uppercase shadow-[0_0_15px_rgba(245,158,11,0.05)]">
+                        About The Fest
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white brand-font tracking-wide leading-tight">
+                        Where <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">Innovation</span> Meets <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Celebration</span>
+                    </h2>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                        The <strong>Department of Computer Applications</strong> proudly presents <strong>Tech Fêté 2K26</strong>, a grand technical and cultural extravaganza happening at Pope John Paul II College of Education, Puducherry.
+                    </p>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                        Tech Fêté 2K26 is designed to bring together creativity, innovation, logic, and talent under one platform. This event aims to inspire students to showcase their technical expertise, problem-solving skills, artistic creativity, and teamwork through a series of exciting competitions and activities.
+                    </p>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                        Whether you are a tech enthusiast, a creative thinker, or a performer at heart, Tech Fêté offers something for everyone. Join us for a day filled with learning, competition, collaboration, and unforgettable memories.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tech+F%C3%AAt%C3%A9+2K26&dates=20260328T033000Z/20260328T113000Z&details=Join+us+for+Tech+F%C3%AAt%C3%A9+2K26,+a+grand+technical+and+cultural+extravaganza!&location=Pope+John+Paul+II+College+of+Education,+Puducherry" target="_blank" rel="noopener noreferrer" title="Add to Google Calendar" class="flex-1 flex items-center text-slate-300 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-amber-500/40 transition-all group cursor-pointer relative z-50">
+                            <i data-lucide="calendar" class="w-8 h-8 text-amber-500 mr-4 shrink-0 group-hover:scale-110 transition-transform"></i>
+                            <div>
+                                <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Date</div>
+                                <div class="font-semibold text-sm leading-tight group-hover:text-amber-400 transition-colors">
+                                    28 March 2026
+                                    <i data-lucide="external-link" class="inline-block w-3 h-3 ml-1 opacity-60 group-hover:opacity-100"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://maps.app.goo.gl/wJay78bBBCbAwdDL7" target="_blank" rel="noopener noreferrer" title="View on Google Maps" class="flex-1 flex items-center text-slate-300 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-amber-500/40 transition-all group cursor-pointer relative z-50">
+                            <i data-lucide="map-pin" class="w-8 h-8 text-amber-500 mr-4 shrink-0 group-hover:scale-110 transition-transform"></i>
+                            <div>
+                                <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Venue</div>
+                                <div class="font-semibold text-sm leading-tight group-hover:text-amber-400 transition-colors">
+                                    Pope John Paul II College of Education
+                                    <i data-lucide="external-link" class="inline-block w-3 h-3 ml-1 opacity-60 group-hover:opacity-100"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <p class="text-amber-400 font-bold text-xl brand-font tracking-wide uppercase">
+                        <i data-lucide="zap" class="w-5 h-5 inline-block mr-2 -mt-1"></i>
+                        Be ready to compete, connect, and celebrate innovation!
+                    </p>
+                </div>
+
+                <!-- Event Lists Cards -->
+                <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mt-8 lg:mt-0">
+                    <!-- Technical Box -->
+                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+                        <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white brand-font mb-6 tracking-wide">🚀 Technical Events</h3>
+                        <ul class="space-y-4 text-slate-300 text-sm font-medium">
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> PPT Presentation</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Debugging</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Vibe Coding</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Poster Making</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Tech Meme</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Quiz</li>
+                        </ul>
+                    </div>
+
+                    <!-- Non-Technical Box -->
+                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group sm:translate-y-12">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+                        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="palette" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white brand-font mb-6 tracking-wide">🎭 Non-Technical & Fun</h3>
+                        <ul class="space-y-4 text-slate-300 text-sm font-medium">
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Chess</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Ad Splash</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Dumb Charades</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Photography</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Creative Writing</li>
+                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Dance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-20 bg-black/60 backdrop-blur-xl border-t border-amber-500/10 relative z-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div class="col-span-1">
+                    <div class="flex items-center mb-6">
+                         <!-- Small Footer Logo -->
+                         <div class="w-12 h-12 mr-4 relative">
+                            <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
+                                <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="#f59e0b" />
+                                <path d="M 52 15 H 90 V 35 H 70 V 45 H 85 L 80 60 H 70 V 80 L 52 100 V 15 Z" fill="#f59e0b" />
+                            </svg>
+                        </div>
+                        <div class="leading-none">
+                            <span class="block text-3xl brand-font font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">TECH FÊTÉ</span>
+                            <span class="text-sm text-amber-500/80 tracking-[0.3em] font-bold">2K26</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 max-w-sm mb-8 text-sm leading-relaxed font-medium">
+                        Pope John Paul II College of Education<br>
+                        Puducherry - 605 010<br>
+                        Dept of Computer Applications
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" title="Visit our Instagram" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                            <i data-lucide="instagram" class="w-6 h-6"></i>
+                        </a>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=techfete2026@gmail.com" target="_blank" rel="noopener noreferrer" title="Email Us" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-8 border-b border-amber-500/20 pb-2 inline-block">Student Co-ordinators</h4>
+                        <ul class="space-y-6 text-slate-400 text-sm">
+                            <li class="flex items-center hover:text-amber-400 transition-colors bg-white/5 p-3 rounded-lg">
+                                <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Ms. Hemadharshini</span>
+                                    <span class="font-bold tracking-wide text-white">+91 91504 06749</span>
+                                </div>
+                            </li>
+                            <li class="flex items-center hover:text-amber-400 transition-colors bg-white/5 p-3 rounded-lg">
+                                <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Mr. Jean Claude</span>
+                                    <span class="font-bold tracking-wide text-white">+91 97918 01597</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-8 border-b border-amber-500/20 pb-2 inline-block">Staff Co-ordinators</h4>
+                        <ul class="space-y-6 text-slate-400 text-sm">
+                            <li class="flex items-center hover:text-amber-400 transition-colors bg-white/5 p-3 rounded-lg">
+                                <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Mrs. Sona</span>
+                                    <span class="font-bold tracking-wide text-white">+91 98840 99806</span>
+                                </div>
+                            </li>
+                            <li class="flex items-center hover:text-amber-400 transition-colors bg-white/5 p-3 rounded-lg">
+                                <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                <div class="flex flex-col">
+                                    <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Mrs. Yazhini</span>
+                                    <span class="font-bold tracking-wide text-white">+91 73970 73362</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-900 text-center text-slate-600 text-sm tracking-wider">
+                © 2026 Tech Fêté. Pope John Paul II College of Education.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal (Hidden by default) -->
+    <div id="event-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <div class="bg-[#0f172a] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.1)] relative transform scale-95 transition-transform duration-300" id="modal-content">
+            <button onclick="closeModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div id="modal-body" class="p-8 md:p-12">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Cart Bar -->
+    <div id="floating-cart" class="fixed bottom-0 left-0 w-full bg-[#020617]/95 backdrop-blur-md border-t border-amber-500/30 p-4 transform translate-y-full transition-transform duration-300 z-[90] flex justify-between items-center px-6 md:px-12 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+        <div>
+            <div class="text-amber-500 font-bold text-xs tracking-widest uppercase mb-1">Your Selection</div>
+            <div class="text-white font-black text-xl"><span id="cart-count">0</span> Events | <span class="text-emerald-400">₹<span id="cart-total">0</span></span></div>
+        </div>
+        <button onclick="openCheckoutModal()" class="bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+            Checkout <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- Checkout / Registration Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <div class="bg-[#0f172a] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.1)] relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="checkout-content">
+            <button onclick="closeCheckoutModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            
+            <!-- Selected Events List -->
+            <div class="w-full md:w-1/2 p-8 md:p-10 bg-slate-900/50 border-r border-amber-500/10 hidden md:block overflow-y-auto max-h-[90vh]">
+                <h3 class="text-2xl font-black text-white brand-font tracking-wide mb-6">Selected Events</h3>
+                <div id="checkout-events-list" class="space-y-4">
+                    <!-- Cart items injected here -->
+                </div>
+                <div class="mt-8 pt-6 border-t border-slate-800 flex justify-between items-center text-xl font-black text-white">
+                    <span>Total Amount</span>
+                    <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center">
+                <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-2">Almost There</h3>
+                <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-8">Participant Details</h2>
+                
+                <form id="registration-form" onsubmit="processRazorpay(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Full Name</label>
+                        <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">College / Institution</label>
+                        <input type="text" id="reg-college" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phone</label>
+                            <input type="tel" id="reg-phone" required pattern="[0-9]{10}" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email</label>
+                            <input type="email" id="reg-email" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full mt-6 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 text-center py-4 rounded-xl font-black text-lg hover:brightness-110 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 uppercase tracking-widest flex justify-center items-center">
+                        Pay with Razorpay <i data-lucide="shield-check" class="ml-2 w-5 h-5"></i>
+                    </button>
+                    <p class="text-[10px] text-slate-500 text-center mt-3 uppercase tracking-wider font-bold">Secure Encrypted Payment</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Data & Interactivity -->
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Canvas Starfield Logic (Simulates Live Video)
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const count = Math.floor(width * height / 10000); // Adjust density
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2,
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    speedY: (Math.random() - 0.5) * 0.3,
+                    opacity: Math.random(),
+                    fadeSpeed: 0.005 + Math.random() * 0.01
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, width, height);
+            
+            stars.forEach(star => {
+                // Move
+                star.x += star.speedX;
+                star.y += star.speedY;
+
+                // Wrap around screen
+                if (star.x < 0) star.x = width;
+                if (star.x > width) star.x = 0;
+                if (star.y < 0) star.y = height;
+                if (star.y > height) star.y = 0;
+
+                // Twinkle (Blink)
+                star.opacity += star.fadeSpeed;
+                if (star.opacity > 1 || star.opacity < 0.2) {
+                    star.fadeSpeed = -star.fadeSpeed;
+                }
+
+                // Draw
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animateStars();
+
+        // Navbar Scroll Logic
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-[#020617]/95', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg');
+                nav.classList.remove('py-5');
+                nav.classList.add('py-3');
+            } else {
+                nav.classList.remove('bg-[#020617]/95', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg', 'py-3');
+                nav.classList.add('py-5');
+            }
+        });
+
+        // Event Data
+        const events = [
+            {
+                id: 1, title: "PPT Presentation", category: "Technical", fee: "100",
+                shortDesc: "Present your innovative ideas and technical research.",
+                fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills. Choose a trending topic in technology and present it to the judges.",
+                rules: ["Maximum 2 members per team.", "Time limit: 8 minutes + 2 minutes Q&A.", "Bring soft copy in pen drive.", "Topics must be related to Computer Science/IT."],
+                date: "Mar 28, 2026", time: "10:00 AM", venue: "Seminar Hall 1", prize: "Gold Trophy + Certificate", icon: "monitor"
+            },
+            {
+                id: 2, title: "Debugging", category: "Technical", fee: "100",
+                shortDesc: "Find and fix bugs in the given code snippets.",
+                fullDesc: "Test your programming logic and sharp eyes. Participants will be given a set of buggy code. The one who fixes the most bugs in the least time wins.",
+                rules: ["Individual participation.", "Two rounds: Prelims and Finals.", "No internet access allowed.", "IDE provided: VS Code / Turbo C."],
+                date: "Mar 28, 2026", time: "11:30 AM", venue: "Computer Lab A", prize: "Gold Medal + Cash Prize", icon: "code"
+            },
+            {
+                id: 3, title: "Vibe Coding", category: "Technical", fee: "100",
+                shortDesc: "Code with the rhythm! A unique coding challenge.",
+                fullDesc: "Can you focus when the beat drops? Solve coding problems while navigating distractions and music. It's about 'vibing' while you code.",
+                rules: ["Individual participation.", "Headphones provided.", "Languages: Python, Java, C++.", "Judged on logic and efficiency."],
+                date: "Mar 28, 2026", time: "02:00 PM", venue: "Computer Lab B", prize: "Tech Gadgets", icon: "music"
+            },
+            {
+                id: 4, title: "Techmeme", category: "Creative", fee: "100",
+                shortDesc: "Create the funniest and most relatable tech memes.",
+                fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.",
+                rules: ["Individual or Team of 2.", "No offensive content.", "Templates provided or create your own.", "Judged on humor."],
+                date: "Mar 28, 2026", time: "All Day", venue: "Online / Gallery", prize: "Merchandise", icon: "image"
+            },
+            {
+                id: 5, title: "Quiz", category: "Technical", fee: "100",
+                shortDesc: "Battle of brains covering Tech & General Knowledge.",
+                fullDesc: "Put your knowledge to the test. The quiz will cover a wide range of topics from latest tech trends to general trivia.",
+                rules: ["Team of 2.", "Rounds: Prelims, Visual, Rapid Fire.", "Quiz master's decision is final."],
+                date: "Mar 28, 2026", time: "01:00 PM", venue: "Main Auditorium", prize: "Cash Prize", icon: "brain"
+            },
+            {
+                id: 6, title: "Dance", category: "Cultural", fee: "100",
+                shortDesc: "Solo or Group dance competition.",
+                fullDesc: "Express yourself through movement. Classical, Western, Folk - all styles are welcome to set the stage on fire.",
+                rules: ["Time limit: 4-6 minutes.", "Audio track submitted 1 hour prior.", "Props allowed.", "Decent attire mandatory."],
+                date: "Mar 28, 2026", time: "03:00 PM", venue: "Open Air Theater", prize: "Trophy + Certificates", icon: "users"
+            },
+            {
+                id: 7, title: "Dumb Charades", category: "Cultural", fee: "100",
+                shortDesc: "Act it out! Classic game of guessing movies/words.",
+                fullDesc: "A fun-filled event testing your acting and guessing skills. Teams compete to guess the word/movie within the time limit.",
+                rules: ["Team of 3.", "No lip movement/sounds.", "60 seconds per guess.", "Theme: Tech & Movies."],
+                date: "Mar 28, 2026", time: "11:00 AM", venue: "Seminar Hall 2", prize: "Gift Hampers", icon: "mic-2"
+            },
+            {
+                id: 8, title: "Adsplash", category: "Creative", fee: "100",
+                shortDesc: "Market a product in the most creative and funny way.",
+                fullDesc: "Mad Ads competition. Pick a wacky product and sell it to the audience using humor, drama, and creativity.",
+                rules: ["Team of 3-5.", "Time limit: 5 minutes.", "Topic given on spot (15 min prep).", "No vulgarity."],
+                date: "Mar 28, 2026", time: "12:30 PM", venue: "Main Stage", prize: "Cash Prize", icon: "video"
+            },
+            {
+                id: 9, title: "Poster Making", category: "Creative", fee: "100",
+                shortDesc: "Design a poster on the given theme.",
+                fullDesc: "Unleash your artistic skills. Design a poster that communicates a strong message effectively.",
+                rules: ["Individual participation.", "Duration: 1.5 Hours.", "Theme on spot.", "Bring own materials."],
+                date: "Mar 28, 2026", time: "10:30 AM", venue: "Art Room", prize: "Art Kit", icon: "palette"
+            },
+            {
+                id: 10, title: "Photography", category: "Creative", fee: "100",
+                shortDesc: "Capture the best moments of Tech Fêté 2K26.",
+                fullDesc: "A shutterbug contest. Roam the campus and capture the vibrancy of the fest. Themes: 'Candid', 'Tech', 'Emotion'.",
+                rules: ["Individual participation.", "Mobile & DSLR categories.", "No heavy editing.", "Submit raw files."],
+                date: "Mar 28, 2026", time: "All Day", venue: "Campus Wide", prize: "Photography Gear", icon: "camera"
+            },
+            {
+                id: 11, title: "Creative Writing", category: "Literary", fee: "100",
+                shortDesc: "Weave words into magic. Story or Poem.",
+                fullDesc: "For the wordsmiths. Write a compelling story or poem based on a prompt or image shown.",
+                rules: ["Individual participation.", "Time limit: 1 Hour.", "English or Tamil.", "Judged on imagination."],
+                date: "Mar 28, 2026", time: "11:00 AM", venue: "Room 101", prize: "Books", icon: "pen-tool"
+            },
+            {
+                id: 12, title: "Chess", category: "Gaming", fee: "100",
+                shortDesc: "Strategic warfare on the 64 squares.",
+                fullDesc: "A battle of patience and strategy. Standard FIDE rules apply for rapid chess format.",
+                rules: ["Individual.", "Rapid format (10 min + 5s).", "Touch-move rule.", "Arbiter's decision final."],
+                date: "Mar 28, 2026", time: "10:00 AM", venue: "Indoor Sports Hall", prize: "Trophy", icon: "pawn"
+            }
+        ];
+
+        // Rendering Logic
+        const grid = document.getElementById('events-grid');
+        let selectedEvents = [];
+
+        function renderEvents(category) {
+            grid.innerHTML = '';
+            const filtered = category === 'All' ? events : events.filter(e => e.category === category);
+            
+            filtered.forEach(event => {
+                const card = document.createElement('div');
+                card.className = "group glass-card rounded-3xl overflow-hidden hover:-translate-y-2 transition-all duration-500 relative";
+                card.innerHTML = `
+                    <div class="absolute inset-0 bg-gradient-to-b from-amber-500/0 via-amber-500/0 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                    <div class="p-8 relative z-10 h-full flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-amber-500/20 text-amber-400 group-hover:scale-110 group-hover:border-amber-500 transition-all duration-300">
+                                ${event.icon === 'pawn' 
+                                    ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><circle cx="12" cy="5.5" r="3.5"/><rect x="8.5" y="9.5" width="7" height="1.5" rx="0.5"/><path d="M10.5 11 C10.5 14.5 8 17 6 18 L18 18 C16 17 13.5 14.5 13.5 11 Z"/><rect x="5.5" y="18.5" width="13" height="1.5" rx="0.5"/><path d="M4.5 22.5 C4.5 21 6 20.5 6 20.5 L18 20.5 C18 20.5 19.5 21 19.5 22.5 Z"/></svg>` 
+                                    : `<i data-lucide="${event.icon}" class="w-6 h-6"></i>`}
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 text-[10px] font-bold uppercase border border-amber-500/20 tracking-wider">
+                                ${event.category}
+                            </span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors brand-font tracking-wide">${event.title}</h3>
+                        <p class="text-slate-400 mb-6 text-sm flex-grow leading-relaxed">${event.shortDesc}</p>
+                        <div class="flex flex-wrap items-center text-xs text-slate-500 gap-y-2 gap-x-4 mb-8 font-medium">
+                            <div class="flex items-center group-hover:text-amber-500/70 transition-colors">
+                                <i data-lucide="calendar" class="w-3 h-3 mr-1.5"></i> ${event.date}
+                            </div>
+                            <div class="flex items-center group-hover:text-amber-500/70 transition-colors">
+                                <i data-lucide="clock" class="w-3 h-3 mr-1.5"></i> ${event.time}
+                            </div>
+                            <div class="flex items-center group-hover:text-amber-500/70 transition-colors">
+                                <i data-lucide="indian-rupee" class="w-3 h-3 mr-1.5"></i> ${event.fee}
+                            </div>
+                        </div>
+                        <button onclick="openModal(${event.id})" class="w-full py-3 bg-[#020617] border border-amber-500/20 rounded-xl font-bold text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500 transition-all uppercase text-xs tracking-widest">
+                            View Details
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function filterEvents(category, btn) {
+            renderEvents(category);
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.className = "filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400";
+            });
+            btn.className = "filter-btn active px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-amber-500 border-amber-400 text-slate-950 shadow-lg shadow-amber-500/20";
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('event-modal');
+        const modalBody = document.getElementById('modal-body');
+        
+        function openModal(id) {
+            const event = events.find(e => e.id === id);
+            if(!event) return;
+            
+            const isSelected = selectedEvents.some(e => e.id === id);
+            const btnText = isSelected ? "Remove from Selection" : "Add to Selection";
+            const btnColor = isSelected ? "bg-red-500 hover:bg-red-400 shadow-red-500/10 text-white" : "bg-amber-500 hover:bg-amber-400 shadow-amber-500/10 text-slate-950";
+
+            modalBody.innerHTML = `
+                <div class="flex items-center mb-8">
+                    <div class="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mr-6 border border-amber-500/20">
+                        ${event.icon === 'pawn'
+                            ? `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8"><circle cx="12" cy="5.5" r="3.5"/><rect x="8.5" y="9.5" width="7" height="1.5" rx="0.5"/><path d="M10.5 11 C10.5 14.5 8 17 6 18 L18 18 C16 17 13.5 14.5 13.5 11 Z"/><rect x="5.5" y="18.5" width="13" height="1.5" rx="0.5"/><path d="M4.5 22.5 C4.5 21 6 20.5 6 20.5 L18 20.5 C18 20.5 19.5 21 19.5 22.5 Z"/></svg>`
+                            : `<i data-lucide="${event.icon}" class="w-8 h-8"></i>`}
+                    </div>
+                    <div>
+                        <span class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1 block">
+                            ${event.category} Event
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-black text-white brand-font tracking-wide">${event.title}</h2>
+                    </div>
+                </div>
+                
+                <p class="text-slate-300 text-base md:text-lg mb-10 leading-relaxed border-l-2 border-amber-500/50 pl-6">
+                    ${event.fullDesc}
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                    <div class="bg-black/30 border border-amber-500/10 p-6 rounded-2xl">
+                        <h4 class="font-bold text-amber-400 flex items-center mb-4 uppercase text-xs tracking-widest">
+                            <i data-lucide="info" class="w-4 h-4 mr-2"></i> Logistics
+                        </h4>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex justify-between border-b border-white/5 pb-2">
+                                <span class="text-slate-500">Date</span> <span class="font-bold">${event.date}</span>
+                            </li>
+                            <li class="flex justify-between border-b border-white/5 pb-2">
+                                <span class="text-slate-500">Time</span> <span class="font-bold">${event.time}</span>
+                            </li>
+                            <li class="flex justify-between border-b border-white/5 pb-2">
+                                <span class="text-slate-500">Venue</span> <span class="text-amber-400 font-bold">${event.venue}</span>
+                            </li>
+                            <li class="flex justify-between border-b border-white/5 pb-2">
+                                <span class="text-slate-500">Reg. Fee</span> <span class="font-bold text-emerald-400">₹${event.fee}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-amber-600/10 to-transparent border border-amber-500/20 p-6 rounded-2xl flex flex-col justify-center items-center text-center">
+                        <h4 class="font-bold text-amber-400 flex items-center mb-2 uppercase text-xs tracking-widest">
+                            <i data-lucide="trophy" class="w-4 h-4 mr-2"></i> Prize
+                        </h4>
+                        <p class="text-white font-black text-xl tracking-tight">${event.prize}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-12">
+                    <h4 class="font-bold text-lg text-white mb-6 flex items-center brand-font tracking-wide">
+                        RULES & REGULATIONS
+                    </h4>
+                    <ul class="space-y-4">
+                        ${event.rules.map((rule, idx) => `
+                            <li class="flex items-start text-slate-400 group">
+                                <span class="w-6 h-6 border border-amber-500/30 rounded flex items-center justify-center text-[10px] font-bold mr-4 shrink-0 text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                                    ${idx + 1}
+                                </span>
+                                <span class="text-sm leading-relaxed">${rule}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <button onclick="toggleEventSelection(${event.id})" class="w-full ${btnColor} text-center py-4 rounded-xl font-black text-lg transition-all shadow-xl active:scale-95 uppercase tracking-widest">
+                    ${btnText}
+                </button>
+            `;
+            
+            lucide.createIcons();
+            modal.classList.remove('hidden', 'opacity-0');
+            modal.classList.add('flex', 'opacity-100');
+            setTimeout(() => {
+                document.getElementById('modal-content').classList.remove('scale-95');
+                document.getElementById('modal-content').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            document.getElementById('modal-content').classList.remove('scale-100');
+            document.getElementById('modal-content').classList.add('scale-95');
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Cart and Registration Logic
+        function toggleEventSelection(id) {
+            const event = events.find(e => e.id === id);
+            const index = selectedEvents.findIndex(e => e.id === id);
+
+            if (index > -1) {
+                // Remove if already selected
+                selectedEvents.splice(index, 1);
+            } else {
+                // Check for time clashes before adding (Ignore 'All Day' events)
+                if (event.time !== 'All Day') {
+                    const clash = selectedEvents.find(e => e.time === event.time && e.time !== 'All Day');
+                    if (clash) {
+                        alert(`⚠️ Time Clash Detected!\n\nYou cannot select "${event.title}" because it happens at ${event.time}, which clashes with your existing selection: "${clash.title}".`);
+                        return; // Stop them from adding
+                    }
+                }
+                selectedEvents.push(event);
+            }
+            
+            updateCartUI();
+            closeModal();
+        }
+
+        function updateCartUI() {
+            const floatingCart = document.getElementById('floating-cart');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (selectedEvents.length > 0) {
+                floatingCart.classList.remove('translate-y-full');
+                cartCount.innerText = selectedEvents.length;
+                cartTotal.innerText = selectedEvents.reduce((sum, e) => sum + parseInt(e.fee), 0);
+            } else {
+                floatingCart.classList.add('translate-y-full');
+            }
+        }
+
+        function openCheckoutModal() {
+            const checkoutModal = document.getElementById('checkout-modal');
+            const listContainer = document.getElementById('checkout-events-list');
+            const checkoutTotal = document.getElementById('checkout-total');
+            
+            // Populate list
+            listContainer.innerHTML = selectedEvents.map(e => `
+                <div class="flex justify-between items-center bg-black/40 p-4 rounded-xl border border-slate-700 relative pr-12">
+                    <div>
+                        <div class="font-bold text-amber-400">${e.title}</div>
+                        <div class="text-xs text-slate-500 mt-1">${e.time}</div>
+                    </div>
+                    <div class="font-bold text-emerald-400">₹${e.fee}</div>
+                    <button onclick="removeEventFromCart(${e.id})" class="absolute right-4 text-slate-500 hover:text-red-500 transition-colors cursor-pointer z-10" title="Remove Event">
+                        <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
+                    </button>
+                </div>
+            `).join('');
+            
+            checkoutTotal.innerText = selectedEvents.reduce((sum, e) => sum + parseInt(e.fee), 0);
+            
+            lucide.createIcons(); // Initialize the new trash icons
+            
+            checkoutModal.classList.remove('hidden', 'opacity-0');
+            checkoutModal.classList.add('flex', 'opacity-100');
+            setTimeout(() => {
+                document.getElementById('checkout-content').classList.remove('scale-95');
+                document.getElementById('checkout-content').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeCheckoutModal() {
+            const checkoutModal = document.getElementById('checkout-modal');
+            document.getElementById('checkout-content').classList.remove('scale-100');
+            document.getElementById('checkout-content').classList.add('scale-95');
+            checkoutModal.classList.remove('opacity-100');
+            checkoutModal.classList.add('opacity-0');
+            setTimeout(() => {
+                checkoutModal.classList.remove('flex');
+                checkoutModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // New function to remove from cart directly
+        function removeEventFromCart(id) {
+            const index = selectedEvents.findIndex(e => e.id === id);
+            if (index > -1) {
+                selectedEvents.splice(index, 1);
+                updateCartUI(); // Update the floating bottom bar
+                
+                if (selectedEvents.length === 0) {
+                    closeCheckoutModal(); // If they remove the last item, close the checkout
+                } else {
+                    openCheckoutModal(); // Refresh the checkout list to show updated total
+                }
+            }
+        }
+
+        // Razorpay Integration Logic
+        function processRazorpay(e) {
+            e.preventDefault(); // Stop form from reloading page
+            
+            const totalAmount = selectedEvents.reduce((sum, ev) => sum + parseInt(ev.fee), 0);
+            
+            // Gather User Details
+            const userName = document.getElementById('reg-name').value;
+            const userEmail = document.getElementById('reg-email').value;
+            const userPhone = document.getElementById('reg-phone').value;
+            const userCollege = document.getElementById('reg-college').value;
+
+            // Razorpay Options
+            var options = {
+                "key": "rzp_test_YOUR_DUMMY_KEY", // Note: Replace with actual Razorpay Key ID
+                "amount": totalAmount * 100, // Amount in paise (multiply by 100)
+                "currency": "INR",
+                "name": "Tech Fêté 2K26",
+                "description": "Registration for " + selectedEvents.length + " Events",
+                "image": "tech_fete_logo.png",
+                "handler": function (response){
+                    // This function runs when payment is successful
+                    alert(`🎉 Registration Successful!\nPayment ID: ${response.razorpay_payment_id}\n\nWe have received your registration for ${selectedEvents.length} events. See you at the fest!`);
+                    
+                    // Clear Cart & Form after successful payment
+                    selectedEvents = [];
+                    updateCartUI();
+                    document.getElementById('registration-form').reset();
+                    closeCheckoutModal();
+                },
+                "prefill": {
+                    "name": userName,
+                    "email": userEmail,
+                    "contact": userPhone
+                },
+                "theme": {
+                    "color": "#10b981" // Match emerald button color
+                }
+            };
+            
+            var rzp = new Razorpay(options);
+            
+            rzp.on('payment.failed', function (response){
+                alert("Payment Failed. Reason: " + response.error.description);
+            });
+            
+            rzp.open();
+        }
+
+        // Initialize
+        renderEvents('All');
+        
+        // Try to load hero image
+        const heroImg = document.getElementById('hero-img-logo');
+        heroImg.onload = function() {
+            heroImg.classList.remove('hidden');
+            document.getElementById('hero-svg-logo').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
