@@ -88,15 +88,15 @@
 
     <!-- Navigation -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <div class="flex items-center gap-3">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center gap-2">
+            <div class="flex items-center gap-2 md:gap-3 shrink-0">
                 <!-- Navbar Logo -->
-                <div class="w-10 h-10 relative">
+                <div class="w-8 h-8 md:w-10 md:h-10 relative">
                      <img src="tech_fete_logo.png" alt="TF Logo" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">
                 </div>
                 <div class="flex flex-col leading-none">
-                    <span class="brand-font text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 tracking-wider">TECH FÊTÉ</span>
-                    <span class="text-[10px] font-bold text-amber-500/80 tracking-[0.4em] ml-0.5">2K26</span>
+                    <span class="brand-font text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 tracking-wider">TECH FÊTÉ</span>
+                    <span class="text-[8px] md:text-[10px] font-bold text-amber-500/80 tracking-[0.4em] ml-0.5">2K26</span>
                 </div>
             </div>
             
@@ -108,16 +108,32 @@
                 <a href="#contact" class="hover:text-amber-400 transition-colors">CONTACT</a>
             </div>
             
-            <!-- INNOVATIVE SMART BUNDLE BUTTON -->
-            <button onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-6 py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-sm tracking-wide flex items-center overflow-hidden">
-                <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-                <i data-lucide="zap" class="w-4 h-4 mr-2 fill-slate-950 animate-pulse"></i> SMART BUNDLES
-            </button>
+            <div class="flex items-center gap-2 md:gap-4">
+                <!-- INNOVATIVE SMART BUNDLE BUTTON -->
+                <button onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-[10px] md:text-sm tracking-wide flex items-center overflow-hidden whitespace-nowrap shrink-0">
+                    <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
+                    <i data-lucide="zap" class="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 fill-slate-950 animate-pulse"></i> SMART BUNDLES
+                </button>
+                
+                <!-- Mobile Hamburger Button -->
+                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-amber-500 p-1 hover:text-amber-400 transition-colors cursor-pointer">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-[#020617]/95 backdrop-blur-xl border-b border-amber-500/20 shadow-2xl flex flex-col">
+            <a href="#home" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">HOME</a>
+            <a href="#about" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">ABOUT</a>
+            <a href="#events" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">EVENTS</a>
+            <a href="#faq" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">FAQ</a>
+            <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">CONTACT</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-20 pb-20 md:pt-32 md:pb-32 z-10 min-h-screen flex flex-col justify-center">
+    <section id="home" class="relative pt-36 pb-20 md:pt-40 md:pb-32 z-10 min-h-screen flex flex-col justify-center">
         <div class="max-w-7xl mx-auto px-6 text-center">
             
             <!-- College Badge -->
@@ -420,7 +436,7 @@
                             </div>
 
                             <!-- Explicit Direct Webmail Compose Contact -->
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=techfete2026@gmail.com" target="_blank" rel="noopener noreferrer" class="relative z-50 flex items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-amber-500 hover:text-black transition-all group/email cursor-pointer">
+                            <a href="mailto:techfete2026@gmail.com" class="relative z-50 flex items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-amber-500 hover:text-black transition-all group/email cursor-pointer">
                                 <div class="bg-black/50 group-hover/email:bg-black/20 p-2 rounded-lg text-amber-400 group-hover/email:text-black mr-4 transition-colors">
                                     <i data-lucide="mail" class="w-5 h-5"></i>
                                 </div>
@@ -463,7 +479,7 @@
                         <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" title="Visit our Instagram" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
                             <i data-lucide="instagram" class="w-6 h-6"></i>
                         </a>
-                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=techfete2026@gmail.com" target="_blank" rel="noopener noreferrer" title="Email Us" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                        <a href="mailto:techfete2026@gmail.com" title="Email Us" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
                             <i data-lucide="mail" class="w-6 h-6"></i>
                         </a>
                     </div>
@@ -541,7 +557,7 @@
     </footer>
 
     <!-- Smart Wizard Modal -->
-    <div id="wizard-modal" class="fixed inset-0 z-[120] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
+    <div id="wizard-modal" onclick="if(event.target === this) window.closeWizardModal()" class="fixed inset-0 z-[120] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
         <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.15)] relative transform scale-95 transition-transform duration-300" id="wizard-content">
             <button onclick="window.closeWizardModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
                 <i data-lucide="x" class="w-6 h-6"></i>
@@ -648,7 +664,7 @@
     </div>
 
     <!-- Modal -->
-    <div id="event-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
+    <div id="event-modal" onclick="if(event.target === this) window.closeModal()" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
         <div class="bg-[#050505] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative transform scale-95 transition-transform duration-300" id="modal-content">
             <button onclick="window.closeModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
                 <i data-lucide="x" class="w-6 h-6"></i>
@@ -671,24 +687,24 @@
     </div>
 
     <!-- Razorpay Checkout Modal -->
-    <div id="checkout-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
+    <div id="checkout-modal" onclick="if(event.target === this) window.closeCheckoutModal()" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
         <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="checkout-content">
-            <button onclick="window.closeCheckoutModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
-                <i data-lucide="x" class="w-6 h-6"></i>
+            <button onclick="window.closeCheckoutModal()" class="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-20 shadow-lg">
+                <i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i>
             </button>
             
             <!-- Selected Events List -->
-            <div class="w-full md:w-1/2 p-8 md:p-10 bg-black/40 border-r border-amber-500/10 hidden md:block overflow-y-auto max-h-[90vh]">
-                <h3 class="text-2xl font-black text-white brand-font tracking-wide mb-6">Selected Events</h3>
-                <div id="checkout-events-list" class="space-y-4">
+            <div class="w-full md:w-1/2 p-6 pt-16 md:p-10 md:pt-10 bg-black/40 border-b md:border-b-0 md:border-r border-amber-500/10 flex flex-col">
+                <h3 class="text-xl md:text-2xl font-black text-white brand-font tracking-wide mb-4 md:mb-6">Selected Events</h3>
+                <div id="checkout-events-list" class="space-y-3 max-h-[35vh] md:max-h-[60vh] overflow-y-auto pr-2">
                     <!-- Cart items injected here -->
                 </div>
-                <div class="mt-6 pt-6 border-t border-slate-800">
+                <div class="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-slate-800">
                     <div id="discount-display" class="flex justify-between items-center text-sm font-bold text-emerald-400 mb-2 hidden">
                         <span>Promo Discount</span>
                         <span>-₹100</span>
                     </div>
-                    <div class="flex justify-between items-center text-xl font-black text-white">
+                    <div class="flex justify-between items-center text-lg md:text-xl font-black text-white">
                         <span>Total Amount</span>
                         <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
                     </div>
@@ -696,7 +712,7 @@
             </div>
 
             <!-- Registration Form -->
-            <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden">
+            <div class="w-full md:w-1/2 p-6 pb-10 md:p-10 flex flex-col justify-center relative">
                 
                 <!-- STEP 1: Registration Details & Razorpay Trigger -->
                 <form id="checkout-step-1" onsubmit="window.processPayment(event)" class="space-y-4 transition-all duration-300">
@@ -707,10 +723,26 @@
                         <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Full Name</label>
                         <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
                     </div>
+                    
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">College / Institution</label>
-                        <input type="text" id="reg-college" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                        <div class="relative">
+                            <input type="text" id="reg-college" required autocomplete="off" oninput="window.filterColleges()" onfocus="window.showCollegeList()" onblur="window.handleCollegeBlur()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Type to search your college...">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-500">
+                                <i data-lucide="search" class="w-4 h-4"></i>
+                            </div>
+                            <!-- Custom Dropdown Menu -->
+                            <div id="custom-college-list" class="hidden absolute top-full left-0 right-0 z-[120] mt-2 bg-[#0f172a] border border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] max-h-52 overflow-y-auto">
+                                <!-- Options are injected here via JS -->
+                            </div>
+                        </div>
                     </div>
+
+                    <div id="other-college-div" class="hidden transition-all duration-300">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center text-amber-500"><i data-lucide="info" class="w-3 h-3 mr-1"></i> Please Specify Your College</label>
+                        <input type="text" id="reg-college-other" class="w-full bg-[#020617] border border-amber-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[0_0_15px_rgba(245,158,11,0.1)]" placeholder="Enter full college name">
+                    </div>
+
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phone</label>
@@ -733,8 +765,8 @@
                     </div>
 
                     <!-- Notice: Razorpay removes the need for manual UPI selection -->
-                    <button type="submit" id="razorpay-btn" class="w-full mt-6 bg-[#3399cc] hover:bg-[#2b82ad] text-white text-center py-4 rounded-xl font-black text-lg transition-all shadow-[0_0_20px_rgba(51,153,204,0.3)] active:scale-95 uppercase tracking-widest flex justify-center items-center">
-                        Pay with Razorpay <i data-lucide="shield-check" class="ml-2 w-5 h-5"></i>
+                    <button type="submit" id="razorpay-btn" class="w-full mt-6 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-center py-4 rounded-xl font-black text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 active:scale-95 uppercase tracking-widest flex justify-center items-center">
+                       Proceed to Pay <i data-lucide="shield-check" class="ml-2 w-5 h-5"></i>
                     </button>
                     <div class="flex justify-center items-center mt-3 space-x-2 text-slate-500">
                         <i data-lucide="lock" class="w-3 h-3"></i>
@@ -792,6 +824,17 @@
         ];
 
         let selectedEventsList = [];
+        
+        // --- LOAD CART FROM STORAGE ON REFRESH ---
+        try {
+            const savedCart = localStorage.getItem('techFeteCart');
+            if (savedCart) {
+                selectedEventsList = JSON.parse(savedCart);
+            }
+        } catch(e) {
+            console.error("Error loading cart", e);
+        }
+
         let userData = {};
 
         const validPromoCodes = [
@@ -800,6 +843,121 @@
         ];
         let discountApplied = 0;
         let appliedPromoCode = "";
+
+        // --- SMART COLLEGE SEARCH LOGIC ---
+        const officialColleges = [
+            "Pondicherry University (PU)",
+            "Puducherry Technological University (PTU)",
+            "Sri Manakula Vinayagar Engineering College (SMVEC)",
+            "Manakula Vinayagar Institute of Technology (MVIT)",
+            "Rajiv Gandhi College of Engineering and Technology (RGCET)",
+            "Christ College of Engineering and Technology",
+            "Achariya College of Engineering Technology",
+            "Sri Ganesh College of Engineering and Technology",
+            "Alpha College of Engineering and Technology",
+            "Perunthalaivar Kamarajar Institute of Engineering and Technology (PKIET)",
+            "NIT Puducherry (Karaikal)",
+            "JIPMER",
+            "Indira Gandhi Medical College and Research Institute (IGMCRI)",
+            "Mahatma Gandhi Medical College and Research Institute (MGMCRI)",
+            "Sri Venkateshwaraa Medical College Hospital (SVMCH)",
+            "Pondicherry Institute of Medical Sciences (PIMS)",
+            "Aarupadai Veedu Medical College (AVMC)",
+            "Mother Theresa Post Graduate and Research Institute of Health Sciences",
+            "Mahatma Gandhi Postgraduate Institute of Dental Sciences",
+            "Rajiv Gandhi Institute of Veterinary Education and Research (RIVER)",
+            "Pope John Paul II College of Education",
+            "Kanchi Mamunivar Govt Institute for Postgraduate Studies",
+            "Bharathidasan Govt College for Women",
+            "Tagore Arts College",
+            "Saradha Gangadharan College",
+            "Raak Arts and Science College",
+            "Idhaya College of Arts and Science",
+            "Indira Gandhi College of Arts and Science",
+            "Rajiv Gandhi Arts and Science College",
+            "Kasthurba College for Women",
+            "Perunthalaivar Kamarajar Arts College",
+            "Pandit Jawaharlal Nehru College of Agriculture (PAJANCOA&RI)",
+            "Other College / University"
+        ];
+
+        window.showCollegeList = function() {
+            window.filterColleges();
+            const listDiv = document.getElementById('custom-college-list');
+            if(listDiv) listDiv.classList.remove('hidden');
+        };
+
+        window.filterColleges = function() {
+            const input = document.getElementById('reg-college');
+            const listDiv = document.getElementById('custom-college-list');
+            if(!input || !listDiv) return;
+            
+            const val = input.value.toLowerCase().trim();
+            let filtered = officialColleges;
+            
+            if (val) {
+                filtered = officialColleges.filter(c => c.toLowerCase().includes(val));
+                if (filtered.length === 0) {
+                    filtered = ["Other College / University"];
+                }
+            }
+
+            listDiv.innerHTML = filtered.map(c => 
+                `<div onmousedown="event.preventDefault(); window.selectCollege('${c}')" class="px-4 py-3 hover:bg-amber-500 hover:text-slate-950 cursor-pointer text-slate-300 transition-colors text-sm border-b border-slate-800 last:border-0">${c}</div>`
+            ).join('');
+        };
+
+        window.selectCollege = function(val) {
+            const input = document.getElementById('reg-college');
+            if(input) input.value = val;
+            const listDiv = document.getElementById('custom-college-list');
+            if(listDiv) listDiv.classList.add('hidden');
+            window.handleCollegeChangeCustom();
+        };
+
+        window.handleCollegeBlur = function() {
+            setTimeout(() => {
+                const listDiv = document.getElementById('custom-college-list');
+                if(listDiv) listDiv.classList.add('hidden');
+                window.handleCollegeChangeCustom();
+            }, 200);
+        };
+
+        window.handleCollegeChangeCustom = function() {
+            const input = document.getElementById('reg-college');
+            const otherDiv = document.getElementById('other-college-div');
+            const otherInput = document.getElementById('reg-college-other');
+            if(!input || !otherDiv || !otherInput) return;
+            
+            const inputValueLower = input.value.trim().toLowerCase();
+            const validOptions = officialColleges.map(c => c.toLowerCase());
+
+            if (input.value.trim()) {
+                if (inputValueLower === "other college / university") {
+                    otherDiv.classList.remove('hidden');
+                    otherInput.required = true;
+                } else if (!validOptions.includes(inputValueLower)) {
+                    // They typed a custom college not in the official list
+                    const typedValue = input.value;
+                    input.value = "Other College / University";
+                    otherInput.value = typedValue;
+                    otherDiv.classList.remove('hidden');
+                    otherInput.required = true;
+                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+                } else {
+                    // Selected a valid existing college (Fixes casing if they typed it manually)
+                    const exactMatch = officialColleges.find(c => c.toLowerCase() === inputValueLower);
+                    if (exactMatch) input.value = exactMatch;
+                    
+                    otherDiv.classList.add('hidden');
+                    otherInput.required = false;
+                    otherInput.value = "";
+                }
+            } else {
+                otherDiv.classList.add('hidden');
+                otherInput.required = false;
+            }
+        };
 
         // 2. Global UI Functions
         window.renderEvents = function(category) {
@@ -919,6 +1077,11 @@
             setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
         };
 
+        // --- SAVE CART TO STORAGE ---
+        window.saveCartState = function() {
+            localStorage.setItem('techFeteCart', JSON.stringify(selectedEventsList));
+        };
+
         window.toggleEventSelection = function(id) {
             const event = eventsData.find(e => e.id === id);
             const index = selectedEventsList.findIndex(e => e.id === id);
@@ -935,6 +1098,7 @@
                 }
                 selectedEventsList.push(event);
             }
+            window.saveCartState();
             window.updateCartUI();
             window.closeModal();
         };
@@ -1033,26 +1197,33 @@
             window.updateCheckoutTotal();
         };
 
-        window.openCheckoutModal = function() {
-            const checkoutModal = document.getElementById('checkout-modal');
+        // --- NEW REFRESH CART FUNCTION ---
+        window.refreshCheckoutCart = function() {
             const listContainer = document.getElementById('checkout-events-list');
-            if(!checkoutModal || !listContainer) return;
+            if(!listContainer) return;
             
             listContainer.innerHTML = selectedEventsList.map(e => `
-                <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-slate-800 relative pr-12 shadow-sm event-cart-item">
+                <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-slate-800 relative pr-14 shadow-sm event-cart-item transition-all">
                     <div>
                         <div class="font-bold text-amber-400">${e.title}</div>
                         <div class="text-xs text-slate-500 mt-1">${e.time}</div>
                     </div>
                     <div class="font-bold text-emerald-400">₹${e.fee}</div>
-                    <button onclick="window.removeEventFromCart(${e.id})" class="delete-event-btn absolute right-4 text-slate-500 hover:text-red-500 transition-colors cursor-pointer z-10" title="Remove Event">
-                        <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
+                    <button type="button" onclick="window.removeEventFromCart(${e.id})" class="delete-event-btn absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all z-50 cursor-pointer shadow-sm" title="Remove Event">
+                        <i data-lucide="trash-2" class="w-4 h-4 pointer-events-none"></i>
                     </button>
                 </div>
             `).join('');
             
             window.updateCheckoutTotal();
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+        };
+
+        window.openCheckoutModal = function() {
+            const checkoutModal = document.getElementById('checkout-modal');
+            if(!checkoutModal) return;
+            
+            window.refreshCheckoutCart();
             
             checkoutModal.classList.remove('hidden', 'opacity-0'); checkoutModal.classList.add('flex', 'opacity-100');
             setTimeout(() => {
@@ -1070,10 +1241,12 @@
             setTimeout(() => { checkoutModal.classList.remove('flex'); checkoutModal.classList.add('hidden'); window.resetCheckoutForm(); }, 300);
         };
 
+        // --- RESTORED MISSING DELETE FUNCTION ---
         window.removeEventFromCart = function(id) {
             const index = selectedEventsList.findIndex(e => e.id === id);
             if (index > -1) {
                 selectedEventsList.splice(index, 1);
+                window.saveCartState();
                 window.updateCartUI();
                 
                 // Re-evaluate discount if cart is empty
@@ -1090,23 +1263,12 @@
                     if(discountDisplay) discountDisplay.classList.add('hidden');
                 }
                 
-                if (selectedEventsList.length === 0) { window.closeCheckoutModal(); } 
-                else { window.openCheckoutModal(); window.updateCheckoutTotal(); }
+                if (selectedEventsList.length === 0) { 
+                    window.closeCheckoutModal(); 
+                } else { 
+                    window.refreshCheckoutCart(); 
+                }
             }
-        };
-
-        // --- SMART WIZARD LOGIC ---
-        window.openWizardModal = function() {
-            const modal = document.getElementById('wizard-modal');
-            if(!modal) return;
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-            
-            modal.classList.remove('hidden', 'opacity-0');
-            modal.classList.add('flex', 'opacity-100');
-            setTimeout(() => {
-                const wc = document.getElementById('wizard-content');
-                if(wc) { wc.classList.remove('scale-95'); wc.classList.add('scale-100'); }
-            }, 10);
         };
 
         window.closeWizardModal = function() {
@@ -1124,6 +1286,7 @@
                 const event = eventsData.find(e => e.id === id);
                 if(event) selectedEventsList.push(event);
             });
+            window.saveCartState();
             window.updateCartUI();
             window.closeWizardModal();
             setTimeout(() => { window.openCheckoutModal(); }, 350);
@@ -1150,9 +1313,15 @@
         window.processPayment = function(e) {
             e.preventDefault(); 
             
+            // Check if they are using the "Other" college option
+            let finalCollege = document.getElementById('reg-college').value;
+            if (finalCollege === "Other College / University") {
+                finalCollege = document.getElementById('reg-college-other').value;
+            }
+            
             userData = {
                 name: document.getElementById('reg-name').value,
-                college: document.getElementById('reg-college').value,
+                college: finalCollege,
                 phone: document.getElementById('reg-phone').value,
                 email: document.getElementById('reg-email').value,
                 payerUpi: "Paid securely via Razorpay"
@@ -1320,12 +1489,19 @@
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
             
             selectedEventsList = [];
+            window.saveCartState(); // Clears the storage after successful payment
             window.updateCartUI();
         };
 
         window.resetCheckoutForm = function() {
             const form1 = document.getElementById('checkout-step-1');
             if(form1) form1.reset();
+            
+            // Reset College custom input box
+            const otherDiv = document.getElementById('other-college-div');
+            const otherInput = document.getElementById('reg-college-other');
+            if(otherDiv) otherDiv.classList.add('hidden');
+            if(otherInput) { otherInput.required = false; otherInput.value = ""; }
             
             discountApplied = 0;
             appliedPromoCode = "";
@@ -1413,6 +1589,7 @@
 
             // Initial UI renders
             window.renderEvents('All');
+            window.updateCartUI(); // This instantly triggers the cart UI if items were loaded from storage
             
             // Try to load hero image safely
             const heroImg = document.getElementById('hero-img-logo');
