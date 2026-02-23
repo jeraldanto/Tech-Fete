@@ -13,9 +13,6 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
-    <!-- Razorpay SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* Custom Font Assignments */
@@ -44,18 +41,14 @@
 
         /* Glassmorphism Utilities */
         .glass-card {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(0, 0, 0, 0.8) 100%);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(245, 158, 11, 0.1);
         }
         .glass-card:hover {
             border-color: rgba(245, 158, 11, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(245, 158, 11, 0.05);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.1);
         }
-        
-        /* Details Summary Reset for FAQ */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
     </style>
     <script>
         window.tailwind.config = {
@@ -104,14 +97,11 @@
                 <a href="#home" class="hover:text-amber-400 transition-colors">HOME</a>
                 <a href="#about" class="hover:text-amber-400 transition-colors">ABOUT</a>
                 <a href="#events" class="hover:text-amber-400 transition-colors">EVENTS</a>
-                <a href="#faq" class="hover:text-amber-400 transition-colors">FAQ</a>
                 <a href="#contact" class="hover:text-amber-400 transition-colors">CONTACT</a>
             </div>
             
-            <!-- INNOVATIVE SMART BUNDLE BUTTON -->
-            <button onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-6 py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-sm tracking-wide flex items-center overflow-hidden">
-                <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-                <i data-lucide="zap" class="w-4 h-4 mr-2 fill-slate-950 animate-pulse"></i> SMART BUNDLES
+            <button class="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-6 py-2 rounded-full font-bold hover:brightness-110 transition-all shadow-lg shadow-amber-900/20 text-sm tracking-wide">
+                REGISTER
             </button>
         </div>
     </nav>
@@ -292,7 +282,7 @@
                 </div>
                 
                 <div class="flex flex-wrap gap-2" id="category-filters">
-                    <button class="filter-btn active px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-amber-500 border-amber-400 text-slate-950 shadow-lg shadow-amber-500/20" onclick="window.filterEvents('All', this)">All</button>
+                    <button class="filter-btn active px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-amber-500 border-amber-400 text-slate-950" onclick="window.filterEvents('All', this)">All</button>
                     <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Technical', this)">Technical</button>
                     <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Creative', this)">Creative</button>
                     <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Cultural', this)">Cultural</button>
@@ -307,142 +297,13 @@
         </div>
     </section>
 
-    <!-- FAQ & Helpline Section -->
-    <section id="faq" class="py-24 relative z-10 bg-[#020617] border-t border-amber-500/10 shadow-[inset_0_20px_50px_rgba(0,0,0,0.5)]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                
-                <!-- FAQ Accordion (Left side, takes 2 columns) -->
-                <div class="lg:col-span-2">
-                    <h2 class="text-4xl font-bold mb-2 flex items-center text-white brand-font tracking-wide">
-                        <i data-lucide="help-circle" class="w-8 h-8 text-amber-500 mr-4"></i>
-                        FREQUENTLY ASKED QUESTIONS
-                    </h2>
-                    <p class="text-slate-400 text-lg mb-8 ml-12">Everything you need to know before registering.</p>
-
-                    <div class="space-y-4">
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Who can participate in Tech Fêté 2K26?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Students from any recognized college or university pursuing UG/PG courses can participate. Please ensure you bring a valid college ID card on the day of the event, as it is mandatory for entry.
-                            </div>
-                        </details>
-
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Can I register for multiple events?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Absolutely! You can add multiple events to your selection cart before checking out. However, please make sure the timings of the events do not clash. Our system will automatically alert you if you select events happening at the exact same time.
-                            </div>
-                        </details>
-
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Are on-spot registrations available?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Yes, on-spot registrations will be open from 8:30 AM to 9:30 AM at the reception desk on the day of the event. However, this is strictly subject to slot availability. We highly recommend registering online in advance to secure your spot.
-                            </div>
-                        </details>
-
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Will food and refreshments be provided?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Lunch will be provided complimentary for participants who register for 2 or more events. For others, a canteen is available on campus. Basic refreshments and water will be available for all attendees throughout the day.
-                            </div>
-                        </details>
-                    </div>
-                </div>
-
-                <!-- Dedicated Helpline Box (Right side, takes 1 column) -->
-                <div class="lg:col-span-1 flex flex-col justify-center">
-                    <div class="bg-gradient-to-br from-[#0f172a] to-black p-8 rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative overflow-hidden group">
-                        <!-- Glowing backdrop effect inside the card -->
-                        <div class="absolute top-[-50px] right-[-50px] w-32 h-32 bg-amber-500/20 blur-[50px] rounded-full group-hover:bg-amber-500/30 transition-colors"></div>
-                        
-                        <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-6 border border-amber-500/20">
-                            <i data-lucide="headset" class="w-7 h-7"></i>
-                        </div>
-                        
-                        <h3 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">24/7 Helpline</h3>
-                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Having trouble with registration, payment, or finding your way? We are here to help.</p>
-                        
-                        <div class="space-y-4">
-                            <!-- Helpline Contact 1 -->
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/50 transition-colors group/contact">
-                                <div class="flex items-center">
-                                    <div class="bg-black/50 p-2 rounded-lg text-emerald-400 mr-4 group-hover/contact:text-emerald-300 transition-colors">
-                                        <i data-lucide="message-circle" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Registration Support</div>
-                                        <div class="text-white font-bold text-sm">+91 91504 06749</div>
-                                    </div>
-                                </div>
-                                <button onclick="window.copyToClipboard('+91 91504 06749', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
-                                </button>
-                            </div>
-                            
-                            <!-- Helpline Contact 2 -->
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/50 transition-colors group/contact">
-                                <div class="flex items-center">
-                                    <div class="bg-black/50 p-2 rounded-lg text-blue-400 mr-4 group-hover/contact:text-blue-300 transition-colors">
-                                        <i data-lucide="phone-call" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">General Queries</div>
-                                        <div class="text-white font-bold text-sm">+91 97918 01597</div>
-                                    </div>
-                                </div>
-                                <button onclick="window.copyToClipboard('+91 97918 01597', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
-                                </button>
-                            </div>
-
-                            <!-- Explicit Direct Webmail Compose Contact -->
-                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=techfete2026@gmail.com" target="_blank" rel="noopener noreferrer" class="relative z-50 flex items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-amber-500 hover:text-black transition-all group/email cursor-pointer">
-                                <div class="bg-black/50 group-hover/email:bg-black/20 p-2 rounded-lg text-amber-400 group-hover/email:text-black mr-4 transition-colors">
-                                    <i data-lucide="mail" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] text-slate-500 group-hover/email:text-black/70 font-bold uppercase tracking-widest mb-1 transition-colors">Email Us</div>
-                                    <div class="text-white group-hover/email:text-black font-bold text-sm transition-colors">techfete2026@gmail.com</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer id="contact" class="py-20 bg-black/90 backdrop-blur-xl border-t border-amber-500/10 relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+    <footer id="contact" class="py-20 bg-black/60 backdrop-blur-xl border-t border-amber-500/10 relative z-10">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
                 <div class="col-span-1">
                     <div class="flex items-center mb-6">
+                         <!-- Small Footer Logo -->
                          <div class="w-12 h-12 mr-4 relative">
                             <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
                                 <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="#f59e0b" />
@@ -450,7 +311,7 @@
                             </svg>
                         </div>
                         <div class="leading-none">
-                            <span class="block text-3xl brand-font font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 tracking-wider">TECH FÊTÉ</span>
+                            <span class="block text-3xl brand-font font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">TECH FÊTÉ</span>
                             <span class="text-sm text-amber-500/80 tracking-[0.3em] font-bold">2K26</span>
                         </div>
                     </div>
@@ -540,116 +401,9 @@
         </div>
     </footer>
 
-    <!-- Smart Wizard Modal -->
-    <div id="wizard-modal" class="fixed inset-0 z-[120] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.15)] relative transform scale-95 transition-transform duration-300" id="wizard-content">
-            <button onclick="window.closeWizardModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            
-            <div class="p-8 md:p-12">
-                <div class="text-center mb-10">
-                    <span class="inline-block py-1.5 px-4 rounded-full bg-amber-500/10 text-amber-500 font-bold text-xs mb-4 border border-amber-500/20 uppercase tracking-[0.2em]"><i data-lucide="sparkles" class="w-3 h-3 inline mr-1 -mt-0.5"></i> Curated Packages</span>
-                    <h2 class="text-3xl md:text-5xl font-black text-white brand-font tracking-wide mb-4">What's Your Vibe?</h2>
-                    <p class="text-slate-400 max-w-xl mx-auto">Skip the hassle of choosing. Pick a persona and we will auto-fill your cart with the perfect clash-free event combo!</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Bundle 1 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="terminal" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹300</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Hardcore Techie</h3>
-                        <p class="text-sm text-slate-400 mb-6">For the ones who speak in code and logic. Dominate the technical arenas.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> PPT Presentation (10:00 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> Debugging (11:30 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> Tech Quiz (01:00 PM)</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([1, 2, 5])" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(59,130,246,0.3)]">Auto-Fill Cart</button>
-                    </div>
-
-                    <!-- Bundle 2 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-pink-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="palette" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹300</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Creative Soul</h3>
-                        <p class="text-sm text-slate-400 mb-6">Art, aesthetics, and humor. Show off your imaginative and artistic side.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-pink-500 mr-2"></i> Poster Making (10:30 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-pink-500 mr-2"></i> Techmeme (All Day)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-pink-500 mr-2"></i> Photography (All Day)</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([9, 4, 10])" class="w-full py-3 bg-pink-600 hover:bg-pink-500 text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(236,72,153,0.3)]">Auto-Fill Cart</button>
-                    </div>
-
-                    <!-- Bundle 3 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="mic-2" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹300</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Entertainer</h3>
-                        <p class="text-sm text-slate-400 mb-6">Born for the stage. Grab the spotlight with your acting and dancing skills.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mr-2"></i> Dumb Charades (11:00 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mr-2"></i> Adsplash (12:30 PM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mr-2"></i> Dance (03:00 PM)</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([7, 8, 6])" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(16,185,129,0.3)]">Auto-Fill Cart</button>
-                    </div>
-
-                    <!-- Bundle 4 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-amber-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="gamepad-2" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹200</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">2 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Strategist</h3>
-                        <p class="text-sm text-slate-400 mb-6">Patience, focus, and sharp execution. Outplay your opponents in silence.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-amber-500 mr-2"></i> Chess (10:00 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-amber-500 mr-2"></i> Vibe Coding (02:00 PM)</li>
-                            <li class="flex items-center opacity-0"><i class="w-4 h-4 mr-2"></i> Spacer</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([12, 3])" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl font-black uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(245,158,11,0.3)]">Auto-Fill Cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
+    <!-- Modal (Hidden by default) -->
     <div id="event-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative transform scale-95 transition-transform duration-300" id="modal-content">
+        <div class="bg-[#0f172a] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.1)] relative transform scale-95 transition-transform duration-300" id="modal-content">
             <button onclick="window.closeModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
@@ -660,7 +414,7 @@
     </div>
 
     <!-- Floating Cart Bar -->
-    <div id="floating-cart" class="fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-amber-500/30 p-4 transform translate-y-full transition-transform duration-300 z-[90] flex justify-between items-center px-6 md:px-12 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+    <div id="floating-cart" class="fixed bottom-0 left-0 w-full bg-[#020617]/95 backdrop-blur-md border-t border-amber-500/30 p-4 transform translate-y-full transition-transform duration-300 z-[90] flex justify-between items-center px-6 md:px-12 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div>
             <div class="text-amber-500 font-bold text-xs tracking-widest uppercase mb-1">Your Selection</div>
             <div class="text-white font-black text-xl"><span id="cart-count">0</span> Events | <span class="text-emerald-400">₹<span id="cart-total">0</span></span></div>
@@ -670,37 +424,31 @@
         </button>
     </div>
 
-    <!-- Razorpay Checkout Modal -->
+    <!-- Direct UPI Checkout Modal -->
     <div id="checkout-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="checkout-content">
+        <div class="bg-[#0f172a] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(245,158,11,0.1)] relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="checkout-content">
             <button onclick="window.closeCheckoutModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             
             <!-- Selected Events List -->
-            <div class="w-full md:w-1/2 p-8 md:p-10 bg-black/40 border-r border-amber-500/10 hidden md:block overflow-y-auto max-h-[90vh]">
+            <div class="w-full md:w-1/2 p-8 md:p-10 bg-slate-900/50 border-r border-amber-500/10 hidden md:block overflow-y-auto max-h-[90vh]">
                 <h3 class="text-2xl font-black text-white brand-font tracking-wide mb-6">Selected Events</h3>
                 <div id="checkout-events-list" class="space-y-4">
                     <!-- Cart items injected here -->
                 </div>
-                <div class="mt-6 pt-6 border-t border-slate-800">
-                    <div id="discount-display" class="flex justify-between items-center text-sm font-bold text-emerald-400 mb-2 hidden">
-                        <span>Promo Discount</span>
-                        <span>-₹100</span>
-                    </div>
-                    <div class="flex justify-between items-center text-xl font-black text-white">
-                        <span>Total Amount</span>
-                        <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
-                    </div>
+                <div class="mt-8 pt-6 border-t border-slate-800 flex justify-between items-center text-xl font-black text-white">
+                    <span>Total Amount</span>
+                    <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
                 </div>
             </div>
 
-            <!-- Registration Form -->
+            <!-- Registration & Payment Form -->
             <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center relative overflow-hidden">
                 
-                <!-- STEP 1: Registration Details & Razorpay Trigger -->
+                <!-- STEP 1: Registration Details & Payment Method -->
                 <form id="checkout-step-1" onsubmit="window.processPayment(event)" class="space-y-4 transition-all duration-300">
-                    <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1">Secure Checkout</h3>
+                    <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1">Step 1 of 2</h3>
                     <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-6">Participant Details</h2>
                     
                     <div>
@@ -722,42 +470,94 @@
                         </div>
                     </div>
 
-                    <!-- Promo Code Section -->
-                    <div class="mt-2 pt-2 border-b border-slate-800 pb-6 mb-6">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Promo Code (Optional)</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="promo-code-input" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-amber-500 transition-colors uppercase font-mono tracking-wider" placeholder="ENTER CODE">
-                            <button type="button" id="promo-apply-btn" onclick="window.applyPromoCode()" class="bg-slate-800 text-amber-400 px-6 py-2 rounded-xl font-bold hover:bg-amber-500 hover:text-slate-950 transition-colors text-sm w-32 flex justify-center items-center">APPLY</button>
+                    <!-- Payment Method Selector -->
+                    <div class="mt-6">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Select Payment Method</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="pay-method" value="gpay" class="peer sr-only" checked onchange="window.togglePayerUpiInput('gpay')">
+                                <div class="text-center py-3 px-1 rounded-xl border border-slate-700 peer-checked:border-emerald-500 peer-checked:bg-emerald-500/10 text-slate-400 peer-checked:text-emerald-400 transition-all font-bold text-[10px] md:text-xs uppercase tracking-wider flex flex-col items-center gap-1 hover:bg-slate-800">
+                                    <i data-lucide="smartphone" class="w-5 h-5 mb-0.5"></i>
+                                    GPay
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="pay-method" value="paytm" class="peer sr-only" onchange="window.togglePayerUpiInput('paytm')">
+                                <div class="text-center py-3 px-1 rounded-xl border border-slate-700 peer-checked:border-[#00B9F5] peer-checked:bg-[#00B9F5]/10 text-slate-400 peer-checked:text-[#00B9F5] transition-all font-bold text-[10px] md:text-xs uppercase tracking-wider flex flex-col items-center gap-1 hover:bg-slate-800">
+                                    <i data-lucide="wallet" class="w-5 h-5 mb-0.5"></i>
+                                    Paytm
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="pay-method" value="upi" class="peer sr-only" onchange="window.togglePayerUpiInput('upi')">
+                                <div class="text-center py-3 px-1 rounded-xl border border-slate-700 peer-checked:border-amber-500 peer-checked:bg-amber-500/10 text-slate-400 peer-checked:text-amber-400 transition-all font-bold text-[10px] md:text-xs uppercase tracking-wider flex flex-col items-center gap-1 hover:bg-slate-800">
+                                    <i data-lucide="qr-code" class="w-5 h-5 mb-0.5"></i>
+                                    Other UPI App
+                                </div>
+                            </label>
                         </div>
-                        <p id="promo-message" class="text-xs mt-2 hidden"></p>
                     </div>
 
-                    <!-- Notice: Razorpay removes the need for manual UPI selection -->
-                    <button type="submit" id="razorpay-btn" class="w-full mt-6 bg-[#3399cc] hover:bg-[#2b82ad] text-white text-center py-4 rounded-xl font-black text-lg transition-all shadow-[0_0_20px_rgba(51,153,204,0.3)] active:scale-95 uppercase tracking-widest flex justify-center items-center">
-                        Pay with Razorpay <i data-lucide="shield-check" class="ml-2 w-5 h-5"></i>
-                    </button>
-                    <div class="flex justify-center items-center mt-3 space-x-2 text-slate-500">
-                        <i data-lucide="lock" class="w-3 h-3"></i>
-                        <p class="text-[10px] uppercase tracking-wider font-bold">100% Secure Payments via Cards, UPI & Netbanking</p>
+                    <!-- Hidden Input for Payer's UPI ID (Only shows if 'Other UPI App' is selected) -->
+                    <div id="payer-upi-container" class="hidden mt-4">
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Your UPI ID <span class="text-amber-500">*</span></label>
+                        <input type="text" id="payer-upi-id" placeholder="e.g., username@ybl" class="w-full bg-[#020617] border border-amber-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-400 transition-colors">
                     </div>
+                    
+                    <button type="submit" class="w-full mt-6 bg-gradient-to-r from-emerald-500 to-emerald-600 text-slate-950 text-center py-4 rounded-xl font-black text-lg hover:brightness-110 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 uppercase tracking-widest flex justify-center items-center">
+                        Proceed to Pay <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
+                    </button>
+                    <p class="text-[10px] text-slate-500 text-center mt-2 uppercase tracking-wider font-bold">Direct & Secure Transfer</p>
                 </form>
 
-                <!-- STEP 2: Payment Success Confirmation (Hidden by default) -->
-                <div id="checkout-step-2" class="hidden flex-col justify-center items-center h-full text-center transition-all duration-300">
+                <!-- STEP 2: Payment Verification (Hidden by default) -->
+                <div id="checkout-step-2" class="hidden flex-col justify-center h-full transition-all duration-300">
+                    <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-2 text-center">Step 2 of 2</h3>
+                    <h2 class="text-2xl font-black text-white brand-font tracking-wide mb-4 text-center">Verify Payment</h2>
+                    
+                    <div class="bg-black/40 p-5 rounded-2xl border border-white/5 text-center mb-6">
+                        <p class="text-sm text-slate-300 mb-4 leading-relaxed font-medium">
+                            Scan the secure QR code below using your preferred app to complete your payment of <strong class="text-emerald-400 text-lg">₹<span id="verify-amount">0</span></strong>.
+                        </p>
+                        <!-- Secure QR Code Image (No Text Display of Merchant ID) -->
+                        <div class="bg-white p-2 inline-block rounded-xl mx-auto mb-2 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                            <img id="upi-qr-code" src="" alt="Secure Scan to Pay" class="w-32 h-32">
+                        </div>
+                    </div>
+
+                    <form id="verification-form" onsubmit="window.confirmRegistration(event)">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Enter 12-Digit UTR / Ref No.</label>
+                            <input type="text" id="reg-utr" required pattern="[0-9]{12}" placeholder="e.g. 312345678901" class="w-full bg-[#020617] border border-emerald-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-400 transition-colors shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+                            <p class="text-[10px] text-slate-500 mt-2">Find this 12-digit number in your payment history details.</p>
+                        </div>
+                        
+                        <button type="submit" id="confirm-btn" class="w-full mt-6 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-center py-4 rounded-xl font-black text-lg hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] active:scale-95 uppercase tracking-widest flex justify-center items-center">
+                            Confirm Registration <i data-lucide="check-circle" class="ml-2 w-5 h-5"></i>
+                        </button>
+                        
+                        <button type="button" onclick="window.resetCheckoutForm()" class="w-full text-center text-slate-500 text-xs font-bold uppercase hover:text-white transition-colors mt-4">
+                            Go Back
+                        </button>
+                    </form>
+                </div>
+
+                <!-- STEP 3: Payment Success Confirmation (Hidden by default) -->
+                <div id="checkout-step-3" class="hidden flex-col justify-center items-center h-full text-center transition-all duration-300">
                     <div class="w-24 h-24 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
                         <i data-lucide="check-circle" class="w-12 h-12"></i>
                     </div>
                     <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-2">Registration Successful!</h2>
                     <p class="text-slate-400 mb-8 leading-relaxed">
-                        Thank you, <span id="success-name" class="text-white font-bold"></span>! We have received your payment and registration for the selected events.
+                        Thank you, <span id="success-name" class="text-white font-bold"></span>! We have received your registration for the selected events.
                     </p>
                     
                     <div class="bg-black/40 p-5 rounded-2xl border border-white/5 w-full max-w-sm mb-10">
-                        <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-1">Razorpay Payment ID</div>
-                        <div id="success-utr" class="font-mono text-emerald-400 font-black text-xl tracking-widest break-all"></div>
+                        <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-1">Reference / UTR ID</div>
+                        <div id="success-utr" class="font-mono text-emerald-400 font-black text-xl tracking-widest"></div>
                     </div>
                     
-                    <p class="text-xs text-slate-500 mb-8">A confirmation email acting as your official receipt has been sent to your email address. See you at the fest!</p>
+                    <p class="text-xs text-slate-500 mb-8">Our team will verify the payment and send a confirmation email shortly. See you at the fest!</p>
 
                     <button type="button" onclick="window.closeCheckoutModal()" class="bg-slate-800 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-colors w-full">
                         Done & Close
@@ -770,11 +570,6 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Init Icons
-        if (typeof window.lucide !== 'undefined') {
-            window.lucide.createIcons();
-        }
-
         // 1. Data Definitions
         const eventsData = [
             { id: 1, title: "PPT Presentation", category: "Technical", fee: "100", shortDesc: "Present your innovative ideas and technical research.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills. Choose a trending topic in technology and present it to the judges.", rules: ["Maximum 2 members per team.", "Time limit: 8 minutes + 2 minutes Q&A.", "Bring soft copy in pen drive.", "Topics must be related to Computer Science/IT."], date: "Mar 28, 2026", time: "10:00 AM", venue: "Seminar Hall 1", prize: "Gold Trophy + Certificate", icon: "monitor" },
@@ -793,13 +588,6 @@
 
         let selectedEventsList = [];
         let userData = {};
-
-        const validPromoCodes = [
-            "TECH100", "FETE100", "POPE100", "CODE100", "VIBE100",
-            "WIN100", "FUN100", "STAR100", "PROMO100", "DISC100"
-        ];
-        let discountApplied = 0;
-        let appliedPromoCode = "";
 
         // 2. Global UI Functions
         window.renderEvents = function(category) {
@@ -954,104 +742,26 @@
             }
         };
 
-        window.updateCheckoutTotal = function() {
-            const checkoutTotal = document.getElementById('checkout-total');
-            const discountDisplay = document.getElementById('discount-display');
-            
-            const subtotal = selectedEventsList.reduce((sum, e) => sum + parseInt(e.fee), 0);
-            const finalTotal = Math.max(0, subtotal - discountApplied);
-            
-            if (checkoutTotal) checkoutTotal.innerText = finalTotal;
-            
-            if (discountDisplay) {
-                if (discountApplied > 0) {
-                    discountDisplay.classList.remove('hidden');
-                } else {
-                    discountDisplay.classList.add('hidden');
-                }
-            }
-        };
-
-        window.applyPromoCode = async function() {
-            const inputField = document.getElementById('promo-code-input');
-            const applyBtn = document.getElementById('promo-apply-btn');
-            const input = inputField.value.trim().toUpperCase();
-            const msgEl = document.getElementById('promo-message');
-            const subtotal = selectedEventsList.reduce((sum, e) => sum + parseInt(e.fee), 0);
-            
-            msgEl.classList.remove('hidden');
-
-            if (discountApplied > 0) {
-                msgEl.innerText = "A promo code is already applied.";
-                msgEl.className = "text-xs mt-2 text-amber-500 block font-bold";
-                return;
-            }
-
-            if (subtotal <= 0) {
-                msgEl.innerText = "Add events to your selection first.";
-                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                return;
-            }
-
-            if (!validPromoCodes.includes(input)) {
-                msgEl.innerText = "Invalid or expired promo code.";
-                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                return;
-            }
-
-            // Check if this device has already redeemed the code
-            const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-            if (usedCodes.includes(input)) {
-                msgEl.innerText = "You have already redeemed this promo code.";
-                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                return;
-            }
-
-            // UI loading state
-            applyBtn.innerHTML = "<i data-lucide='loader-2' class='w-4 h-4 animate-spin'></i>";
-            applyBtn.disabled = true;
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-
-            // Global Cloud Firebase check
-            if (typeof window.checkPromoCodeGlobal === 'function') {
-                const globalCheck = await window.checkPromoCodeGlobal(input);
-                if (!globalCheck.valid) {
-                    msgEl.innerText = globalCheck.message;
-                    msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                    applyBtn.innerText = "APPLY";
-                    applyBtn.disabled = false;
-                    return;
-                }
-            }
-
-            discountApplied = 100;
-            appliedPromoCode = input;
-            msgEl.innerText = "Promo code applied! ₹100 deducted.";
-            msgEl.className = "text-xs mt-2 text-emerald-400 block font-bold";
-            inputField.disabled = true;
-            applyBtn.innerText = "APPLIED";
-            window.updateCheckoutTotal();
-        };
-
         window.openCheckoutModal = function() {
             const checkoutModal = document.getElementById('checkout-modal');
             const listContainer = document.getElementById('checkout-events-list');
+            const checkoutTotal = document.getElementById('checkout-total');
             if(!checkoutModal || !listContainer) return;
             
             listContainer.innerHTML = selectedEventsList.map(e => `
-                <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-slate-800 relative pr-12 shadow-sm event-cart-item">
+                <div class="flex justify-between items-center bg-black/40 p-4 rounded-xl border border-slate-700 relative pr-12">
                     <div>
                         <div class="font-bold text-amber-400">${e.title}</div>
                         <div class="text-xs text-slate-500 mt-1">${e.time}</div>
                     </div>
                     <div class="font-bold text-emerald-400">₹${e.fee}</div>
-                    <button onclick="window.removeEventFromCart(${e.id})" class="delete-event-btn absolute right-4 text-slate-500 hover:text-red-500 transition-colors cursor-pointer z-10" title="Remove Event">
+                    <button onclick="window.removeEventFromCart(${e.id})" class="absolute right-4 text-slate-500 hover:text-red-500 transition-colors cursor-pointer z-10" title="Remove Event">
                         <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
                     </button>
                 </div>
             `).join('');
             
-            window.updateCheckoutTotal();
+            if(checkoutTotal) checkoutTotal.innerText = selectedEventsList.reduce((sum, e) => sum + parseInt(e.fee), 0);
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
             
             checkoutModal.classList.remove('hidden', 'opacity-0'); checkoutModal.classList.add('flex', 'opacity-100');
@@ -1075,58 +785,9 @@
             if (index > -1) {
                 selectedEventsList.splice(index, 1);
                 window.updateCartUI();
-                
-                // Re-evaluate discount if cart is empty
-                if (selectedEventsList.length === 0) {
-                    discountApplied = 0;
-                    appliedPromoCode = "";
-                    const promoInput = document.getElementById('promo-code-input');
-                    if (promoInput) { promoInput.disabled = false; promoInput.value = ""; }
-                    const applyBtn = document.getElementById('promo-apply-btn');
-                    if(applyBtn) { applyBtn.innerText = "APPLY"; applyBtn.disabled = false; }
-                    const promoMsg = document.getElementById('promo-message');
-                    if (promoMsg) { promoMsg.classList.add('hidden'); promoMsg.innerText = ""; }
-                    const discountDisplay = document.getElementById('discount-display');
-                    if(discountDisplay) discountDisplay.classList.add('hidden');
-                }
-                
                 if (selectedEventsList.length === 0) { window.closeCheckoutModal(); } 
-                else { window.openCheckoutModal(); window.updateCheckoutTotal(); }
+                else { window.openCheckoutModal(); }
             }
-        };
-
-        // --- SMART WIZARD LOGIC ---
-        window.openWizardModal = function() {
-            const modal = document.getElementById('wizard-modal');
-            if(!modal) return;
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-            
-            modal.classList.remove('hidden', 'opacity-0');
-            modal.classList.add('flex', 'opacity-100');
-            setTimeout(() => {
-                const wc = document.getElementById('wizard-content');
-                if(wc) { wc.classList.remove('scale-95'); wc.classList.add('scale-100'); }
-            }, 10);
-        };
-
-        window.closeWizardModal = function() {
-            const modal = document.getElementById('wizard-modal');
-            const wc = document.getElementById('wizard-content');
-            if(!modal || !wc) return;
-            wc.classList.remove('scale-100'); wc.classList.add('scale-95');
-            modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
-        };
-
-        window.applyWizardBundle = function(eventIdsArray) {
-            selectedEventsList = [];
-            eventIdsArray.forEach(id => {
-                const event = eventsData.find(e => e.id === id);
-                if(event) selectedEventsList.push(event);
-            });
-            window.updateCartUI();
-            window.closeWizardModal();
-            setTimeout(() => { window.openCheckoutModal(); }, 350);
         };
 
         // --- CLIPBOARD COPY FUNCTION ---
@@ -1138,97 +799,105 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
 
+            // Visual feedback
             const copyIcon = btn.querySelector('.copy-icon');
             const checkIcon = btn.querySelector('.check-icon');
+            
             if(copyIcon && checkIcon) {
-                copyIcon.classList.add('hidden'); checkIcon.classList.remove('hidden');
-                setTimeout(() => { copyIcon.classList.remove('hidden'); checkIcon.classList.add('hidden'); }, 2000);
+                copyIcon.classList.add('hidden');
+                checkIcon.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    copyIcon.classList.remove('hidden');
+                    checkIcon.classList.add('hidden');
+                }, 2000);
             }
         };
 
-        // --- SECURE RAZORPAY INTEGRATION ---
+        // --- DYNAMIC PAYMENT UI LOGIC ---
+        window.togglePayerUpiInput = function(method) {
+            const container = document.getElementById('payer-upi-container');
+            const upiInput = document.getElementById('payer-upi-id');
+            if (method === 'upi') {
+                container.classList.remove('hidden');
+                upiInput.required = true;
+            } else {
+                container.classList.add('hidden');
+                upiInput.required = false;
+                upiInput.value = ''; // clear it if they switch back
+            }
+        };
+
+        // --- STEP 1: Process User Details & Trigger Payment App ---
         window.processPayment = function(e) {
             e.preventDefault(); 
+            
+            const payerUpiInputValue = document.getElementById('payer-upi-id').value;
             
             userData = {
                 name: document.getElementById('reg-name').value,
                 college: document.getElementById('reg-college').value,
                 phone: document.getElementById('reg-phone').value,
                 email: document.getElementById('reg-email').value,
-                payerUpi: "Paid securely via Razorpay"
+                payerUpi: payerUpiInputValue || "Used Generic GPay/Paytm"
             };
 
-            const subtotal = selectedEventsList.reduce((sum, ev) => sum + parseInt(ev.fee), 0);
-            const totalAmount = Math.max(0, subtotal - discountApplied);
+            const totalAmount = selectedEventsList.reduce((sum, ev) => sum + parseInt(ev.fee), 0);
             
-            const submitBtn = document.getElementById('razorpay-btn');
-            const originalBtnContent = submitBtn.innerHTML;
-            submitBtn.innerHTML = "Opening Secure Checkout... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
-            submitBtn.disabled = true;
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+            // 🛑 Your actual UPI ID
+            const collegeUpiId = "jeraldanto2005@oksbi"; 
+            const payeeName = "Tech Fete 2K26";
+            const transactionNote = encodeURIComponent("TechFete Registration");
             
-            // --- FREE REGISTRATION BYPASS (Total = ₹0) ---
-            if (totalAmount === 0) {
-                const promoUtr = "PROMO-" + Math.floor(10000000 + Math.random() * 90000000);
-                userData.payerUpi = "N/A (Free via Promo Code)";
-                window.triggerEmailAndSuccess(promoUtr, totalAmount, submitBtn, originalBtnContent);
-                return; 
+            // Construct Base Parameters
+            const baseParams = `pa=${collegeUpiId}&pn=${encodeURIComponent(payeeName)}&am=${totalAmount}&cu=INR&tn=${transactionNote}`;
+            
+            // Set verify step amount
+            document.getElementById('verify-amount').innerText = totalAmount;
+
+            // Generate Standard UPI QR code (Works for all apps)
+            const standardUpiUrl = `upi://pay?${baseParams}`;
+            const qrImg = document.getElementById('upi-qr-code');
+            if(qrImg) qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(standardUpiUrl)}`;
+
+            // Determine which app link to use based on radio selection
+            const selectedPayMethod = document.querySelector('input[name="pay-method"]:checked').value;
+            let finalDeepLink = standardUpiUrl;
+
+            if (selectedPayMethod === 'gpay') {
+                finalDeepLink = `gpay://upi/pay?${baseParams}`;
+            } else if (selectedPayMethod === 'paytm') {
+                finalDeepLink = `paytmmp://pay?${baseParams}`;
             }
 
-            // --- RAZORPAY CHECKOUT OPTIONS ---
-            var options = {
-                "key": "rzp_live_SJV3kgUcRfxEZX", // YOUR RAZORPAY TEST KEY
-                "amount": totalAmount * 100, // Amount must be in paise (₹100 = 10000 paise)
-                "currency": "INR",
-                "name": "Tech Fête 2K26",
-                "description": "Event Registration for " + userData.name,
-                "image": "https://i.imgur.com/your-hosted-logo.png", // Optional: Link to your logo
-                "handler": function (response) {
-                    // This function triggers automatically when payment is successful!
-                    const paymentId = response.razorpay_payment_id;
-                    window.triggerEmailAndSuccess(paymentId, totalAmount, submitBtn, originalBtnContent);
-                },
-                "prefill": {
-                    "name": userData.name,
-                    "email": userData.email,
-                    "contact": userData.phone
-                },
-                "notes": {
-                    "college": userData.college,
-                    "events": selectedEventsList.map(ev => ev.title).join(", ")
-                },
-                "theme": {
-                    "color": "#f59e0b" // Matches your website's amber theme!
-                }
-            };
-            
-            try {
-                var rzp1 = new Razorpay(options);
-                rzp1.on('payment.failed', function (response){
-                    alert("Payment Failed. Reason: " + response.error.description);
-                    submitBtn.innerHTML = originalBtnContent;
-                    submitBtn.disabled = false;
-                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                });
-                
-                // If user closes the popup without paying
-                rzp1.on('payment.modal.closed', function() {
-                    submitBtn.innerHTML = originalBtnContent;
-                    submitBtn.disabled = false;
-                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                });
+            // Hide Step 1, Show Step 2
+            document.getElementById('checkout-step-1').classList.add('hidden');
+            document.getElementById('checkout-step-2').classList.remove('hidden');
+            document.getElementById('checkout-step-2').classList.add('flex');
 
-                rzp1.open();
-            } catch (err) {
-                console.error(err);
-                alert("Razorpay failed to load. Please check your internet connection.");
-                submitBtn.innerHTML = originalBtnContent;
-                submitBtn.disabled = false;
+            // Trigger the App intent (works on Mobile devices)
+            if(window.innerWidth <= 768) {
+                window.location.href = finalDeepLink;
             }
         };
 
-        // --- Triggered AFTER Razorpay confirms payment ---
-        window.triggerEmailAndSuccess = function(paymentId, totalAmount, submitBtn, originalBtnContent) {
+        // --- STEP 2 & 3: Final Registration Confirmation & Email Send ---
+        window.confirmRegistration = function(e) {
+            e.preventDefault();
+            const utr = document.getElementById('reg-utr').value;
+            
+            if(utr.length < 12) {
+                alert("Please enter a valid 12-digit UTR/Reference ID from your payment app.");
+                return;
+            }
+
+            const submitBtn = document.getElementById('confirm-btn');
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.innerHTML = "Processing... Please wait";
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            const totalAmount = selectedEventsList.reduce((sum, ev) => sum + parseInt(ev.fee), 0);
             const eventNames = selectedEventsList.map(ev => ev.title).join(", ");
             const paymentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
@@ -1239,83 +908,45 @@
                 college_name: userData.college,
                 payer_upi: userData.payerUpi,
                 total_amount: totalAmount,
-                promo_code: appliedPromoCode || "None",
                 event_names: eventNames,
-                utr_number: paymentId,
+                utr_number: utr,
                 payment_time: paymentTime
             };
-            
-            // --- NEW: Google Sheets Data Export ---
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec'; // <-- PASTE YOUR APP SCRIPT URL HERE
-            
-            const sheetData = {
-                name: userData.name,
-                email: userData.email,
-                phone: userData.phone,
-                college: userData.college,
-                events: eventNames,
-                amount: totalAmount,
-                paymentId: paymentId,
-                promoCode: appliedPromoCode || "None"
-            };
 
-            // Send to Google Sheets asynchronously (doesn't block the UI)
-            if (scriptURL !== 'YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE') {
-                fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors', // Important so browser doesn't block the request
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(sheetData)
-                }).catch(err => console.error("Sheet error:", err));
-            }
-
-            // Send Email via EmailJS
             if (typeof emailjs !== 'undefined') {
-                emailjs.send('service_8p8w7u3', 'template_ex83rhf', templateParams)
-                    .then(function() {
-                        console.log('Email sent!');
+                // NOTE: Replace 'service_9joz2xq' and 'YOUR_TEMPLATE_ID' below
+                emailjs.send('service_9joz2xq', 'YOUR_TEMPLATE_ID', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        window.showSuccessScreen(utr);
                     }, function(error) {
-                        console.log('Email failed...', error);
+                        console.log('FAILED...', error);
+                        alert("Your payment details are saved, but the confirmation email failed to send. Please take a screenshot and contact the coordinators.");
+                        window.showSuccessScreen(utr);
                     })
                     .finally(function() {
-                        window.showSuccessScreen(paymentId);
                         submitBtn.innerHTML = originalBtnContent;
                         submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
                     });
             } else {
-                window.showSuccessScreen(paymentId);
+                console.warn("EmailJS not loaded. Proceeding to success screen anyway.");
+                alert("Email service is unavailable (possibly blocked by browser). However, your registration will be processed offline. Please save your UTR.");
+                window.showSuccessScreen(utr);
                 submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
             }
-        }
+        };
 
         window.showSuccessScreen = function(utr) {
-            // Save used promo code to localStorage so it can't be used again on this device
-            if (appliedPromoCode) {
-                const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-                if (!usedCodes.includes(appliedPromoCode)) {
-                    usedCodes.push(appliedPromoCode);
-                    localStorage.setItem('techFeteUsedPromos', JSON.stringify(usedCodes));
-                }
-                if (typeof window.markPromoCodeUsedGlobal === 'function') {
-                    window.markPromoCodeUsedGlobal(appliedPromoCode, userData);
-                }
-            }
-
-            document.getElementById('checkout-step-1').classList.add('hidden');
-            document.getElementById('checkout-step-2').classList.remove('hidden');
-            document.getElementById('checkout-step-2').classList.add('flex');
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-2').classList.remove('flex');
+            document.getElementById('checkout-step-3').classList.remove('hidden');
+            document.getElementById('checkout-step-3').classList.add('flex');
             
             document.getElementById('success-name').innerText = userData.name || "Participant";
             document.getElementById('success-utr').innerText = utr;
-
-            // Remove delete buttons from the selected events list so user can't modify it post-payment
-            const deleteBtns = document.querySelectorAll('.delete-event-btn');
-            deleteBtns.forEach(btn => btn.remove());
-            
-            // Remove padding to center the UI nicely without the trash button
-            const cartItems = document.querySelectorAll('.event-cart-item');
-            cartItems.forEach(item => item.classList.remove('pr-12'));
             
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
             
@@ -1326,20 +957,18 @@
         window.resetCheckoutForm = function() {
             const form1 = document.getElementById('checkout-step-1');
             if(form1) form1.reset();
+            const utrField = document.getElementById('reg-utr');
+            if(utrField) utrField.value = '';
             
-            discountApplied = 0;
-            appliedPromoCode = "";
-            const promoInput = document.getElementById('promo-code-input');
-            if(promoInput) { promoInput.value = ""; promoInput.disabled = false; }
-            const applyBtn = document.getElementById('promo-apply-btn');
-            if(applyBtn) { applyBtn.innerText = "APPLY"; applyBtn.disabled = false; }
-            const promoMsg = document.getElementById('promo-message');
-            if(promoMsg) { promoMsg.classList.add('hidden'); promoMsg.innerText = ""; }
-            const discountDisplay = document.getElementById('discount-display');
-            if(discountDisplay) discountDisplay.classList.add('hidden');
+            // Hide the optional UPI input
+            document.getElementById('payer-upi-container').classList.add('hidden');
             
             document.getElementById('checkout-step-2').classList.add('hidden');
             document.getElementById('checkout-step-2').classList.remove('flex');
+            
+            document.getElementById('checkout-step-3').classList.add('hidden');
+            document.getElementById('checkout-step-3').classList.remove('flex');
+            
             document.getElementById('checkout-step-1').classList.remove('hidden');
         };
 
@@ -1348,7 +977,7 @@
             
             // Initialise EmailJS safely
             if (typeof emailjs !== 'undefined') {
-                emailjs.init("axvXXO83vzZ-jHNQn");
+                emailjs.init("YOUR_PUBLIC_KEY");
             }
 
             // Safe Initialisation of Icons
@@ -1402,10 +1031,10 @@
                 const nav = document.getElementById('navbar');
                 if (nav) {
                     if (window.scrollY > 50) {
-                        nav.classList.add('bg-black/90', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg');
+                        nav.classList.add('bg-[#020617]/95', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg');
                         nav.classList.remove('py-5'); nav.classList.add('py-3');
                     } else {
-                        nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg', 'py-3');
+                        nav.classList.remove('bg-[#020617]/95', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg', 'py-3');
                         nav.classList.add('py-5');
                     }
                 }
@@ -1430,85 +1059,6 @@
                 }
             }
         });
-    </script>
-    
-    <!-- FIREBASE CLOUD DATABASE LOGIC -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global environment variables provided by Canvas
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'techfete-app-id';
-        let firebaseConfig = {};
-        try {
-            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                firebaseConfig = JSON.parse(__firebase_config);
-            }
-        } catch (e) {
-            console.error("Firebase config parse error", e);
-        }
-
-        // Initialize Firebase ONLY if config is available
-        if (Object.keys(firebaseConfig).length > 0) {
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-            let currentUser = null;
-
-            // Strict Authentication Rule
-            const initAuth = async () => {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch (error) {
-                    console.error("Auth Error:", error);
-                }
-            };
-            initAuth();
-
-            onAuthStateChanged(auth, (user) => {
-                currentUser = user;
-            });
-
-            // Expose a global validation check to the frontend
-            window.checkPromoCodeGlobal = async function(code) {
-                if (!currentUser) return { valid: true }; // Pass if auth is still initializing
-                try {
-                    const promoRef = doc(db, 'artifacts', appId, 'public', 'data', 'promocodes', code);
-                    const promoSnap = await getDoc(promoRef);
-                    if (promoSnap.exists() && promoSnap.data().used) {
-                        return { valid: false, message: "This promo code has already been redeemed globally." };
-                    }
-                    return { valid: true };
-                } catch (err) {
-                    console.error("Firestore DB Validation Error:", err);
-                    return { valid: true }; // Fallback to local logic if network fails
-                }
-            };
-
-            // Expose a global sync mutation when payment succeeds
-            window.markPromoCodeUsedGlobal = async function(code, userDetails) {
-                if (!currentUser) return;
-                try {
-                    const promoRef = doc(db, 'artifacts', appId, 'public', 'data', 'promocodes', code);
-                    await setDoc(promoRef, {
-                        used: true,
-                        usedBy: userDetails.name + " (" + userDetails.email + ")",
-                        usedAt: new Date().toISOString()
-                    }, { merge: true });
-                } catch (err) {
-                    console.error("Firestore DB Write Error:", err);
-                }
-            };
-        } else {
-            // Dummy fallback if no cloud DB config is available
-            window.checkPromoCodeGlobal = async () => ({ valid: true });
-            window.markPromoCodeUsedGlobal = async () => {};
-        }
     </script>
 </body>
 </html>
