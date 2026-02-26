@@ -355,7 +355,7 @@
                                 </span>
                             </summary>
                             <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Absolutely! You can add multiple events to your selection cart before checking out. However, please make sure the timings of the events do not clash. Our system will automatically alert you if you select events happening at the exact same time.
+                                Absolutely! You can participate in any number of individual events, and up to a maximum of 2 group events (maximum 3 events total). However, please make sure the timings of the events do not clash. Our system will automatically alert you if you select events happening at the exact same time.
                             </div>
                         </details>
 
@@ -577,7 +577,7 @@
                                 <i data-lucide="terminal" class="w-6 h-6"></i>
                             </div>
                             <div class="text-right">
-                                <div class="text-xl font-black text-white">₹400</div>
+                                <div class="text-xl font-black text-white">₹350</div>
                                 <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
                             </div>
                         </div>
@@ -599,7 +599,7 @@
                                 <i data-lucide="palette" class="w-6 h-6"></i>
                             </div>
                             <div class="text-right">
-                                <div class="text-xl font-black text-white">₹250</div>
+                                <div class="text-xl font-black text-white">₹200</div>
                                 <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
                             </div>
                         </div>
@@ -751,8 +751,8 @@
                             <input type="tel" id="reg-phone" required pattern="[0-9]{10}" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email (Your Cloud ID) <span class="text-red-500">*</span></label>
-                            <input type="email" id="reg-email" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="used to track your events">
+                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email  <span class="text-red-500">*</span></label>
+                            <input type="email" id="reg-email" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Email id">
                         </div>
                     </div>
 
@@ -778,10 +778,10 @@
                         </h4>
                         <ol class="text-[10px] text-slate-300 space-y-1.5 list-decimal pl-4 leading-relaxed font-medium">
                             <li>Kindly bring your <strong>College ID</strong> for smoother registration.</li>
-                            <li>You can participate in any number of individual events, but a maximum of <strong>2 group events</strong>.</li>
+                            <li>One Person can participate only in <strong>3 events</strong> inclusive of not more than <strong>2 group events</strong>.</li>
                             <li><strong>Quiz</strong> and <strong>Chess</strong> are mutually exclusive; you cannot participate in both. The same applies for <strong>PPT Presentation</strong> and <strong>Debugging</strong>.</li>
                             <li>If the participant fails to check the timing before the event registration it will be considered as their negligence and our team isn't responsible for that.</li>
-                            <li>If the person violates any rules, the amount will <strong>not be refunded</strong> and the first entry will only be taken into account.</li>
+                            <li>If the person violates the above rules, the amount will <strong>not be refunded</strong> and the first entry will only be taken into account.</li>
                             <li>The Fête Co-ordinators have all the rights to disqualify the Individual Participant / Team if the above is not met.</li>
                         </ol>
                     </div>
@@ -846,47 +846,49 @@
         let selectedEventsList = [];
         let localPurchasedEvents = []; // Fallback memory
 
-        // GLOBAL DISCOUNT CALCULATION LOGIC
+        // GLOBAL DISCOUNT CALCULATION LOGIC (Chronological Order)
         window.calculateSubtotal = function(currentList, pastList = []) {
             let baseTotal = 0;
             let comboDisc = 0;
             let effectiveFees = {}; // { eventId: finalPrice }
-            
-            // Count past individual events
-            let pastIndCount = pastList.filter(e => e.maxTeam === 1).length;
-            
-            // Separate current events
-            let indEvents = currentList.filter(e => e.maxTeam === 1).sort((a,b) => parseInt(b.fee) - parseInt(a.fee));
-            let groupEvents = currentList.filter(e => e.maxTeam > 1);
-            
-            let totalIndCount = pastIndCount;
-            
-            // Calculate for Individual Events
-            for(let i=0; i<indEvents.length; i++) {
-                let origFee = parseInt(indEvents[i].fee);
-                baseTotal += origFee;
-                totalIndCount++;
+
+            // Create a single chronological timeline of all events
+            const combinedTimeline = [...pastList, ...currentList];
+
+            for (let i = 0; i < combinedTimeline.length; i++) {
+                const ev = combinedTimeline[i];
+                const isPast = i < pastList.length;
+
+                // The very first event the person ever selects
+                const isFirstEventEver = (i === 0);
                 
-                if (totalIndCount > 1) {
-                    effectiveFees[indEvents[i].id] = 50; // Reduced to 50
-                    comboDisc += (origFee - 50);
-                } else {
-                    effectiveFees[indEvents[i].id] = origFee; // Stays base price
+                // Group events
+                const isGroup = ev.maxTeam > 1;
+
+                let finalFee = parseInt(ev.fee);
+
+                // RULE: If it's the very first event, it is full price (always).
+                // RULE: If it's a Group event, it is full price (always).
+                // RULE: If it is the 2nd or 3rd event AND it is Individual, it drops to 50!
+                if (!isFirstEventEver && !isGroup) {
+                    finalFee = 50;
+                }
+
+                // Only sum up the cost for the items currently in the cart
+                if (!isPast) {
+                    baseTotal += parseInt(ev.fee);
+                    effectiveFees[ev.id] = finalFee;
+                    if (finalFee < parseInt(ev.fee)) {
+                        comboDisc += (parseInt(ev.fee) - finalFee);
+                    }
                 }
             }
-            
-            // Calculate for Group Events (Always stay base price)
-            for(let i=0; i<groupEvents.length; i++) {
-                let origFee = parseInt(groupEvents[i].fee);
-                baseTotal += origFee;
-                effectiveFees[groupEvents[i].id] = origFee;
-            }
-            
-            return { 
-                subtotal: baseTotal - comboDisc, 
-                comboDisc: comboDisc, 
+
+            return {
+                subtotal: baseTotal - comboDisc,
+                comboDisc: comboDisc,
                 baseTotal: baseTotal,
-                effectiveFees: effectiveFees 
+                effectiveFees: effectiveFees
             };
         };
         
@@ -1179,8 +1181,10 @@
             const index = selectedEventsList.findIndex(e => e.id === id);
 
             if (index > -1) {
+                // If it's already in the cart, remove it
                 selectedEventsList.splice(index, 1);
             } else {
+                // If it's a new event, check all the rules before adding!
                 if (localPurchasedEvents.some(e => e.id === id)) {
                     alert(`⚠️ Already Registered!\n\nYou have already successfully registered for "${event.title}".`);
                     return;
@@ -1191,7 +1195,7 @@
                 const hasQuiz = allEvents.some(e => e.id === 5);
                 const hasChess = allEvents.some(e => e.id === 12);
                 if (hasQuiz && hasChess) {
-                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both Quiz and Chess as they happen at the same time/are mutually exclusive.`);
+                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both Quiz and Chess as they are mutually exclusive.`);
                     return;
                 }
 
@@ -1203,7 +1207,14 @@
                     return;
                 }
 
-                // Max 2 Group Events Rule (Removed Individual Limit)
+                // Total 3 Events Max
+                const currentTotal = localPurchasedEvents.length + selectedEventsList.length;
+                if (currentTotal >= 3) {
+                    alert(`⚠️ Limit Reached!\n\nYou can only register for a maximum of 3 events in total.`);
+                    return;
+                }
+
+                // Total 2 Group Events Max
                 if (event.maxTeam > 1) {
                     const purchasedGroupCount = localPurchasedEvents.filter(e => e.maxTeam > 1).length;
                     const selectedGroupCount = selectedEventsList.filter(e => e.maxTeam > 1).length;
@@ -1221,6 +1232,8 @@
                         return; 
                     }
                 }
+                
+                // Valid! Add it to the end of the cart array
                 selectedEventsList.push(event);
             }
             window.saveCartState();
@@ -1254,10 +1267,15 @@
             
             if (checkoutTotal) checkoutTotal.innerText = finalTotal;
 
-            // Hide the global combo display so we don't double count visually, since we show it per-item now!
-            if (comboDisplay) {
-                comboDisplay.classList.add('hidden');
-                comboDisplay.classList.remove('flex');
+            if (comboDisplay && comboAmt) {
+                if (pricing.comboDisc > 0) {
+                    comboAmt.innerText = pricing.comboDisc;
+                    comboDisplay.classList.remove('hidden');
+                    comboDisplay.classList.add('flex');
+                } else {
+                    comboDisplay.classList.add('hidden');
+                    comboDisplay.classList.remove('flex');
+                }
             }
             
             if (discountDisplay) {
@@ -1528,6 +1546,12 @@
                      continue;
                 }
 
+                const currentTotal = localPurchasedEvents.length + validAdds.length;
+                if (currentTotal >= 3) {
+                     warnings.push(`Skipped "${event.title}": 3 events max limit reached.`);
+                     continue;
+                }
+
                 if (event.maxTeam > 1) {
                     const purchasedGroupCount = localPurchasedEvents.filter(e => e.maxTeam > 1).length;
                     const selectedGroupCount = validAdds.filter(e => e.maxTeam > 1).length;
@@ -1639,6 +1663,11 @@
             const hasPPT = combinedEvents.some(e => e.id === 1);
             const hasDebugging = combinedEvents.some(e => e.id === 2);
             if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging.`);
+
+            // Check Max Total (3)
+            if (combinedEvents.length > 3) {
+                warnings.push(`- Max 3 events allowed. You currently have ${combinedEvents.length} selected/registered on this email.`);
+            }
 
             // Check Max Group (2)
             const groupCount = combinedEvents.filter(e => e.maxTeam > 1).length;
