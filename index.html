@@ -136,14 +136,22 @@
     <section id="home" class="relative pt-36 pb-20 md:pt-40 md:pb-32 z-10 min-h-screen flex flex-col justify-center">
         <div class="max-w-7xl mx-auto px-6 text-center">
             
-            <!-- College Badge -->
-            <div class="inline-block py-3 px-10 rounded-full bg-amber-500/5 text-amber-300 font-bold text-base md:text-2xl mb-8 border border-amber-500/20 backdrop-blur-sm tracking-widest uppercase shadow-[0_0_15px_rgba(245,158,11,0.1)]">
-                Pope John Paul II College of Education
+            <!-- AESTHETIC COLLEGE BADGE WITH LOGO -->
+            <div class="inline-flex items-center gap-4 md:gap-5 py-3 px-5 md:py-4 md:px-10 rounded-full bg-amber-500/5 text-amber-300 font-bold text-lg sm:text-xl md:text-3xl mb-8 border border-amber-500/20 backdrop-blur-sm tracking-widest uppercase shadow-[0_0_20px_rgba(245,158,11,0.15)] hover:bg-amber-500/10 transition-colors group">
+                
+                <!-- White Logo Container (Square/Rounded-xl instead of full circle) -->
+                <div class="w-12 h-12 md:w-20 md:h-20 bg-white rounded-xl p-1 md:p-1.5 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:scale-110 transition-transform duration-300">
+                    <img src="college_logo.jpg" alt="PJPII Logo" class="w-full h-full object-contain rounded-xl" onerror="this.style.display='none'">
+                </div>
+                
+                <span class="text-left leading-tight">Pope John Paul II<br class="md:hidden"> College of Education</span>
             </div>
 
             <!-- Department Info -->
-            <h3 class="text-amber-100/60 font-medium mb-4 tracking-[0.2em] text-xs md:text-base uppercase">
+            <h3 class="text-amber-100/70 font-semibold mb-8 tracking-[0.2em] text-sm sm:text-base md:text-lg uppercase flex items-center justify-center gap-3">
+                <span class="w-10 h-[2px] bg-amber-500/30 hidden md:block"></span>
                 Department of Computer Applications Organises
+                <span class="w-10 h-[2px] bg-amber-500/30 hidden md:block"></span>
             </h3>
             
             <!-- Flex Container for Logo and Title -->
@@ -406,8 +414,8 @@
                                         <i data-lucide="message-circle" class="w-5 h-5"></i>
                                     </div>
                                     <div>
-                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Registration Support</div>
-                                        <div class="text-white font-bold text-sm">+91 91504 06749</div>
+                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Mr.Anto</div>
+                                        <div class="text-white font-bold text-sm">+91 63854 27635</div>
                                     </div>
                                 </div>
                                 <button onclick="window.copyToClipboard('+91 91504 06749', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
@@ -423,8 +431,8 @@
                                         <i data-lucide="phone-call" class="w-5 h-5"></i>
                                     </div>
                                     <div>
-                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">General Queries</div>
-                                        <div class="text-white font-bold text-sm">+91 97918 01597</div>
+                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Mr.Vibin Isaac</div>
+                                        <div class="text-white font-bold text-sm">+91 89257 45388</div>
                                     </div>
                                 </div>
                                 <button onclick="window.copyToClipboard('+91 97918 01597', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
@@ -454,8 +462,9 @@
     <!-- Footer -->
     <footer id="contact" class="py-20 bg-black/90 backdrop-blur-xl border-t border-amber-500/10 relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-                <div class="col-span-1">
+            <div class="flex flex-col md:grid md:grid-cols-3 gap-12 mb-16">
+                <!-- Branding & Address (Moved to Bottom on Mobile) -->
+                <div class="col-span-1 order-2 md:order-1">
                     <div class="flex items-center mb-6">
                          <div class="w-12 h-12 mr-4 relative">
                             <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
@@ -483,7 +492,8 @@
                     </div>
                 </div>
                 
-                <div class="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <!-- Contact Details (Moved to Top on Mobile) -->
+                <div class="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8 order-1 md:order-2">
                     <div>
                         <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-8 border-b border-amber-500/20 pb-2 inline-block">Student Co-ordinators</h4>
                         <ul class="space-y-4 text-slate-400 text-sm">
@@ -704,7 +714,7 @@
                     </div>
                     <div id="discount-display" class="flex justify-between items-center text-sm font-bold text-emerald-400 mb-2 hidden">
                         <span>Promo Discount</span>
-                        <span>-₹100</span>
+                        <span>-₹<span id="promo-discount-amt">100</span></span>
                     </div>
                     <div class="flex justify-between items-center text-lg md:text-xl font-black text-white">
                         <span>Total Amount</span>
@@ -723,7 +733,7 @@
                     
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Primary Member Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                        <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors"placeholder="Enter Your Full Name">
                     </div>
                     
                     <div>
@@ -748,7 +758,10 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phone <span class="text-red-500">*</span></label>
-                            <input type="tel" id="reg-phone" required pattern="[0-9]{10}" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors">
+                            <div class="relative flex items-center">
+                                <span class="absolute left-4 text-slate-500 font-bold">+91</span>
+                                <input type="tel" id="reg-phone" required minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="window.formatPhoneNumber(this)" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="XXXXXXXXXX">
+                            </div>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email  <span class="text-red-500">*</span></label>
@@ -766,7 +779,10 @@
                         <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Promo Code (Optional)</label>
                         <div class="flex gap-2">
                             <input type="text" id="promo-code-input" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-amber-500 transition-colors uppercase font-mono tracking-wider" placeholder="ENTER CODE">
-                            <button type="button" id="promo-apply-btn" onclick="window.applyPromoCode()" class="bg-slate-800 text-amber-400 px-6 py-2 rounded-xl font-bold hover:bg-amber-500 hover:text-slate-950 transition-colors text-sm w-32 flex justify-center items-center">APPLY</button>
+                            <button type="button" id="promo-apply-btn" onclick="window.applyPromoCode()" class="bg-slate-800 text-amber-400 px-6 py-2 rounded-xl font-bold hover:bg-amber-500 hover:text-slate-950 transition-colors text-sm w-32 flex justify-center items-center shrink-0">APPLY</button>
+                            <button type="button" id="promo-remove-btn" onclick="window.removePromoCode()" class="hidden bg-red-900/30 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-colors text-sm flex justify-center items-center shrink-0" title="Remove Promo Code">
+                                <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
+                            </button>
                         </div>
                         <p id="promo-message" class="text-xs mt-2 hidden"></p>
                     </div>
@@ -778,7 +794,7 @@
                         </h4>
                         <ol class="text-[10px] text-slate-300 space-y-1.5 list-decimal pl-4 leading-relaxed font-medium">
                             <li>Kindly bring your <strong>College ID</strong> for smoother registration.</li>
-                            <li>One Person can participate only in <strong>3 events</strong> inclusive of not more than <strong>2 group events</strong>.</li>
+                            <li>You can select a maximum of <strong>3 events per checkout</strong>. For more events, please make multiple registrations.</li>
                             <li><strong>Quiz</strong> and <strong>Chess</strong> are mutually exclusive; you cannot participate in both. The same applies for <strong>PPT Presentation</strong> and <strong>Debugging</strong>.</li>
                             <li>If the participant fails to check the timing before the event registration it will be considered as their negligence and our team isn't responsible for that.</li>
                             <li>If the person violates the above rules, the amount will <strong>not be refunded</strong> and the first entry will only be taken into account.</li>
@@ -813,7 +829,7 @@
                     
                     <p class="text-xs text-slate-500 mb-8">A confirmation email acting as your official receipt has been sent to your email address. See you at the fest!</p>
 
-                    <button type="button" onclick="window.closeCheckoutModal()" class="bg-slate-800 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-colors w-full">
+                    <button type="button" onclick="window.closeSuccessModal()" class="bg-slate-800 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-colors w-full">
                         Done & Close
                     </button>
                 </div>
@@ -846,41 +862,42 @@
         let selectedEventsList = [];
         let localPurchasedEvents = []; // Fallback memory
 
-        // GLOBAL DISCOUNT CALCULATION LOGIC (Chronological Order)
+        // GLOBAL DISCOUNT CALCULATION LOGIC (Checkout Session Based)
         window.calculateSubtotal = function(currentList, pastList = []) {
             let baseTotal = 0;
             let comboDisc = 0;
             let effectiveFees = {}; // { eventId: finalPrice }
 
-            // Create a single chronological timeline of all events
-            const combinedTimeline = [...pastList, ...currentList];
+            // Sort current list so Group events are evaluated first, treating them as the "first" event.
+            // If both are individual, sort by highest fee first to act as the primary full-priced event.
+            const sortedCurrentList = [...currentList].sort((a, b) => {
+                const aIsGroup = a.maxTeam > 1 ? 1 : 0;
+                const bIsGroup = b.maxTeam > 1 ? 1 : 0;
+                if (bIsGroup !== aIsGroup) return bIsGroup - aIsGroup;
+                return parseInt(b.fee) - parseInt(a.fee);
+            });
 
-            for (let i = 0; i < combinedTimeline.length; i++) {
-                const ev = combinedTimeline[i];
-                const isPast = i < pastList.length;
-
-                // The very first event the person ever selects
-                const isFirstEventEver = (i === 0);
+            // Discounts apply ONLY to the current checkout session
+            for (let i = 0; i < sortedCurrentList.length; i++) {
+                const ev = sortedCurrentList[i];
                 
                 // Group events
                 const isGroup = ev.maxTeam > 1;
+                // The first event in the CURRENT cart is full price
+                const isFirstInCart = (i === 0);
 
                 let finalFee = parseInt(ev.fee);
 
-                // RULE: If it's the very first event, it is full price (always).
-                // RULE: If it's a Group event, it is full price (always).
-                // RULE: If it is the 2nd or 3rd event AND it is Individual, it drops to 50!
-                if (!isFirstEventEver && !isGroup) {
+                // RULE: First event in cart is full price. Group events are full price.
+                // RULE: 2nd or 3rd event IN THIS CART (Individual) drops to 50!
+                if (!isFirstInCart && !isGroup) {
                     finalFee = 50;
                 }
 
-                // Only sum up the cost for the items currently in the cart
-                if (!isPast) {
-                    baseTotal += parseInt(ev.fee);
-                    effectiveFees[ev.id] = finalFee;
-                    if (finalFee < parseInt(ev.fee)) {
-                        comboDisc += (parseInt(ev.fee) - finalFee);
-                    }
+                baseTotal += parseInt(ev.fee);
+                effectiveFees[ev.id] = finalFee;
+                if (finalFee < parseInt(ev.fee)) {
+                    comboDisc += (parseInt(ev.fee) - finalFee);
                 }
             }
 
@@ -909,10 +926,20 @@
 
         let userData = {};
 
-        const validPromoCodes = [
-            "TECH100", "FETE100", "POPE100", "CODE100", "VIBE100",
-            "WIN100", "FUN100", "STAR100", "PROMO100", "DISC100"
-        ];
+        // PROMO CODE CONFIGURATION (Code: Discount Amount)
+        const promoCodesConfig = {
+            // ₹50 Promo Codes (5 codes)
+            "SAVE50": 50, "TECH50": 50, "FUN50": 50, "VIBE50": 50, "CODE50": 50,"A50":50,"B50":50,"C50":50,"D50":50,"E50":50,"F50":50,
+            
+            // ₹150 Promo Codes (5 codes)
+            "SAVE150": 150, "TECH150": 150, "FUN150": 150, "VIBE150": 150, "CODE150": 150,"A150":150,"B150":150,"C150":150,"D150":150,"E150":150,"F150":150,
+            
+            // ₹200 Promo Codes (5 codes)
+            "SAVE200": 200, "TECH200": 200, "FUN200": 200, "VIBE200": 200, "FEST200": 200,"A350":350,"B350":350,"C350":350,"D350":350,"E350":350,
+
+            // Keeping a few legacy ₹100 ones just in case someone already has them
+            "TECH100": 100, "WIN100": 100, "DISC100": 100
+        };
         let discountApplied = 0;
         let appliedPromoCode = "";
 
@@ -1028,6 +1055,25 @@
             } else {
                 otherDiv.classList.add('hidden');
                 otherInput.required = false;
+            }
+        };
+
+        // --- PHONE NUMBER FORMATTER ---
+        window.formatPhoneNumber = function(input) {
+            let val = input.value;
+            
+            // Handle +91 auto-fill from mobile keyboards gracefully
+            if (val.startsWith('+91')) {
+                val = val.replace('+91', '');
+            } else if (val.startsWith('91') && val.length > 10) {
+                val = val.substring(2);
+            }
+            
+            let cleaned = val.replace(/\D/g, '').substring(0, 10);
+            
+            // Only update if it changed to prevent annoying cursor jumps
+            if (input.value !== cleaned) {
+                input.value = cleaned;
             }
         };
 
@@ -1207,30 +1253,10 @@
                     return;
                 }
 
-                // Total 3 Events Max
-                const currentTotal = localPurchasedEvents.length + selectedEventsList.length;
-                if (currentTotal >= 3) {
-                    alert(`⚠️ Limit Reached!\n\nYou can only register for a maximum of 3 events in total.`);
+                // Cart Max 3 Events Constraint
+                if (selectedEventsList.length >= 3) {
+                    alert(`⚠️ Cart Limit Reached!\n\nYou can only checkout a maximum of 3 events at a time. Please complete this registration first.`);
                     return;
-                }
-
-                // Total 2 Group Events Max
-                if (event.maxTeam > 1) {
-                    const purchasedGroupCount = localPurchasedEvents.filter(e => e.maxTeam > 1).length;
-                    const selectedGroupCount = selectedEventsList.filter(e => e.maxTeam > 1).length;
-                    if (purchasedGroupCount + selectedGroupCount >= 2) {
-                        alert(`⚠️ Group Limit Reached!\n\nYou can only register for a maximum of 2 group events.`);
-                        return;
-                    }
-                }
-
-                // Check for time clashes combining both local purchased and selected
-                if (event.time !== 'All Day') {
-                    const clash = [...localPurchasedEvents, ...selectedEventsList].find(e => e.time === event.time && e.time !== 'All Day');
-                    if (clash) {
-                        alert(`⚠️ Time Clash Detected!\n\nYou cannot select "${event.title}" because it happens at ${event.time}, which clashes with your registration for "${clash.title}".`);
-                        return; 
-                    }
                 }
                 
                 // Valid! Add it to the end of the cart array
@@ -1259,6 +1285,7 @@
         window.updateCheckoutTotal = function() {
             const checkoutTotal = document.getElementById('checkout-total');
             const discountDisplay = document.getElementById('discount-display');
+            const promoAmountDisplay = document.getElementById('promo-discount-amt');
             const comboDisplay = document.getElementById('combo-discount-display');
             const comboAmt = document.getElementById('combo-discount-amt');
             
@@ -1280,6 +1307,7 @@
             
             if (discountDisplay) {
                 if (discountApplied > 0) {
+                    if(promoAmountDisplay) promoAmountDisplay.innerText = discountApplied;
                     discountDisplay.classList.remove('hidden');
                     discountDisplay.classList.add('flex');
                 } else {
@@ -1296,6 +1324,9 @@
             const msgEl = document.getElementById('promo-message');
             const subtotal = window.calculateSubtotal(selectedEventsList, localPurchasedEvents).subtotal;
             
+            // Get email strictly to bind the code to the user, not just the browser
+            const userEmailInput = document.getElementById('reg-email').value.toLowerCase().trim();
+            
             msgEl.classList.remove('hidden');
 
             if (discountApplied > 0) {
@@ -1310,16 +1341,29 @@
                 return;
             }
 
-            if (!validPromoCodes.includes(input)) {
+            if (!input) {
+                msgEl.innerText = "Please enter a code.";
+                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
+                return;
+            }
+
+            if (!promoCodesConfig.hasOwnProperty(input)) {
                 msgEl.innerText = "Invalid or expired promo code.";
                 msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
                 return;
             }
 
-            // Check if this device has already redeemed the code
-            const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-            if (usedCodes.includes(input)) {
-                msgEl.innerText = "You have already redeemed this promo code.";
+            if (!userEmailInput) {
+                msgEl.innerText = "Please enter your Email ID above first.";
+                msgEl.className = "text-xs mt-2 text-amber-500 block font-bold";
+                document.getElementById('reg-email').focus();
+                return;
+            }
+
+            // CHECK 1: Local Storage Code Check (Prevents reuse on same device immediately)
+            const usedPromoCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
+            if (usedPromoCodes.includes(input)) {
+                msgEl.innerText = "This promo code has already been redeemed.";
                 msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
                 return;
             }
@@ -1329,7 +1373,7 @@
             applyBtn.disabled = true;
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
 
-            // Global Cloud Firebase check
+            // CHECK 2: Global Cloud Firebase check (Prevents reuse across different devices)
             if (typeof window.checkPromoCodeGlobal === 'function') {
                 const globalCheck = await window.checkPromoCodeGlobal(input);
                 if (!globalCheck.valid) {
@@ -1341,13 +1385,79 @@
                 }
             }
 
-            discountApplied = 100;
+            // Determine discount amount directly from the configuration map
+            let amountToDeduct = promoCodesConfig[input];
+
+            discountApplied = amountToDeduct;
             appliedPromoCode = input;
-            msgEl.innerText = "Promo code applied! ₹100 deducted.";
+            msgEl.innerText = `Promo code applied! ₹${amountToDeduct} deducted.`;
             msgEl.className = "text-xs mt-2 text-emerald-400 block font-bold";
             inputField.disabled = true;
-            applyBtn.innerText = "APPLIED";
+            
+            // Swap buttons
+            applyBtn.classList.add('hidden');
+            applyBtn.innerText = "APPLY"; // Reset text for later
+            applyBtn.disabled = false;
+            document.getElementById('promo-remove-btn').classList.remove('hidden');
+            
             window.updateCheckoutTotal();
+        };
+
+        // --- REMOVE PROMO CODE ---
+        window.removePromoCode = function() {
+            discountApplied = 0;
+            appliedPromoCode = "";
+            
+            const inputField = document.getElementById('promo-code-input');
+            const applyBtn = document.getElementById('promo-apply-btn');
+            const removeBtn = document.getElementById('promo-remove-btn');
+            const msgEl = document.getElementById('promo-message');
+
+            inputField.disabled = false;
+            inputField.value = ""; // Clear the old code
+            
+            applyBtn.classList.remove('hidden');
+            removeBtn.classList.add('hidden');
+            
+            msgEl.classList.add('hidden');
+            msgEl.innerText = "";
+            
+            window.updateCheckoutTotal();
+        };
+
+        // --- FORM DATA PERSISTENCE ACROSS REFRESHES ---
+        window.saveFormData = function() {
+            const form = document.getElementById('checkout-step-1');
+            if(!form) return;
+            const inputs = form.querySelectorAll('input');
+            const data = {};
+            inputs.forEach(inp => {
+                // Save everything except the promo code input
+                if (inp.id && inp.id !== 'promo-code-input') {
+                    data[inp.id] = inp.value;
+                }
+            });
+            localStorage.setItem('techFeteFormData', JSON.stringify(data));
+        };
+
+        window.restoreFormData = function() {
+            try {
+                const saved = localStorage.getItem('techFeteFormData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    Object.keys(data).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.value = data[id];
+                    });
+                    
+                    // Re-trigger the college dropdown logic to show the "Other" field if needed
+                    if (typeof window.handleCollegeChangeCustom === 'function') {
+                        window.handleCollegeChangeCustom();
+                    }
+                }
+            } catch(e) {
+                console.error("Error restoring form data", e);
+            }
         };
 
         // --- NEW DYNAMIC TEAM FIELDS GENERATOR ---
@@ -1355,6 +1465,13 @@
             const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
             const teamContainer = document.getElementById('team-members-container');
             if(!teamContainer) return;
+
+            // PRESERVE EXISTING VALUES
+            let existingValues = {};
+            const inputs = teamContainer.querySelectorAll('input');
+            inputs.forEach(inp => {
+                if (inp.id) existingValues[inp.id] = inp.value;
+            });
 
             if (teamEvents.length > 0) {
                 teamContainer.classList.remove('hidden');
@@ -1389,6 +1506,13 @@
                 
                 html += '</div>';
                 teamContainer.innerHTML = html;
+                
+                // RESTORE EXISTING VALUES
+                Object.keys(existingValues).forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = existingValues[id];
+                });
+
                 if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
             } else {
                 teamContainer.classList.add('hidden');
@@ -1443,6 +1567,7 @@
             if(!checkoutModal) return;
             
             window.refreshCheckoutCart();
+            window.restoreFormData(); // Restore all typed details automatically
             
             checkoutModal.classList.remove('hidden', 'opacity-0'); checkoutModal.classList.add('flex', 'opacity-100');
             setTimeout(() => {
@@ -1457,8 +1582,25 @@
             if(!checkoutModal || !cc) return;
             cc.classList.remove('scale-100'); cc.classList.add('scale-95');
             checkoutModal.classList.remove('opacity-100'); checkoutModal.classList.add('opacity-0');
-            setTimeout(() => { checkoutModal.classList.remove('flex'); checkoutModal.classList.add('hidden'); window.resetCheckoutForm(); }, 300);
+            setTimeout(() => { 
+                checkoutModal.classList.remove('flex'); 
+                checkoutModal.classList.add('hidden'); 
+                
+                // Only reset the form entirely if the cart is empty (e.g., they cleared it)
+                // Otherwise, preserve their input details!
+                if (selectedEventsList.length === 0) {
+                    window.resetCheckoutForm(); 
+                }
+            }, 300);
         };
+
+        // NEW: Specific closer for successful payments
+        window.closeSuccessModal = function() {
+            window.closeCheckoutModal();
+            setTimeout(() => {
+                window.resetCheckoutForm();
+            }, 300);
+        }
 
         // --- RESTORED MISSING DELETE FUNCTION ---
         window.removeEventFromCart = function(id) {
@@ -1470,22 +1612,13 @@
                 
                 // Re-evaluate discount if cart is empty
                 if (selectedEventsList.length === 0) {
-                    discountApplied = 0;
-                    appliedPromoCode = "";
-                    const promoInput = document.getElementById('promo-code-input');
-                    if (promoInput) { promoInput.disabled = false; promoInput.value = ""; }
-                    const applyBtn = document.getElementById('promo-apply-btn');
-                    if(applyBtn) { applyBtn.innerText = "APPLY"; applyBtn.disabled = false; }
-                    const promoMsg = document.getElementById('promo-message');
-                    if (promoMsg) { promoMsg.classList.add('hidden'); promoMsg.innerText = ""; }
-                    const discountDisplay = document.getElementById('discount-display');
-                    if(discountDisplay) discountDisplay.classList.add('hidden');
+                    window.removePromoCode();
                 }
                 
                 if (selectedEventsList.length === 0) { 
-                    window.closeCheckoutModal(); 
+                    window.closeCheckoutModal(); // Form resets automatically here now due to length === 0
                 } else { 
-                    window.refreshCheckoutCart(); 
+                    window.refreshCheckoutCart(); // Preserves typed inputs now!
                 }
             }
         };
@@ -1633,6 +1766,17 @@
 
             const userEmailInput = document.getElementById('reg-email').value.toLowerCase().trim();
 
+            // PRE-CHECK 1: Make sure they didn't fake the promo code local storage right before clicking pay
+            if (appliedPromoCode) {
+                const usedPromoCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
+                if (usedPromoCodes.includes(appliedPromoCode)) {
+                    alert("This promo code has already been redeemed.");
+                    submitBtn.innerHTML = originalBtnContent;
+                    submitBtn.disabled = false;
+                    return;
+                }
+            }
+
             // 1. QUERY FIREBASE FOR PAST PURCHASES BY THIS EMAIL
             let cloudPurchasedIds = [];
             if (typeof window.getGlobalPurchasedEvents === 'function') {
@@ -1664,27 +1808,9 @@
             const hasDebugging = combinedEvents.some(e => e.id === 2);
             if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging.`);
 
-            // Check Max Total (3)
-            if (combinedEvents.length > 3) {
-                warnings.push(`- Max 3 events allowed. You currently have ${combinedEvents.length} selected/registered on this email.`);
-            }
-
-            // Check Max Group (2)
-            const groupCount = combinedEvents.filter(e => e.maxTeam > 1).length;
-            if (groupCount > 2) {
-                warnings.push(`- Max 2 group events allowed. You currently have ${groupCount} registered/selected.`);
-            }
-
-            // Check Time Clashes
-            const times = [];
-            for(let ev of combinedEvents) {
-                if(ev.time !== 'All Day') {
-                    if(times.includes(ev.time)) {
-                        warnings.push(`- Time clash detected at ${ev.time}.`);
-                        break; 
-                    }
-                    times.push(ev.time);
-                }
+            // Check Cart Max Total (3)
+            if (selectedEventsList.length > 3) {
+                warnings.push(`- Cart limit exceeded. You can only checkout 3 events at a time.`);
             }
 
             // If validation fails, stop everything and show errors!
@@ -1705,38 +1831,19 @@
                 finalCollege = document.getElementById('reg-college-other').value;
             }
             
-            // Extract Dynamic Team Details PER EVENT
-            let teamInfoArray = [];
-            const teamContainer = document.getElementById('team-members-container');
-            if (teamContainer && !teamContainer.classList.contains('hidden')) {
-                const teamEvents = selectedEventsList.filter(ev => ev.maxTeam > 1);
-                teamEvents.forEach(event => {
-                    const teamName = document.getElementById(`reg-team-name-${event.id}`)?.value || '';
-                    let members = [];
-                    for(let i=2; i<=event.maxTeam; i++) {
-                        const mem = document.getElementById(`reg-member-${event.id}-${i}`);
-                        if (mem && mem.value.trim()) members.push(mem.value.trim());
-                    }
-                    if (teamName || members.length > 0) {
-                        teamInfoArray.push(`[${event.title} - Team: ${teamName || 'N/A'} | Ext: ${members.join(', ')}]`);
-                    }
-                });
-            }
-            
-            const teamInfo = teamInfoArray.length > 0 ? " " + teamInfoArray.join(' ') : "";
-            
             userData = {
-                name: document.getElementById('reg-name').value + teamInfo,
+                name: document.getElementById('reg-name').value,
+                pureName: document.getElementById('reg-name').value, 
                 college: finalCollege,
-                phone: document.getElementById('reg-phone').value,
-                email: userEmailInput, // Save the validated email
+                phone: "+91 " + document.getElementById('reg-phone').value,
+                email: userEmailInput, 
                 payerUpi: "Paid securely via Razorpay"
             };
 
             const pricing = window.calculateSubtotal(selectedEventsList, pastEventsData);
             const totalAmount = Math.max(0, pricing.subtotal - discountApplied);
             
-            // --- FREE REGISTRATION BYPASS (Total = ₹0) ---
+            // --- FREE REGISTRATION BY bypass (Total = ₹0) ---
             if (totalAmount === 0) {
                 const promoUtr = "PROMO-" + Math.floor(10000000 + Math.random() * 90000000);
                 userData.payerUpi = "N/A (Free via Promo Code)";
@@ -1764,11 +1871,18 @@
                 },
                 "notes": {
                     "college": userData.college,
-                    "events": selectedEventsList.map(ev => ev.title).join(", "),
-                    "team": teamInfo 
+                    "events": selectedEventsList.map(ev => ev.title).join(", ")
                 },
                 "theme": {
-                    "color": "#f59e0b"
+                    "color": "#e23636"
+                },
+                "modal": {
+                    "ondismiss": function() {
+                        // This fires perfectly when the user closes the Razorpay window
+                        submitBtn.innerHTML = originalBtnContent;
+                        submitBtn.disabled = false;
+                        if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+                    }
                 }
             };
             
@@ -1776,13 +1890,6 @@
                 var rzp1 = new Razorpay(options);
                 rzp1.on('payment.failed', function (response){
                     alert("Payment Failed. Reason: " + response.error.description);
-                    submitBtn.innerHTML = originalBtnContent;
-                    submitBtn.disabled = false;
-                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                });
-                
-                // If user closes the popup without paying
-                rzp1.on('payment.modal.closed', function() {
                     submitBtn.innerHTML = originalBtnContent;
                     submitBtn.disabled = false;
                     if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
@@ -1797,10 +1904,86 @@
             }
         };
 
-        // --- Triggered AFTER Razorpay confirms payment ---
-        window.triggerEmailAndSuccess = function(paymentId, totalAmount, submitBtn, originalBtnContent) {
+        window.triggerEmailAndSuccess = async function(paymentId, totalAmount, submitBtn, originalBtnContent) {
             const eventNames = selectedEventsList.map(ev => ev.title).join(", ");
             const paymentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+            
+            // --- QR CODE GENERATION & DATABASE SAVING ---
+            let basePath = window.location.pathname.replace(/\/index\.html$/, '');
+            if (basePath === '/' || basePath === '/index.html') basePath = '';
+            const baseVerifyUrl = window.location.origin + basePath + "/verify.html";
+            
+            const indEvents = selectedEventsList.filter(e => e.maxTeam === 1);
+            const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
+            
+            let emailQrHtml = "";
+            let teamData = []; // NEW: Array to hold structured team data for Google Sheets
+
+            // 1. Generate ONE QR for all Individual Events
+            if (indEvents.length > 0) {
+                const pid = "PID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                const indVerifyLink = `${baseVerifyUrl}?pid=${pid}`;
+                const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(indVerifyLink)}&size=200`;
+                
+                // Formatted specifically on a single line to guarantee EmailJS doesn't break it with injected <br> tags
+                emailQrHtml += `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Participant QR Pass</h3><p style="font-size:14px; margin-bottom:10px;">Valid For: <b>${indEvents.map(e => e.title).join(", ")}</b></p><a href="${indVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="QR Code" style="display:inline-block;" /></a><br><br><a href="${indVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a></div>`;
+
+                if (typeof window.saveIndividualTicket === 'function') {
+                    await window.saveIndividualTicket(pid, {
+                        pid: pid,
+                        name: userData.pureName,
+                        email: userData.email,
+                        phone: userData.phone,
+                        college: userData.college,
+                        events: indEvents.map(e => e.title),
+                        paymentId: paymentId,
+                        attended: false,
+                        timestamp: paymentTime,
+                        qrUrl: qrUrl
+                    });
+                }
+            }
+
+            // 2. Generate Separate QRs for Team Events
+            for (const ev of teamEvents) {
+                const tid = "TID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
+                const teamVerifyLink = `${baseVerifyUrl}?team=${tid}`;
+                const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(teamVerifyLink)}&size=200`;
+
+                const teamName = document.getElementById(`reg-team-name-${ev.id}`)?.value || 'Unnamed Team';
+                let members = [];
+                for(let i=2; i<=ev.maxTeam; i++) {
+                    const mem = document.getElementById(`reg-member-${ev.id}-${i}`);
+                    if (mem && mem.value.trim()) members.push(mem.value.trim());
+                }
+
+                // Push structured team data for Google Sheets
+                teamData.push({
+                    event: ev.title,
+                    name: teamName,
+                    members: members.join(', ') || 'None'
+                });
+
+                // Formatted specifically on a single line to guarantee EmailJS doesn't break it with injected <br> tags
+                emailQrHtml += `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Team QR Pass: ${ev.title}</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Leader: <b>${userData.pureName}</b></p><a href="${teamVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="Team QR Code" style="display:inline-block;" /></a><br><br><a href="${teamVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a></div>`;
+
+                if (typeof window.saveTeamTicket === 'function') {
+                    await window.saveTeamTicket(tid, {
+                        tid: tid,
+                        eventName: ev.title,
+                        teamName: teamName,
+                        leaderName: userData.pureName,
+                        leaderEmail: userData.email,
+                        college: userData.college, // <--- ADDED THIS LINE TO FIX THE N/A ISSUE
+                        phone: userData.phone,     // <--- ADDED PHONE NUMBER JUST IN CASE
+                        members: members,
+                        paymentId: paymentId,
+                        attended: false,
+                        timestamp: paymentTime,
+                        qrUrl: qrUrl
+                    });
+                }
+            }
 
             // IMMEDIATELY SAVE NEW PURCHASE TO FIREBASE CLOUD
             if (typeof window.saveGlobalPurchasedEvents === 'function') {
@@ -1809,7 +1992,7 @@
             }
 
             const templateParams = {
-                to_name: userData.name, // Will output "John Doe [Dance - Team: Groovers | Ext: Jane]"
+                to_name: userData.pureName, 
                 to_email: userData.email,
                 user_phone: userData.phone,
                 college_name: userData.college,
@@ -1818,21 +2001,41 @@
                 promo_code: appliedPromoCode || "None",
                 event_names: eventNames,
                 utr_number: paymentId,
-                payment_time: paymentTime
+                payment_time: paymentTime,
+                qr_codes_html: emailQrHtml 
             };
             
-            // --- NEW: Google Sheets Data Export ---
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec'; // <-- PASTE YOUR APP SCRIPT URL HERE
+            // --- NEW: Google Sheets Data Export (Event-Specific Logic) ---
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec';
             
-            const sheetData = {
-                name: userData.name, // Goes into your Sheet Name column safely!
-                email: userData.email,
-                phone: userData.phone,
-                college: userData.college,
-                events: eventNames,
-                amount: totalAmount,
-                paymentId: paymentId,
-                promoCode: appliedPromoCode || "None"
+            // Build an array of individual registrations for each event booked
+            const registrationsData = selectedEventsList.map(ev => {
+                let tName = "N/A";
+                let tMembers = "N/A";
+                if (ev.maxTeam > 1) {
+                    const td = teamData.find(t => t.event === ev.title);
+                    if (td) {
+                        tName = td.name;
+                        tMembers = td.members;
+                    }
+                }
+                return {
+                    eventName: ev.title, // Used by Google Script to find the exact Sheet Tab
+                    name: userData.pureName, 
+                    email: userData.email,
+                    phone: "'" + userData.phone, 
+                    college: userData.college,
+                    teamName: tName,
+                    teamMembers: tMembers,
+                    amount: totalAmount,
+                    paymentId: paymentId,
+                    promoCode: appliedPromoCode || "None"
+                };
+            });
+
+            const sheetPayload = {
+                action: "register",
+                data: registrationsData
             };
 
             // Send to Google Sheets asynchronously (doesn't block the UI)
@@ -1841,7 +2044,7 @@
                     method: 'POST',
                     mode: 'no-cors', // Important so browser doesn't block the request
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(sheetData)
+                    body: JSON.stringify(sheetPayload)
                 }).catch(err => console.error("Sheet error:", err));
             }
 
@@ -1866,12 +2069,12 @@
         }
 
         window.showSuccessScreen = function(utr) {
-            // Save used promo code to localStorage so it can't be used again on this device
+            // Save used promo code to localStorage so it can't be used again
             if (appliedPromoCode) {
-                const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-                if (!usedCodes.includes(appliedPromoCode)) {
-                    usedCodes.push(appliedPromoCode);
-                    localStorage.setItem('techFeteUsedPromos', JSON.stringify(usedCodes));
+                const usedPromoCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
+                if (!usedPromoCodes.includes(appliedPromoCode)) {
+                    usedPromoCodes.push(appliedPromoCode);
+                    localStorage.setItem('techFeteUsedPromos', JSON.stringify(usedPromoCodes));
                 }
                 if (typeof window.markPromoCodeUsedGlobal === 'function') {
                     window.markPromoCodeUsedGlobal(appliedPromoCode, userData);
@@ -1910,6 +2113,9 @@
             const form1 = document.getElementById('checkout-step-1');
             if(form1) form1.reset();
             
+            // Clear local storage for form so the next registration starts fresh
+            localStorage.removeItem('techFeteFormData');
+            
             // Reset College custom input box
             const otherDiv = document.getElementById('other-college-div');
             const otherInput = document.getElementById('reg-college-other');
@@ -1920,16 +2126,7 @@
             const teamContainer = document.getElementById('team-members-container');
             if(teamContainer) { teamContainer.innerHTML = ''; teamContainer.classList.add('hidden'); }
             
-            discountApplied = 0;
-            appliedPromoCode = "";
-            const promoInput = document.getElementById('promo-code-input');
-            if(promoInput) { promoInput.value = ""; promoInput.disabled = false; }
-            const applyBtn = document.getElementById('promo-apply-btn');
-            if(applyBtn) { applyBtn.innerText = "APPLY"; applyBtn.disabled = false; }
-            const promoMsg = document.getElementById('promo-message');
-            if(promoMsg) { promoMsg.classList.add('hidden'); promoMsg.innerText = ""; }
-            const discountDisplay = document.getElementById('discount-display');
-            if(discountDisplay) discountDisplay.classList.add('hidden');
+            window.removePromoCode(); // Use the new function to cleanly reset the promo section
             
             document.getElementById('checkout-step-2').classList.add('hidden');
             document.getElementById('checkout-step-2').classList.remove('flex');
@@ -2008,6 +2205,12 @@
             window.renderEvents('All');
             window.updateCartUI(); // This instantly triggers the cart UI if items were loaded from storage
             
+            // Attach auto-save listener to form so it saves as user types
+            const checkoutForm = document.getElementById('checkout-step-1');
+            if(checkoutForm) {
+                checkoutForm.addEventListener('input', window.saveFormData);
+            }
+            
             // Try to load hero image safely
             const heroImg = document.getElementById('hero-img-logo');
             if (heroImg) {
@@ -2037,12 +2240,13 @@
         // (You get this from your Firebase Console -> Project Settings -> General)
         // =======================================================================
         const myOwnFirebaseConfig = {
-            apiKey: "YOUR_API_KEY_HERE",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
+            authDomain: "tech-fete-2026.firebaseapp.com",
+            projectId: "tech-fete-2026",
+            storageBucket: "tech-fete-2026.firebasestorage.app",
+            messagingSenderId: "588004541639",
+            appId: "1:588004541639:web:e9c9d79bfd27d3242b6ae2",
+            measurementId: "G-R67C2YD74F"
         };
         // =======================================================================
 
@@ -2063,12 +2267,16 @@
             const app = initializeApp(finalFirebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
-            let currentUser = null;
 
             const initAuth = async () => {
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
+                        try {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } catch (e) {
+                            console.warn("Custom token sign-in failed (likely using own Firebase config). Falling back to anonymous auth.");
+                            await signInAnonymously(auth);
+                        }
                     } else {
                         await signInAnonymously(auth); // Uses anonymous login
                     }
@@ -2078,13 +2286,9 @@
             };
             initAuth();
 
-            onAuthStateChanged(auth, (user) => {
-                currentUser = user;
-            });
-
-            // 1. Promo Code Validation
+            // 1. Promo Code Validation (Tied to Code itself)
             window.checkPromoCodeGlobal = async function(code) {
-                if (!currentUser) return { valid: true }; 
+                if (!code) return { valid: true }; 
                 try {
                     const promoRef = doc(db, 'promocodes', code);
                     const promoSnap = await getDoc(promoRef);
@@ -2098,14 +2302,13 @@
                 }
             };
 
-            // 2. Promo Code Sync
+            // 2. Promo Code Sync (Tied to Code itself)
             window.markPromoCodeUsedGlobal = async function(code, userDetails) {
-                if (!currentUser) return;
                 try {
                     const promoRef = doc(db, 'promocodes', code);
                     await setDoc(promoRef, {
                         used: true,
-                        usedBy: userDetails.name + " (" + userDetails.email + ")",
+                        usedBy: userDetails.email,
                         usedAt: new Date().toISOString()
                     }, { merge: true });
                 } catch (err) {
@@ -2115,7 +2318,6 @@
 
             // 3. READ Past Event Purchases via Email Address
             window.getGlobalPurchasedEvents = async function(email) {
-                if (!currentUser) return []; 
                 try {
                     const sanitizedEmail = email.toLowerCase().trim();
                     const userRef = doc(db, 'user_registrations', sanitizedEmail);
@@ -2132,7 +2334,6 @@
 
             // 4. WRITE New Event Purchases to Email Address
             window.saveGlobalPurchasedEvents = async function(email, newIds) {
-                if (!currentUser) return; 
                 try {
                     const sanitizedEmail = email.toLowerCase().trim();
                     const userRef = doc(db, 'user_registrations', sanitizedEmail);
@@ -2151,15 +2352,40 @@
                         purchasedIds: combinedIds,
                         lastUpdate: new Date().toISOString()
                     }, { merge: true });
-
                 } catch (err) {
                     console.error("Firestore Write Error:", err);
                 }
             };
 
+            // 5. WRITE Individual Ticket QR Data
+            window.saveIndividualTicket = async function(pid, data) {
+                try {
+                    await setDoc(doc(db, 'individual_tickets', pid), data);
+                    console.log("Individual Ticket Saved:", pid);
+                } catch (err) { 
+                    alert("Firebase Error: Could not save ticket! Please make sure techferte.netlify.app is added to your Firebase Authentication Authorized Domains.");
+                    console.error("Ticket Save Error:", err); 
+                }
+            };
+
+            // 6. WRITE Team Ticket QR Data
+            window.saveTeamTicket = async function(tid, data) {
+                try {
+                    await setDoc(doc(db, 'team_tickets', tid), data);
+                    console.log("Team Ticket Saved:", tid);
+                } catch (err) { 
+                    alert("Firebase Error: Could not save team ticket!");
+                    console.error("Ticket Save Error:", err); 
+                }
+            };
+
         } else {
-            // Dummy fallback if Firebase is not setup yet
-            window.checkPromoCodeGlobal = async () => ({ valid: true });
+            // Dummy fallback if Firebase is not setup yet (Simulates the code restriction perfectly)
+            window.checkPromoCodeGlobal = async (code) => {
+                const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
+                if(usedCodes.includes(code)) return { valid: false, message: "This promo code has already been redeemed." };
+                return { valid: true };
+            };
             window.markPromoCodeUsedGlobal = async () => {};
             window.getGlobalPurchasedEvents = async () => { return []; };
             window.saveGlobalPurchasedEvents = async () => {};

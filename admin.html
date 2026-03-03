@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Tech Fêté 2k26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- ADD SHEETJS FOR EXCEL GENERATION -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: white; }
+        h1, h2, h3, .brand-font { font-family: 'Antonio', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4">
+    <div class="text-center mb-10">
+        <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider">ADMIN DASHBOARD</h1>
+        <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fêté 2k26 Secure Portal</p>
+    </div>
+
+    <div class="w-full max-w-2xl bg-slate-900 border border-amber-500/20 rounded-3xl shadow-2xl p-8 relative overflow-hidden">
+        
+        <div id="auth-section" class="text-center">
+            <div class="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-amber-500/20">
+                <i data-lucide="lock" class="w-8 h-8"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">Admin Authentication</h2>
+            <p class="text-slate-400 mb-6 text-sm">Please enter the master admin PIN to access and download the attendance records.</p>
+            <input type="password" id="admin-pin" placeholder="Enter PIN" class="w-full max-w-xs bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors text-center text-xl tracking-widest mb-4">
+            <button onclick="window.verifyAdmin()" class="w-full max-w-xs bg-amber-500 text-slate-950 px-6 py-3 rounded-xl font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-lg mx-auto block">
+                Unlock Dashboard
+            </button>
+        </div>
+
+        <div id="dashboard-section" class="hidden">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-6 mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-1">Attendance Logs</h2>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Live Database Connection Active</p>
+                </div>
+                <div class="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-lg border border-emerald-500/20 text-sm font-bold flex items-center">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Connected
+                </div>
+            </div>
+
+            <div class="bg-black/40 p-6 rounded-2xl border border-slate-800 mb-8 text-center">
+                <i data-lucide="file-spreadsheet" class="w-12 h-12 text-emerald-400 mx-auto mb-4"></i>
+                <h3 class="text-lg font-bold mb-2">Export Data to Excel</h3>
+                <p class="text-sm text-slate-400 mb-6">Download a complete, beautifully organized Excel (.xlsx) file containing every participant who has successfully checked in at the venue.</p>
+                
+                <button id="download-btn" onclick="window.downloadExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center mx-auto w-full sm:w-auto">
+                    <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download Excel File
+                </button>
+                <p id="download-status" class="text-xs text-amber-400 font-bold mt-4 hidden animate-pulse">Fetching records from cloud...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Exact same Firebase config as your main app
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
+            authDomain: "tech-fete-2026.firebaseapp.com",
+            projectId: "tech-fete-2026",
+            storageBucket: "tech-fete-2026.firebasestorage.app",
+            messagingSenderId: "588004541639",
+            appId: "1:588004541639:web:e9c9d79bfd27d3242b6ae2",
+            measurementId: "G-R67C2YD74F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Silent login for database access
+        signInAnonymously(auth).catch(console.error);
+
+        // Simple UI lock (Uses the same PIN as the scanner: 2026)
+        window.verifyAdmin = function() {
+            const pin = document.getElementById('admin-pin').value;
+            if (pin === "2026") {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+            } else {
+                alert("Incorrect Admin PIN.");
+            }
+        };
+
+        // EXCEL Generation & Download Logic
+        window.downloadExcel = async function() {
+            const btn = document.getElementById('download-btn');
+            const status = document.getElementById('download-status');
+            
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            status.classList.remove('hidden');
+            status.innerText = "Fetching records from cloud...";
+
+            try {
+                // Fetch all records from the attendance_logs collection, sorted by time
+                const logsRef = collection(db, "attendance_logs");
+                const q = query(logsRef, orderBy("timestamp", "asc"));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    alert("No attendance records found yet. Nobody has checked in!");
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    status.classList.add('hidden');
+                    return;
+                }
+
+                status.innerText = "Processing Excel File...";
+
+                // Format data specifically for Excel
+                const excelData = [];
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    excelData.push({
+                        "Check-In Time": data.checkInTime || '',
+                        "Ticket Type": data.type || '',
+                        "Primary Name": data.primaryName || '',
+                        "College": data.college || 'N/A',
+                        "Registered Events": data.eventsCheckedIn || '',
+                        "Team Name": data.teamName || 'N/A',
+                        "Team Members": (data.members && data.members.length > 0) ? data.members.join(', ') : 'N/A'
+                    });
+                });
+
+                // Create a new Worksheet and Workbook
+                const worksheet = XLSX.utils.json_to_sheet(excelData);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Logs");
+
+                // Auto-adjust column widths for better readability
+                const columnWidths = [
+                    { wch: 25 }, // Check-In Time
+                    { wch: 15 }, // Ticket Type
+                    { wch: 25 }, // Primary Name
+                    { wch: 45 }, // College
+                    { wch: 40 }, // Registered Events
+                    { wch: 20 }, // Team Name
+                    { wch: 40 }  // Team Members
+                ];
+                worksheet['!cols'] = columnWidths;
+
+                // Generate and download the .xlsx file
+                const fileName = `TechFete_Attendance_${new Date().toISOString().slice(0,10)}.xlsx`;
+                XLSX.writeFile(workbook, fileName);
+
+                status.classList.add('hidden');
+                status.innerText = "Download Complete!";
+                status.classList.remove('text-amber-400');
+                status.classList.add('text-emerald-400');
+                status.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    status.classList.add('hidden');
+                    status.classList.remove('text-emerald-400');
+                    status.classList.add('text-amber-400');
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }, 3000);
+
+            } catch (error) {
+                console.error("Error generating Excel: ", error);
+                alert("Error downloading file. Please check console for details.");
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                status.classList.add('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
