@@ -50,6 +50,10 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, updateDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+<<<<<<< HEAD
+=======
+        // Your exact Firebase keys
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
         const firebaseConfig = {
             apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
             authDomain: "tech-fete-2026.firebaseapp.com",
@@ -67,6 +71,10 @@
         let currentDocRef = null;
         let isAttended = false;
         
+<<<<<<< HEAD
+=======
+        // Global variables for attendance logging
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
         window.currentTicketData = null;
         window.currentTicketId = null;
 
@@ -112,8 +120,16 @@
                 }
 
                 const data = snap.data();
+<<<<<<< HEAD
                 window.currentTicketData = data;
                 window.currentTicketId = documentId;
+=======
+                
+                // Store data for logging later
+                window.currentTicketData = data;
+                window.currentTicketId = documentId;
+                
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 isAttended = data.attended || false;
 
                 document.getElementById('loading-state').classList.add('hidden');
@@ -189,6 +205,10 @@
         }
 
         window.markAttendance = async function() {
+<<<<<<< HEAD
+=======
+            // Note: The PIN is 2026.
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
             const pin = prompt("Enter Admin PIN to mark attendance:");
             if (pin !== "2026") {
                 alert("Incorrect PIN!");
@@ -202,12 +222,20 @@
             const timeNowString = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
             try {
+<<<<<<< HEAD
                 // 1. Update Firebase
+=======
+                // 1. Update the original ticket to mark it as attended
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 await updateDoc(currentDocRef, {
                     attended: true,
                     checkInTime: timeNowString
                 });
                 
+<<<<<<< HEAD
+=======
+                // 2. NEW FEATURE: Log this event into a completely separate "attendance_logs" collection
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 const logData = {
                     ticketId: window.currentTicketId,
                     type: pid ? 'Individual' : 'Team',
@@ -215,13 +243,19 @@
                     college: window.currentTicketData.college || 'N/A',
                     eventsCheckedIn: pid ? (window.currentTicketData.events || []).join(", ") : window.currentTicketData.eventName,
                     teamName: window.currentTicketData.teamName || 'N/A',
+<<<<<<< HEAD
                     members: window.currentTicketData.members || [],
                     checkInTime: timeNowString,
                     timestamp: new Date().getTime() 
+=======
+                    checkInTime: timeNowString,
+                    timestamp: new Date().getTime() // for exact sorting in Firebase
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 };
                 
                 await addDoc(collection(db, 'attendance_logs'), logData);
 
+<<<<<<< HEAD
                 // 2. NEW: Forward Attendance to LIVE Google Sheets instantly!
                 const sheetPayload = {
                     action: "attendance",
@@ -245,6 +279,8 @@
                     body: JSON.stringify(sheetPayload)
                 }).catch(err => console.error("Sheet error:", err));
 
+=======
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 // Update Local UI
                 isAttended = true;
                 window.currentTicketData.checkInTime = timeNowString;

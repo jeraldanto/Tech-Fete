@@ -929,6 +929,7 @@
         // PROMO CODE CONFIGURATION (Code: Discount Amount)
         const promoCodesConfig = {
             // ₹50 Promo Codes (5 codes)
+<<<<<<< HEAD
             "SAVE50": 50, "TECH50": 50, "FUN50": 50, "VIBE50": 50, "CODE50": 50,"A50":50,"B50":50,"C50":50,"D50":50,"E50":50,"F50":50,
             
             // ₹150 Promo Codes (5 codes)
@@ -936,6 +937,15 @@
             
             // ₹200 Promo Codes (5 codes)
             "SAVE200": 200, "TECH200": 200, "FUN200": 200, "VIBE200": 200, "FEST200": 200,"A350":350,"B350":350,"C350":350,"D350":350,"E350":350,
+=======
+            "SAVE50": 50, "TECH50": 50, "FUN50": 50, "VIBE50": 50, "CODE50": 50,
+            
+            // ₹150 Promo Codes (5 codes)
+            "SAVE150": 150, "TECH150": 150, "FUN150": 150, "VIBE150": 150, "CODE150": 150,
+            
+            // ₹200 Promo Codes (5 codes)
+            "SAVE200": 200, "TECH200": 200, "FUN200": 200, "VIBE200": 200, "FEST200": 200,
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
 
             // Keeping a few legacy ₹100 ones just in case someone already has them
             "TECH100": 100, "WIN100": 100, "DISC100": 100
@@ -1832,11 +1842,19 @@
             }
             
             userData = {
+<<<<<<< HEAD
                 name: document.getElementById('reg-name').value,
                 pureName: document.getElementById('reg-name').value, 
                 college: finalCollege,
                 phone: "+91 " + document.getElementById('reg-phone').value,
                 email: userEmailInput, 
+=======
+                name: document.getElementById('reg-name').value + teamInfo,
+                pureName: document.getElementById('reg-name').value, // NEW: pure name for QR
+                college: finalCollege,
+                phone: "+91 " + document.getElementById('reg-phone').value,
+                email: userEmailInput, // Save the validated email
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 payerUpi: "Paid securely via Razorpay"
             };
 
@@ -1917,7 +1935,10 @@
             const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
             
             let emailQrHtml = "";
+<<<<<<< HEAD
             let teamData = []; // NEW: Array to hold structured team data for Google Sheets
+=======
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
 
             // 1. Generate ONE QR for all Individual Events
             if (indEvents.length > 0) {
@@ -1925,8 +1946,19 @@
                 const indVerifyLink = `${baseVerifyUrl}?pid=${pid}`;
                 const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(indVerifyLink)}&size=200`;
                 
+<<<<<<< HEAD
                 // Formatted specifically on a single line to guarantee EmailJS doesn't break it with injected <br> tags
                 emailQrHtml += `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Participant QR Pass</h3><p style="font-size:14px; margin-bottom:10px;">Valid For: <b>${indEvents.map(e => e.title).join(", ")}</b></p><a href="${indVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="QR Code" style="display:inline-block;" /></a><br><br><a href="${indVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a></div>`;
+=======
+                // SIMPLIFIED HTML to guarantee EmailJS does not strip it out
+                emailQrHtml += `
+                <div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;">
+                    <h3 style="color:#b45309; margin-top:0;">Participant QR Pass</h3>
+                    <p style="font-size:14px; margin-bottom:10px;">Valid For: <b>${indEvents.map(e => e.title).join(", ")}</b></p>
+                    <a href="${indVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="QR Code" style="display:inline-block;" /></a><br><br>
+                    <a href="${indVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a>
+                </div>`;
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
 
                 if (typeof window.saveIndividualTicket === 'function') {
                     await window.saveIndividualTicket(pid, {
@@ -1957,6 +1989,7 @@
                     if (mem && mem.value.trim()) members.push(mem.value.trim());
                 }
 
+<<<<<<< HEAD
                 // Push structured team data for Google Sheets
                 teamData.push({
                     event: ev.title,
@@ -1966,6 +1999,17 @@
 
                 // Formatted specifically on a single line to guarantee EmailJS doesn't break it with injected <br> tags
                 emailQrHtml += `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Team QR Pass: ${ev.title}</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Leader: <b>${userData.pureName}</b></p><a href="${teamVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="Team QR Code" style="display:inline-block;" /></a><br><br><a href="${teamVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a></div>`;
+=======
+                // SIMPLIFIED HTML to guarantee EmailJS does not strip it out
+                emailQrHtml += `
+                <div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;">
+                    <h3 style="color:#b45309; margin-top:0;">Team QR Pass: ${ev.title}</h3>
+                    <p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p>
+                    <p style="font-size:14px; margin-bottom:10px;">Leader: <b>${userData.pureName}</b></p>
+                    <a href="${teamVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="Team QR Code" style="display:inline-block;" /></a><br><br>
+                    <a href="${teamVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a>
+                </div>`;
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
 
                 if (typeof window.saveTeamTicket === 'function') {
                     await window.saveTeamTicket(tid, {
@@ -1974,8 +2018,11 @@
                         teamName: teamName,
                         leaderName: userData.pureName,
                         leaderEmail: userData.email,
+<<<<<<< HEAD
                         college: userData.college, // <--- ADDED THIS LINE TO FIX THE N/A ISSUE
                         phone: userData.phone,     // <--- ADDED PHONE NUMBER JUST IN CASE
+=======
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                         members: members,
                         paymentId: paymentId,
                         attended: false,
@@ -1992,7 +2039,11 @@
             }
 
             const templateParams = {
+<<<<<<< HEAD
                 to_name: userData.pureName, 
+=======
+                to_name: userData.pureName, // Fixed to avoid showing team details in email greeting
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
                 to_email: userData.email,
                 user_phone: userData.phone,
                 college_name: userData.college,
@@ -2005,6 +2056,7 @@
                 qr_codes_html: emailQrHtml 
             };
             
+<<<<<<< HEAD
             // --- NEW: Google Sheets Data Export (Event-Specific Logic) ---
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec';
             
@@ -2036,6 +2088,21 @@
             const sheetPayload = {
                 action: "register",
                 data: registrationsData
+=======
+            // --- NEW: Google Sheets Data Export ---
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec';
+            
+            const sheetData = {
+                name: userData.pureName, // FIXED: Sends ONLY the clean name
+                teamDetails: teamInfo.trim() || "N/A", // FIXED: Sends Team info safely inside a new property
+                email: userData.email,
+                phone: "'" + userData.phone, // FIXED: Added an apostrophe to stop Google Sheets from showing #ERROR!
+                college: userData.college,
+                events: eventNames,
+                amount: totalAmount,
+                paymentId: paymentId,
+                promoCode: appliedPromoCode || "None"
+>>>>>>> 8896fb4026001e4046b50396650a42f19750c1a9
             };
 
             // Send to Google Sheets asynchronously (doesn't block the UI)
