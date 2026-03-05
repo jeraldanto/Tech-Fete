@@ -17,7 +17,7 @@
 <body class="min-h-screen flex flex-col items-center py-10 px-4">
     <div class="text-center mb-10">
         <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider">ADMIN DASHBOARD</h1>
-        <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fêté 2k26 Secure Portal</p>
+        <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fête 2k26 Secure Portal</p>
     </div>
 
     <div class="w-full max-w-2xl bg-slate-900 border border-amber-500/20 rounded-3xl shadow-2xl p-8 relative overflow-hidden">
@@ -129,12 +129,12 @@
                     const data = doc.data();
                     excelData.push({
                         "Check-In Time": data.checkInTime || '',
-                        "Ticket Type": data.type || '',
+                        "Registration ID": data.regId || 'N/A', // NEW FIELD FOR EXCEL
                         "Primary Name": data.primaryName || '',
                         "College": data.college || 'N/A',
-                        "Registered Events": data.eventsCheckedIn || '',
+                        "Location / Event": data.eventsCheckedIn || '',
+                        "Type": data.type || '',
                         "Team Name": data.teamName || 'N/A',
-                        "Team Members": (data.members && data.members.length > 0) ? data.members.join(', ') : 'N/A'
                     });
                 });
 
@@ -146,12 +146,12 @@
                 // Auto-adjust column widths for better readability
                 const columnWidths = [
                     { wch: 25 }, // Check-In Time
-                    { wch: 15 }, // Ticket Type
+                    { wch: 22 }, // Registration ID
                     { wch: 25 }, // Primary Name
                     { wch: 45 }, // College
                     { wch: 40 }, // Registered Events
+                    { wch: 15 }, // Ticket Type
                     { wch: 20 }, // Team Name
-                    { wch: 40 }  // Team Members
                 ];
                 worksheet['!cols'] = columnWidths;
 

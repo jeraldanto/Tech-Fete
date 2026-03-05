@@ -95,7 +95,7 @@
                      <img src="tech_fete_logo.png" alt="TF Logo" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">
                 </div>
                 <div class="flex flex-col leading-none">
-                    <span class="brand-font text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 tracking-wider py-1">TECH FÊTE</span>
+                    <span class="brand-font text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 tracking-wider">TECH FÊTE</span>
                     <span class="text-[8px] md:text-[10px] font-bold text-amber-500/80 tracking-[0.4em] ml-0.5">2K26</span>
                 </div>
             </div>
@@ -109,6 +109,16 @@
             </div>
             
             <div class="flex items-center gap-2 md:gap-4">
+                <!-- Admin & Scanner Quick Links (Desktop) -->
+                <div class="hidden lg:flex items-center gap-2 mr-1 border-r border-slate-700/50 pr-4">
+                    <a href="verify.html" target="_blank" title="Scanner Portal" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-400 hover:text-amber-400 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-amber-500/30 transition-all">
+                        <i data-lucide="scan-line" class="w-3.5 h-3.5"></i> SCAN
+                    </a>
+                    <a href="admin.html" target="_blank" title="Admin Dashboard" class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-400 hover:text-emerald-400 bg-slate-900/50 rounded-lg border border-slate-800 hover:border-emerald-500/30 transition-all">
+                        <i data-lucide="database" class="w-3.5 h-3.5"></i> ADMIN
+                    </a>
+                </div>
+
                 <!-- INNOVATIVE SMART BUNDLE BUTTON -->
                 <button onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-[10px] md:text-sm tracking-wide flex items-center overflow-hidden whitespace-nowrap shrink-0">
                     <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
@@ -128,7 +138,17 @@
             <a href="#about" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">ABOUT</a>
             <a href="#events" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">EVENTS</a>
             <a href="#faq" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">FAQ</a>
-            <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">CONTACT</a>
+            <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">CONTACT</a>
+            
+            <!-- Organizer Links (Mobile) -->
+            <div class="grid grid-cols-2 gap-3 p-6 bg-black/50">
+                <a href="verify.html" target="_blank" class="flex items-center justify-center gap-2 py-3 px-2 text-amber-400 bg-amber-500/10 rounded-xl font-bold text-xs tracking-widest border border-amber-500/20 hover:bg-amber-500 hover:text-slate-950 transition-colors">
+                    <i data-lucide="scan-line" class="w-4 h-4"></i> SCAN
+                </a>
+                <a href="admin.html" target="_blank" class="flex items-center justify-center gap-2 py-3 px-2 text-emerald-400 bg-emerald-500/10 rounded-xl font-bold text-xs tracking-widest border border-emerald-500/20 hover:bg-emerald-500 hover:text-slate-950 transition-colors">
+                    <i data-lucide="database" class="w-4 h-4"></i> ADMIN
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -1392,6 +1412,10 @@
                         return;
                     }
                 }
+            } else {
+                // Keep the UI consistent even though TESTFREE skips the cloud check
+                applyBtn.innerHTML = "<i data-lucide='loader-2' class='w-4 h-4 animate-spin'></i>";
+                applyBtn.disabled = true;
             }
 
             // Determine discount amount directly from the configuration map
@@ -1511,7 +1535,13 @@
                         html += `
                             <div>
                                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Member ${i} Name ${isReq ? '<span class="text-red-500">*</span>' : '(Optional)'}</label>
-                                <input type="text" id="reg-member-${event.id}-${i}" ${isReq ? 'required' : ''} class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]" placeholder="Full Name">
+                                <input type="text" id="reg-member-name-${event.id}-${i}" ${isReq ? 'required' : ''} class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] mb-3" placeholder="Full Name">
+                                
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Member ${i} Phone ${isReq ? '<span class="text-red-500">*</span>' : ''}</label>
+                                <div class="relative flex items-center">
+                                    <span class="absolute left-4 text-slate-500 font-bold">+91</span>
+                                    <input type="tel" id="reg-member-phone-${event.id}-${i}" ${isReq ? 'required' : ''} minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="window.formatPhoneNumber(this)" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]" placeholder="XXXXXXXXXX">
+                                </div>
                             </div>
                         `;
                     }
@@ -1922,7 +1952,7 @@
             const eventNames = selectedEventsList.map(ev => ev.title).join(", ");
             const paymentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
             
-            // --- QR CODE GENERATION & DATABASE SAVING ---
+            // --- UNIVERSAL QR CODE GENERATION & DATABASE SAVING ---
             let basePath = window.location.pathname.replace(/\/index\.html$/, '');
             if (basePath === '/' || basePath === '/index.html') basePath = '';
             const baseVerifyUrl = window.location.origin + basePath + "/verify.html";
@@ -1931,72 +1961,110 @@
             const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
             
             let emailQrHtml = "";
-            let teamData = []; // NEW: Array to hold structured team data for Google Sheets
+            let teamData = []; // Array to hold structured team data for Google Sheets
+            let leaderEventsToAdd = []; // Accumulates all events the primary buyer is in
 
-            // 1. Generate ONE QR for all Individual Events
-            if (indEvents.length > 0) {
-                const pid = "PID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-                const indVerifyLink = `${baseVerifyUrl}?pid=${pid}`;
-                const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(indVerifyLink)}&size=200`;
-                
-                // Formatted specifically on a single line to guarantee EmailJS doesn't break it with injected <br> tags
-                emailQrHtml += `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Participant QR Pass</h3><p style="font-size:14px; margin-bottom:10px;">Valid For: <b>${indEvents.map(e => e.title).join(", ")}</b></p><a href="${indVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="QR Code" style="display:inline-block;" /></a><br><br><a href="${indVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a></div>`;
+            // 1. Fetch Sequential Base Values
+            let baseAttendeeCount = 0;
+            if (typeof window.getUniversalAttendeeCount === 'function') {
+                baseAttendeeCount = await window.getUniversalAttendeeCount();
+            }
+            let newAttendeesThisSession = 0;
 
-                if (typeof window.saveIndividualTicket === 'function') {
-                    await window.saveIndividualTicket(pid, {
-                        pid: pid,
-                        name: userData.pureName,
-                        email: userData.email,
-                        phone: userData.phone,
-                        college: userData.college,
-                        events: indEvents.map(e => e.title),
-                        paymentId: paymentId,
-                        attended: false,
-                        timestamp: paymentTime,
-                        qrUrl: qrUrl
-                    });
+            // Helper function to safely fetch existing ID or generate the sequential TF2K26-NAME-XXXX format
+            async function resolveRegId(phone, name) {
+                if (typeof window.getExistingRegId === 'function') {
+                    const existing = await window.getExistingRegId(phone);
+                    if (existing) return existing;
                 }
+                newAttendeesThisSession++;
+                const count = baseAttendeeCount + newAttendeesThisSession;
+                const xxxx = count.toString().padStart(4, '0');
+                const firstName = name.split(' ')[0].toUpperCase().replace(/[^A-Z]/g, '');
+                return `TF2K26-${firstName}-${xxxx}`;
             }
 
-            // 2. Generate Separate QRs for Team Events
-            for (const ev of teamEvents) {
-                const tid = "TID_" + Math.random().toString(36).substr(2, 9).toUpperCase();
-                const teamVerifyLink = `${baseVerifyUrl}?team=${tid}`;
-                const qrUrl = `https://quickchart.io/qr?text=${encodeURIComponent(teamVerifyLink)}&size=200`;
+            // A. PRE-GENERATE THE LEADER'S ID FIRST
+            const leaderRegId = await resolveRegId(userData.phone, userData.pureName);
 
+            // 2. Process Individual Events for the Leader
+            if (indEvents.length > 0) {
+                indEvents.forEach(e => {
+                    leaderEventsToAdd.push({
+                        eventName: e.title,
+                        type: "Solo",
+                        teamName: "N/A"
+                    });
+                });
+            }
+
+            // 3. Process Team Events (Leader & Members)
+            for (const ev of teamEvents) {
                 const teamName = document.getElementById(`reg-team-name-${ev.id}`)?.value || 'Unnamed Team';
+                
+                // Add this team event to the Leader's universal pass
+                leaderEventsToAdd.push({
+                    eventName: ev.title,
+                    type: "Team",
+                    teamName: teamName,
+                    role: "Leader"
+                });
+                
                 let members = [];
                 for(let i=2; i<=ev.maxTeam; i++) {
-                    const mem = document.getElementById(`reg-member-${ev.id}-${i}`);
-                    if (mem && mem.value.trim()) members.push(mem.value.trim());
+                    const mNameInput = document.getElementById(`reg-member-name-${ev.id}-${i}`);
+                    const mPhoneInput = document.getElementById(`reg-member-phone-${ev.id}-${i}`);
+                    
+                    if (mNameInput && mNameInput.value.trim() && mPhoneInput && mPhoneInput.value.trim()) {
+                        const pureName = mNameInput.value.trim();
+                        const purePhone = "+91 " + mPhoneInput.value.trim();
+                        
+                        const memberRegId = await resolveRegId(purePhone, pureName);
+                        members.push({ name: pureName, phone: purePhone, regId: memberRegId });
+
+                        // A. Generate Universal Ticket for Team Member in Firebase
+                        const memberEventsToAdd = [{
+                            eventName: ev.title,
+                            type: "Team",
+                            teamName: teamName,
+                            role: `Member ${i}`
+                        }];
+                        
+                        if (typeof window.saveUniversalTicket === 'function') {
+                            await window.saveUniversalTicket(purePhone, pureName, userData.college, memberEventsToAdd, memberRegId);
+                        }
+
+                        // B. Generate Member QR for Email Display
+                        const memberVerifyLink = `${baseVerifyUrl}?uid=${memberRegId}`;
+                        const memberQrUrl = `https://quickchart.io/qr?text=${memberRegId}&size=200`;
+
+                        emailQrHtml += `<div style="border:2px dashed #10b981; padding:15px; margin-bottom:20px; text-align:center; background-color:#ecfdf5;"><h3 style="color:#047857; margin-top:0;">Team Pass: ${ev.title} (Member)</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Pass Holder: <b>${pureName} (${memberRegId})</b></p><a href="${memberVerifyLink}"><img src="${memberQrUrl}" width="200" height="200" alt="Universal QR Code" style="display:inline-block;" /></a><br><br><a href="${memberVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view live digital pass</a></div>`;
+                    }
                 }
 
-                // Push structured team data for Google Sheets
+                // Push structured team data for Google Sheets (NOW INCLUDING PHONE NUMBER)
                 teamData.push({
                     event: ev.title,
                     name: teamName,
-                    members: members.join(', ') || 'None'
+                    members: members.map(m => `${m.name} (${m.regId}) [${m.phone}]`).join(' | ') || 'None'
                 });
+            }
 
-                // Formatted specifically on a single line to guarantee EmailJS doesn't break it with injected <br> tags
-                emailQrHtml += `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Team QR Pass: ${ev.title}</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Leader: <b>${userData.pureName}</b></p><a href="${teamVerifyLink}"><img src="${qrUrl}" width="200" height="200" alt="Team QR Code" style="display:inline-block;" /></a><br><br><a href="${teamVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view your digital pass</a></div>`;
-
-                if (typeof window.saveTeamTicket === 'function') {
-                    await window.saveTeamTicket(tid, {
-                        tid: tid,
-                        eventName: ev.title,
-                        teamName: teamName,
-                        leaderName: userData.pureName,
-                        leaderEmail: userData.email,
-                        college: userData.college, // <--- ADDED THIS LINE TO FIX THE N/A ISSUE
-                        phone: userData.phone,     // <--- ADDED PHONE NUMBER JUST IN CASE
-                        members: members,
-                        paymentId: paymentId,
-                        attended: false,
-                        timestamp: paymentTime,
-                        qrUrl: qrUrl
-                    });
+            // 4. Finalize & Save Leader's Universal Pass
+            if (leaderEventsToAdd.length > 0) {
+                if (typeof window.saveUniversalTicket === 'function') {
+                    await window.saveUniversalTicket(userData.phone, userData.pureName, userData.college, leaderEventsToAdd, leaderRegId);
                 }
+
+                const leaderVerifyLink = `${baseVerifyUrl}?uid=${leaderRegId}`;
+                const leaderQrUrl = `https://quickchart.io/qr?text=${leaderRegId}&size=200`;
+
+                const allEventsString = leaderEventsToAdd.map(e => e.eventName).join(", ");
+
+                // Put the Leader's Universal Pass at the very top of the email
+                const leaderPassHtml = `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Your Universal Festival Pass</h3><p style="font-size:14px; margin-bottom:5px;">Participant: <b>${userData.pureName} (${leaderRegId})</b></p><p style="font-size:14px; margin-bottom:10px;">Access To: <b>${allEventsString}</b></p><a href="${leaderVerifyLink}"><img src="${leaderQrUrl}" width="200" height="200" alt="Universal QR Code" style="display:inline-block;" /></a><br><br><a href="${leaderVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view live digital pass</a></div>`;
+                
+                emailQrHtml = leaderPassHtml + emailQrHtml;
             }
 
             // IMMEDIATELY SAVE NEW PURCHASE TO FIREBASE CLOUD
@@ -2019,7 +2087,7 @@
                 qr_codes_html: emailQrHtml 
             };
             
-            // --- NEW: Google Sheets Data Export (Event-Specific Logic) ---
+            // --- Google Sheets Data Export (Event-Specific Logic) ---
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec';
             
             // Build an array of individual registrations for each event booked
@@ -2034,8 +2102,9 @@
                     }
                 }
                 return {
-                    eventName: ev.title, // Used by Google Script to find the exact Sheet Tab
+                    eventName: ev.title, 
                     name: userData.pureName, 
+                    regId: leaderRegId, // Automatically passes the sequential TF2K26 ID
                     email: userData.email,
                     phone: "'" + userData.phone, 
                     college: userData.college,
@@ -2052,11 +2121,11 @@
                 data: registrationsData
             };
 
-            // Send to Google Sheets asynchronously (doesn't block the UI)
+            // Send to Google Sheets asynchronously
             if (scriptURL !== 'YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE') {
                 fetch(scriptURL, {
                     method: 'POST',
-                    mode: 'no-cors', // Important so browser doesn't block the request
+                    mode: 'no-cors', 
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(sheetPayload)
                 }).catch(err => console.error("Sheet error:", err));
@@ -2247,7 +2316,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // =======================================================================
         // IMPORTANT: PASTE YOUR OWN FIREBASE CONFIG OBJECT HERE
@@ -2300,7 +2369,23 @@
             };
             initAuth();
 
-            // 1. Promo Code Validation (Tied to Code itself)
+            // Helpers for Sequential Ticket Generation
+            window.getUniversalAttendeeCount = async function() {
+                try {
+                    const collSnap = await getDocs(collection(db, 'universal_attendees'));
+                    return collSnap.size;
+                } catch(e) { return 0; }
+            };
+            
+            window.getExistingRegId = async function(phone) {
+                try {
+                    const sanitizedPhone = phone.replace(/\D/g, '');
+                    const docSnap = await getDoc(doc(db, 'universal_attendees', sanitizedPhone));
+                    if (docSnap.exists() && docSnap.data().regId) return docSnap.data().regId;
+                    return null;
+                } catch(e) { return null; }
+            };
+
             window.checkPromoCodeGlobal = async function(code) {
                 if (!code) return { valid: true }; 
                 try {
@@ -2316,7 +2401,6 @@
                 }
             };
 
-            // 2. Promo Code Sync (Tied to Code itself)
             window.markPromoCodeUsedGlobal = async function(code, userDetails) {
                 try {
                     const promoRef = doc(db, 'promocodes', code);
@@ -2330,7 +2414,6 @@
                 }
             };
 
-            // 3. READ Past Event Purchases via Email Address
             window.getGlobalPurchasedEvents = async function(email) {
                 try {
                     const sanitizedEmail = email.toLowerCase().trim();
@@ -2346,7 +2429,6 @@
                 }
             };
 
-            // 4. WRITE New Event Purchases to Email Address
             window.saveGlobalPurchasedEvents = async function(email, newIds) {
                 try {
                     const sanitizedEmail = email.toLowerCase().trim();
@@ -2371,30 +2453,46 @@
                 }
             };
 
-            // 5. WRITE Individual Ticket QR Data
-            window.saveIndividualTicket = async function(pid, data) {
+            // UNIVERSAL TICKET LOGIC
+            window.saveUniversalTicket = async function(phone, attendeeName, college, newEventsArray, regId) {
                 try {
-                    await setDoc(doc(db, 'individual_tickets', pid), data);
-                    console.log("Individual Ticket Saved:", pid);
-                } catch (err) { 
-                    alert("Firebase Error: Could not save ticket! Please make sure techferte.netlify.app is added to your Firebase Authentication Authorized Domains.");
-                    console.error("Ticket Save Error:", err); 
-                }
-            };
+                    const sanitizedPhone = phone.replace(/\D/g, ''); // Extract just numbers e.g. 919876543210
+                    const docRef = doc(db, 'universal_attendees', sanitizedPhone);
+                    const docSnap = await getDoc(docRef);
 
-            // 6. WRITE Team Ticket QR Data
-            window.saveTeamTicket = async function(tid, data) {
-                try {
-                    await setDoc(doc(db, 'team_tickets', tid), data);
-                    console.log("Team Ticket Saved:", tid);
+                    let existingEvents = [];
+                    if (docSnap.exists() && docSnap.data().events) {
+                        existingEvents = docSnap.data().events;
+                    }
+
+                    // Append new events safely, preventing exact duplicates
+                    newEventsArray.forEach(newEv => {
+                        if (!existingEvents.some(e => e.eventName === newEv.eventName)) {
+                            existingEvents.push(newEv);
+                        }
+                    });
+
+                    const qrUrl = `https://quickchart.io/qr?text=${regId}&size=200`;
+
+                    await setDoc(docRef, {
+                        id: regId, // The beautiful sequential ID
+                        regId: regId, // Saved explicitly so the scanner can find it easily
+                        phone: phone,
+                        name: attendeeName,
+                        college: college,
+                        events: existingEvents,
+                        qrUrl: qrUrl,
+                        lastUpdated: new Date().toISOString()
+                    }, { merge: true });
+
+                    console.log("Universal Pass Updated for:", regId);
                 } catch (err) { 
-                    alert("Firebase Error: Could not save team ticket!");
-                    console.error("Ticket Save Error:", err); 
+                    console.error("Universal Ticket Save Error:", err); 
                 }
             };
 
         } else {
-            // Dummy fallback if Firebase is not setup yet (Simulates the code restriction perfectly)
+            // Fallbacks
             window.checkPromoCodeGlobal = async (code) => {
                 const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
                 if(usedCodes.includes(code)) return { valid: false, message: "This promo code has already been redeemed." };
@@ -2403,6 +2501,7 @@
             window.markPromoCodeUsedGlobal = async () => {};
             window.getGlobalPurchasedEvents = async () => { return []; };
             window.saveGlobalPurchasedEvents = async () => {};
+            window.saveUniversalTicket = async () => {};
         }
     </script>
 </body>
