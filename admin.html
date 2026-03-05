@@ -14,51 +14,88 @@
         h1, h2, h3, .brand-font { font-family: 'Antonio', sans-serif; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-10 px-4">
-    <div class="text-center mb-10">
-        <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider">ADMIN DASHBOARD</h1>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 relative">
+    
+    <!-- Background styling to match the main site -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-900/20 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-amber-900/10 blur-[150px] rounded-full"></div>
+    </div>
+
+    <div class="text-center mb-10 z-10">
+        <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider drop-shadow-lg">ADMIN DASHBOARD</h1>
         <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fête 2k26 Secure Portal</p>
     </div>
 
-    <div class="w-full max-w-2xl bg-slate-900 border border-amber-500/20 rounded-3xl shadow-2xl p-8 relative overflow-hidden">
+    <div class="w-full max-w-4xl bg-slate-900/80 backdrop-blur-xl border border-amber-500/20 rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.8)] p-8 relative overflow-hidden z-10">
         
-        <div id="auth-section" class="text-center">
-            <div class="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-amber-500/20">
-                <i data-lucide="lock" class="w-8 h-8"></i>
+        <!-- SECURE LOGIN SCREEN -->
+        <div id="auth-section" class="text-center max-w-md mx-auto py-8">
+            <div class="w-20 h-20 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+                <i data-lucide="shield-check" class="w-10 h-10"></i>
             </div>
-            <h2 class="text-2xl font-bold mb-4">Admin Authentication</h2>
-            <p class="text-slate-400 mb-6 text-sm">Please enter the master admin PIN to access and download the attendance records.</p>
-            <input type="password" id="admin-pin" placeholder="Enter PIN" class="w-full max-w-xs bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors text-center text-xl tracking-widest mb-4">
-            <button onclick="window.verifyAdmin()" class="w-full max-w-xs bg-amber-500 text-slate-950 px-6 py-3 rounded-xl font-bold uppercase tracking-widest hover:brightness-110 transition-all shadow-lg mx-auto block">
+            <h2 class="text-3xl brand-font font-bold mb-4 tracking-wide text-white">Admin Authentication</h2>
+            <p class="text-slate-400 mb-8 text-sm leading-relaxed">Please enter the master admin PIN to access the fest's live data portal and scanner tools.</p>
+            <input type="password" id="admin-pin" placeholder="ENTER PIN" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-amber-500 transition-colors text-center text-2xl tracking-[0.5em] mb-6 font-mono font-bold shadow-inner">
+            <button onclick="window.verifyAdmin()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-6 py-4 rounded-xl font-black uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] block">
                 Unlock Dashboard
             </button>
         </div>
 
+        <!-- UNLOCKED DASHBOARD SCREEN -->
         <div id="dashboard-section" class="hidden">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-6 mb-6">
-                <div>
-                    <h2 class="text-2xl font-bold text-white mb-1">Attendance Logs</h2>
-                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Live Database Connection Active</p>
+            <div class="flex flex-col md:flex-row items-center justify-between border-b border-slate-800 pb-6 mb-8 gap-4">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-1">Command Center</h2>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Manage Check-ins & Data</p>
                 </div>
-                <div class="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-lg border border-emerald-500/20 text-sm font-bold flex items-center">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Connected
+                <div class="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-lg border border-emerald-500/20 text-sm font-bold flex items-center shadow-[inset_0_0_10px_rgba(16,185,129,0.1)]">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> Live DB Connected
                 </div>
             </div>
 
-            <div class="bg-black/40 p-6 rounded-2xl border border-slate-800 mb-8 text-center">
-                <i data-lucide="file-spreadsheet" class="w-12 h-12 text-emerald-400 mx-auto mb-4"></i>
-                <h3 class="text-lg font-bold mb-2">Export Data to Excel</h3>
-                <p class="text-sm text-slate-400 mb-6">Download a complete, beautifully organized Excel (.xlsx) file containing every participant who has successfully checked in at the venue.</p>
+            <!-- Dashboard Action Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
-                <button id="download-btn" onclick="window.downloadExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center mx-auto w-full sm:w-auto">
-                    <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download Excel File
-                </button>
-                <p id="download-status" class="text-xs text-amber-400 font-bold mt-4 hidden animate-pulse">Fetching records from cloud...</p>
+                <!-- CARD 1: EXPORT DATA -->
+                <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all text-center flex flex-col justify-between group h-full">
+                    <div>
+                        <div class="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="file-spreadsheet" class="w-8 h-8 text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Export Attendance</h3>
+                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Download a complete, beautifully organized Excel (.xlsx) file containing everyone who has checked into the campus and specific events.</p>
+                    </div>
+                    <div>
+                        <button id="download-btn" onclick="window.downloadExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] flex items-center justify-center w-full active:scale-95">
+                            <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download Excel
+                        </button>
+                        <p id="download-status" class="text-xs text-amber-400 font-bold mt-4 hidden animate-pulse">Fetching records from cloud...</p>
+                    </div>
+                </div>
+
+                <!-- CARD 2: SMART SCANNER -->
+                <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all text-center flex flex-col justify-between group h-full">
+                    <div>
+                        <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="scan-line" class="w-8 h-8 text-amber-400"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Launch Scanner</h3>
+                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Open the secure verification portal. Use this tool at the main gate or event rooms to scan participant IDs and log live attendance.</p>
+                    </div>
+                    <div>
+                        <a href="verify.html" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] flex items-center justify-center w-full active:scale-95">
+                            Launch App <i data-lucide="external-link" class="w-5 h-5 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
 
+    <!-- FIREBASE & APP LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -91,8 +128,10 @@
             if (pin === "2026") {
                 document.getElementById('auth-section').classList.add('hidden');
                 document.getElementById('dashboard-section').classList.remove('hidden');
+                lucide.createIcons();
             } else {
                 alert("Incorrect Admin PIN.");
+                document.getElementById('admin-pin').value = '';
             }
         };
 
@@ -129,7 +168,7 @@
                     const data = doc.data();
                     excelData.push({
                         "Check-In Time": data.checkInTime || '',
-                        "Registration ID": data.regId || 'N/A', // NEW FIELD FOR EXCEL
+                        "Registration ID": data.regId || 'N/A', 
                         "Primary Name": data.primaryName || '',
                         "College": data.college || 'N/A',
                         "Location / Event": data.eventsCheckedIn || '',
@@ -181,6 +220,13 @@
                 status.classList.add('hidden');
             }
         };
+
+        // Add "Enter key" functionality to password box
+        document.getElementById("admin-pin").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                window.verifyAdmin();
+            }
+        });
     </script>
 </body>
 </html>
