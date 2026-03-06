@@ -47,7 +47,8 @@
             </div>
             
             <div class="w-full mt-6 flex gap-2">
-                <input type="text" id="manual-id" placeholder="TF2K26-ANTO-0001" class="flex-1 bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm">
+                <!-- UPDATED: Added value="TF2K26-" -->
+                <input type="text" id="manual-id" value="TF2K26-" placeholder="TF2K26-NAME-0000" class="flex-1 bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm">
                 <button onclick="window.manualLookup()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-amber-500/20">Find</button>
             </div>
         </div>
@@ -152,7 +153,9 @@
         window.resetScanner = function() {
             // Remove uid from URL so it doesn't auto-load again
             window.history.pushState({}, document.title, window.location.pathname);
-            document.getElementById('manual-id').value = '';
+            
+            // Restore default prefix instead of totally clearing it
+            document.getElementById('manual-id').value = 'TF2K26-';
             showSection('scanner-section');
             if (html5QrcodeScanner) {
                 html5QrcodeScanner.render(onScanSuccess, onScanFailure);
@@ -165,8 +168,9 @@
             
             const cleanId = scannedId.trim().toUpperCase();
 
-            if (!cleanId.startsWith('TF2K26-')) {
-                document.getElementById('error-msg').innerText = "Invalid QR Code format. Expected TF2K26-NAME-XXXX.";
+            // Ensure they don't submit just the prefix alone
+            if (!cleanId.startsWith('TF2K26-') || cleanId === 'TF2K26-') {
+                document.getElementById('error-msg').innerText = "Invalid QR Code format. Expected full Registration ID (e.g., TF2K26-NAME-0000).";
                 showSection('error-section');
                 return;
             }
