@@ -47,7 +47,6 @@
             </div>
             
             <div class="w-full mt-6 flex gap-2">
-                <!-- UPDATED: Added value="TF2K26-" -->
                 <input type="text" id="manual-id" value="TF2K26-" placeholder="TF2K26-NAME-0000" class="flex-1 bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm">
                 <button onclick="window.manualLookup()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-amber-500/20">Find</button>
             </div>
@@ -154,7 +153,6 @@
             // Remove uid from URL so it doesn't auto-load again
             window.history.pushState({}, document.title, window.location.pathname);
             
-            // Restore default prefix instead of totally clearing it
             document.getElementById('manual-id').value = 'TF2K26-';
             showSection('scanner-section');
             if (html5QrcodeScanner) {
@@ -162,7 +160,7 @@
             }
         };
 
-        // Core Lookup Function (Now queries by the new TF2K26 ID)
+        // Core Lookup Function
         window.fetchUniversalProfile = async function(scannedId) {
             showSection('loading-section');
             
@@ -280,7 +278,7 @@
             const timestampFull = new Date().toISOString();
 
             try {
-                // 1. Update the Participant's universal_attendee document
+                // 1. Update the Participant's universal_attendee document (Firebase)
                 const docRef = doc(db, 'universal_attendees', currentParticipantPhoneId);
                 await setDoc(docRef, {
                     checkIns: {
@@ -288,19 +286,42 @@
                     }
                 }, { merge: true });
 
-                // 2. Log to global attendance_logs (For Admin Dashboard Excel Export)
+                // 2. Log to global attendance_logs (Firebase for Admin Excel Export)
                 await addDoc(collection(db, "attendance_logs"), {
                     timestamp: timestampFull,
                     checkInTime: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
-                    regId: currentParticipantData.regId || "N/A", // Added the Registration ID to the Logs
+                    regId: currentParticipantData.regId || "N/A", 
                     primaryName: currentParticipantData.name,
                     college: currentParticipantData.college || "N/A",
                     phone: currentParticipantPhoneId,
-                    type: eventDetails ? eventDetails.type : "Campus Entry",
+                    type: eventDetails ? (eventDetails.type || "Campus Entry") : "Campus Entry",
                     eventsCheckedIn: eventName,
-                    teamName: eventDetails ? eventDetails.teamName : "N/A",
-                    role: eventDetails ? eventDetails.role : "N/A"
+                    teamName: eventDetails ? (eventDetails.teamName || "N/A") : "N/A",
+                    role: eventDetails ? (eventDetails.role || "Solo") : "N/A"
                 });
+
+                // ==========================================
+                // 3. NEW: SEND SIGNAL TO GOOGLE SHEETS LIVE!
+                // ==========================================
+                const GOOGLE_SHEETS_WEBHOOK = "https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec";
+                
+                const sheetPayload = {
+                    action: "checkin",
+                    eventName: eventName,
+                    regId: currentParticipantData.regId,
+                    name: currentParticipantData.name,
+                    college: currentParticipantData.college || "N/A"
+                };
+
+                // Fire and forget, don't await so the UI stays snappy for the volunteer
+                fetch(GOOGLE_SHEETS_WEBHOOK, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(sheetPayload)
+                }).catch(e => console.error("Sheets update failed silently:", e));
+                // ==========================================
+
 
                 // Update local state so UI refreshes correctly
                 if (!currentParticipantData.checkIns) currentParticipantData.checkIns = {};

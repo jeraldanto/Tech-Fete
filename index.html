@@ -110,7 +110,7 @@
             
             <div class="flex items-center gap-2 md:gap-4">
                 
-                <!-- NEW: SUBMISSION PORTAL LINK -->
+                <!-- SUBMISSION PORTAL LINK -->
                 <a href="submit.html" target="_blank" class="hidden md:flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-900 bg-amber-500 rounded-full hover:brightness-110 transition-all tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] mr-2">
                     <i data-lucide="upload-cloud" class="w-4 h-4"></i> UPLOAD
                 </a>
@@ -233,9 +233,9 @@
                     EXPLORE EVENTS <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                 </a>
                 
-                <button class="w-full sm:w-auto bg-slate-900/40 backdrop-blur-md border border-amber-500/30 text-amber-400 px-10 py-4 rounded-xl font-bold hover:bg-amber-500/10 transition-all uppercase tracking-wide">
-                    Download Brochure
-                </button>
+                <a href="https://drive.google.com/file/d/1gXN61Om3Lk1byB27f9CRaxSfssUwYI6H/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-slate-900/40 backdrop-blur-md border border-amber-500/30 text-amber-400 px-10 py-4 rounded-xl font-bold hover:bg-amber-500/10 transition-all uppercase tracking-wide text-center flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> Download Brochure
+                </a>
             </div>
         </div>
     </section>
@@ -814,18 +814,24 @@
                         <p id="promo-message" class="text-xs mt-2 hidden"></p>
                     </div>
 
-                    <!-- IMPORTANT RULES / NOTE -->
-                    <div class="mt-4 bg-red-900/20 border border-red-500/30 rounded-xl p-4 mb-6 shadow-[inset_0_0_15px_rgba(239,68,68,0.05)]">
-                        <h4 class="text-[10px] font-black text-red-400 uppercase tracking-widest mb-2 flex items-center">
-                            <i data-lucide="alert-triangle" class="w-3 h-3 mr-1.5"></i> Important Note
+                    <!-- IMPORTANT RULES / NOTE (UPDATED FOR MAXIMUM VISIBILITY) -->
+                    <div class="mt-6 bg-red-950/40 border-2 border-red-500/60 rounded-xl p-5 mb-6 shadow-[0_0_20px_rgba(239,68,68,0.2)] animate-[pulse_3s_ease-in-out_infinite]">
+                        <h4 class="text-sm font-black text-red-400 uppercase tracking-widest mb-3 flex items-center">
+                            <i data-lucide="alert-octagon" class="w-5 h-5 mr-2"></i> IMPORTANT NOTE - READ CAREFULLY
                         </h4>
-                        <ol class="text-[10px] text-slate-300 space-y-1.5 list-decimal pl-4 leading-relaxed font-medium">
-                            <li>Kindly bring your <strong>College ID</strong> for smoother registration.</li>
+                        <ol class="text-[11px] md:text-xs text-slate-200 space-y-2.5 list-decimal pl-5 leading-relaxed font-bold">
+                            <li>Participants must carry a valid <strong>College ID card</strong> during the entire event.</li>
                             <li>You can select a maximum of <strong>3 events per checkout</strong>. For more events, please make multiple registrations.</li>
                             <li><strong>Quiz</strong> and <strong>Chess</strong> are mutually exclusive; you cannot participate in both. The same applies for <strong>PPT Presentation</strong> and <strong>Debugging</strong>.</li>
-                            <li>If the participant fails to check the timing before the event registration it will be considered as their negligence and our team isn't responsible for that.</li>
-                            <li>If the person violates the above rules, the amount will <strong>not be refunded</strong> and the first entry will only be taken into account.</li>
-                            <li>The Fête Co-ordinators have all the rights to disqualify the Individual Participant / Team if the above is not met.</li>
+                            <li>Participants must check the timings before registration. Clashing event timings will be considered participant negligence, and our team is not responsible.</li>
+                            <li class="text-amber-400 bg-amber-950/30 p-1.5 rounded border border-amber-500/30"><strong>If the same person registers for the same event again (e.g., for a friend), Event Management is not responsible and no amount will be refunded. Ensure all participant details are correct.</strong></li>
+                            <li>Report to the venue at least <strong>15 minutes before</strong> the event begins. Late entries may not be entertained once the event has started.</li>
+                            <li>Once you enter the premises, please collect your <strong>token for food and snacks</strong> at the registration desk.</li>
+                            <li>Participants must follow the instructions of the event coordinators and volunteers. Any form of misconduct or inappropriate behavior will lead to disqualification.</li>
+                            <li>Use of unfair means or plagiarism in any event will result in <strong>immediate disqualification</strong>.</li>
+                            <li>The decision of the judges and organizing committee will be <strong>final</strong>. The organizers reserve the right to modify the rules if necessary.</li>
+                            <li>If a person violates the above rules, the amount will <strong>not be refunded</strong> and only the first entry will be taken into account.</li>
+                            <li>The Fête Co-ordinators have all rights to disqualify the Individual Participant / Team if the above conditions are not met.</li>
                         </ol>
                     </div>
 
@@ -890,7 +896,7 @@
         let localPurchasedEvents = []; // Fallback memory
 
         // GLOBAL DISCOUNT CALCULATION LOGIC (Checkout Session Based)
-        window.calculateSubtotal = function(currentList, pastList = []) {
+        window.calculateSubtotal = function(currentList) {
             let baseTotal = 0;
             let comboDisc = 0;
             let effectiveFees = {}; // { eventId: finalPrice }
@@ -1171,19 +1177,11 @@
             if(!modal || !modalBody) return;
             
             const isSelected = selectedEventsList.some(e => e.id === id);
-            const isPurchasedLocally = localPurchasedEvents.some(e => e.id === id);
             
             let btnText = isSelected ? "Remove from Selection" : "Add to Selection";
             let btnColor = isSelected ? "bg-red-500 hover:bg-red-400 shadow-red-500/10 text-white" : "bg-amber-500 hover:bg-amber-400 shadow-amber-500/10 text-slate-950";
             let onClickAction = `window.toggleEventSelection(${event.id})`;
             let cursorStyle = "cursor-pointer active:scale-95";
-
-            if (isPurchasedLocally) {
-                btnText = "<i data-lucide='check-circle' class='w-5 h-5 mr-2 inline'></i> Already Registered (On this Device)";
-                btnColor = "bg-emerald-500/10 text-emerald-500 border border-emerald-500/50";
-                onClickAction = "event.preventDefault()";
-                cursorStyle = "cursor-not-allowed opacity-70";
-            }
 
             let teamSizeText = event.maxTeam > 1 
                 ? (event.minTeam === event.maxTeam ? `Exactly ${event.minTeam} Members` : `${event.minTeam} to ${event.maxTeam} Members`)
@@ -1260,26 +1258,19 @@
                 // If it's already in the cart, remove it
                 selectedEventsList.splice(index, 1);
             } else {
-                // If it's a new event, check all the rules before adding!
-                if (localPurchasedEvents.some(e => e.id === id)) {
-                    alert(`⚠️ Already Registered!\n\nYou have already successfully registered for "${event.title}".`);
-                    return;
-                }
-
                 // Mutual Exclusivity Constraint (Quiz vs Chess)
-                const allEvents = [...localPurchasedEvents, ...selectedEventsList, event];
-                const hasQuiz = allEvents.some(e => e.id === 5);
-                const hasChess = allEvents.some(e => e.id === 12);
-                if (hasQuiz && hasChess) {
-                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both Quiz and Chess as they are mutually exclusive.`);
+                const hasQuiz = selectedEventsList.some(e => e.id === 5);
+                const hasChess = selectedEventsList.some(e => e.id === 12);
+                if ((event.id === 5 && hasChess) || (event.id === 12 && hasQuiz)) {
+                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both Quiz and Chess in the same checkout as they are mutually exclusive.`);
                     return;
                 }
 
                 // Mutual Exclusivity Constraint (PPT vs Debugging)
-                const hasPPT = allEvents.some(e => e.id === 1);
-                const hasDebugging = allEvents.some(e => e.id === 2);
-                if (hasPPT && hasDebugging) {
-                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both PPT Presentation and Debugging.`);
+                const hasPPT = selectedEventsList.some(e => e.id === 1);
+                const hasDebugging = selectedEventsList.some(e => e.id === 2);
+                if ((event.id === 1 && hasDebugging) || (event.id === 2 && hasPPT)) {
+                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both PPT Presentation and Debugging in the same checkout.`);
                     return;
                 }
 
@@ -1306,7 +1297,7 @@
             if (selectedEventsList.length > 0) {
                 floatingCart.classList.remove('translate-y-full');
                 if(cartCount) cartCount.innerText = selectedEventsList.length;
-                if(cartTotal) cartTotal.innerText = window.calculateSubtotal(selectedEventsList, localPurchasedEvents).subtotal;
+                if(cartTotal) cartTotal.innerText = window.calculateSubtotal(selectedEventsList).subtotal;
             } else {
                 floatingCart.classList.add('translate-y-full');
             }
@@ -1319,7 +1310,7 @@
             const comboDisplay = document.getElementById('combo-discount-display');
             const comboAmt = document.getElementById('combo-discount-amt');
             
-            const pricing = window.calculateSubtotal(selectedEventsList, localPurchasedEvents);
+            const pricing = window.calculateSubtotal(selectedEventsList);
             const finalTotal = Math.max(0, pricing.subtotal - discountApplied);
             
             if (checkoutTotal) checkoutTotal.innerText = finalTotal;
@@ -1352,7 +1343,7 @@
             const applyBtn = document.getElementById('promo-apply-btn');
             const input = inputField.value.trim().toUpperCase();
             const msgEl = document.getElementById('promo-message');
-            const subtotal = window.calculateSubtotal(selectedEventsList, localPurchasedEvents).subtotal;
+            const subtotal = window.calculateSubtotal(selectedEventsList).subtotal;
             
             // Get email strictly to bind the code to the user, not just the browser
             const userEmailInput = document.getElementById('reg-email').value.toLowerCase().trim();
@@ -1573,7 +1564,7 @@
             const listContainer = document.getElementById('checkout-events-list');
             if(!listContainer) return;
             
-            const pricing = window.calculateSubtotal(selectedEventsList, localPurchasedEvents);
+            const pricing = window.calculateSubtotal(selectedEventsList);
 
             listContainer.innerHTML = selectedEventsList.map(e => {
                 const finalFee = pricing.effectiveFees[e.id];
@@ -1706,45 +1697,37 @@
                 const event = eventsData.find(e => e.id === id);
                 if (!event) continue;
 
-                if (localPurchasedEvents.some(e => e.id === id)) {
-                     warnings.push(`Skipped "${event.title}": Already registered.`);
-                     continue;
-                }
-
-                const allEvents = [...localPurchasedEvents, ...validAdds, event];
+                const allEvents = [...validAdds, event];
                 
                 const hasQuiz = allEvents.some(e => e.id === 5);
                 const hasChess = allEvents.some(e => e.id === 12);
                 if (hasQuiz && hasChess) {
-                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in cart.`);
+                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in bundle.`);
                      continue;
                 }
 
                 const hasPPT = allEvents.some(e => e.id === 1);
                 const hasDebugging = allEvents.some(e => e.id === 2);
                 if (hasPPT && hasDebugging) {
-                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in cart.`);
+                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in bundle.`);
                      continue;
                 }
 
-                const currentTotal = localPurchasedEvents.length + validAdds.length;
-                if (currentTotal >= 3) {
+                if (validAdds.length >= 3) {
                      warnings.push(`Skipped "${event.title}": 3 events max limit reached.`);
                      continue;
                 }
 
                 if (event.maxTeam > 1) {
-                    const purchasedGroupCount = localPurchasedEvents.filter(e => e.maxTeam > 1).length;
                     const selectedGroupCount = validAdds.filter(e => e.maxTeam > 1).length;
-                    if (purchasedGroupCount + selectedGroupCount >= 2) {
-                        warnings.push(`Skipped "${event.title}": 2 group events max limit reached.`);
+                    if (selectedGroupCount >= 2) {
+                        warnings.push(`Skipped "${event.title}": 2 group events max limit reached per checkout.`);
                         continue;
                     }
                 }
 
                 if (event.time !== 'All Day') {
-                    const allCurrentEvents = [...localPurchasedEvents, ...validAdds];
-                    const clash = allCurrentEvents.find(e => e.time === event.time && e.time !== 'All Day');
+                    const clash = validAdds.find(e => e.time === event.time && e.time !== 'All Day');
                     if (clash) {
                          warnings.push(`Skipped "${event.title}": Time clash with "${clash.title}".`);
                          continue;
@@ -1808,7 +1791,7 @@
             
             const submitBtn = document.getElementById('razorpay-btn');
             const originalBtnContent = submitBtn.innerHTML;
-            submitBtn.innerHTML = "Verifying Identity in Cloud... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
+            submitBtn.innerHTML = "Verifying Details... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
             submitBtn.disabled = true;
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
 
@@ -1825,36 +1808,17 @@
                 }
             }
 
-            // 1. QUERY FIREBASE FOR PAST PURCHASES BY THIS EMAIL
-            let cloudPurchasedIds = [];
-            if (typeof window.getGlobalPurchasedEvents === 'function') {
-                cloudPurchasedIds = await window.getGlobalPurchasedEvents(userEmailInput);
-            }
-
-            // Combine cloud purchases with local memory just to be extra safe
-            const allPastIds = [...new Set([...cloudPurchasedIds, ...localPurchasedEvents.map(e=>e.id)])];
-            const pastEventsData = allPastIds.map(id => eventsData.find(e => e.id === id)).filter(e => e);
-
-            // 2. RUN CONSTRAINTS AGAINST CLOUD DATA
+            // 2. RUN CONSTRAINTS (Current Cart Only - Ignored Past Purchases for Friend Booking)
             let warnings = [];
-            
-            // Check for duplicates
-            for (let ev of selectedEventsList) {
-                if (allPastIds.includes(ev.id)) {
-                    warnings.push(`- You have already registered for "${ev.title}" under this email.`);
-                }
-            }
-
-            const combinedEvents = [...pastEventsData, ...selectedEventsList];
 
             // Exclusivity Checks
-            const hasQuiz = combinedEvents.some(e => e.id === 5);
-            const hasChess = combinedEvents.some(e => e.id === 12);
-            if (hasQuiz && hasChess) warnings.push(`- You cannot register for both Quiz and Chess.`);
+            const hasQuiz = selectedEventsList.some(e => e.id === 5);
+            const hasChess = selectedEventsList.some(e => e.id === 12);
+            if (hasQuiz && hasChess) warnings.push(`- You cannot register for both Quiz and Chess in the same checkout.`);
 
-            const hasPPT = combinedEvents.some(e => e.id === 1);
-            const hasDebugging = combinedEvents.some(e => e.id === 2);
-            if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging.`);
+            const hasPPT = selectedEventsList.some(e => e.id === 1);
+            const hasDebugging = selectedEventsList.some(e => e.id === 2);
+            if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging in the same checkout.`);
 
             // Check Cart Max Total (3)
             if (selectedEventsList.length > 3) {
@@ -1888,7 +1852,7 @@
                 payerUpi: "Paid securely via Razorpay"
             };
 
-            const pricing = window.calculateSubtotal(selectedEventsList, pastEventsData);
+            const pricing = window.calculateSubtotal(selectedEventsList);
             const totalAmount = Math.max(0, pricing.subtotal - discountApplied);
             
             // --- FREE REGISTRATION BY bypass (Total = ₹0) ---
@@ -1997,7 +1961,8 @@
                     leaderEventsToAdd.push({
                         eventName: e.title,
                         type: "Solo",
-                        teamName: "N/A"
+                        teamName: "N/A",
+                        role: "Solo"
                     });
                 });
             }
