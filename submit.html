@@ -36,7 +36,6 @@
             
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Registration ID <span class="text-red-500">*</span></label>
-                <!-- UPDATED: Added value="TF2K26-" -->
                 <input type="text" id="reg-id" required value="TF2K26-" placeholder="TF2K26-NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm">
                 <p class="text-[10px] text-slate-500 mt-1">Check your email or physical pass for your full ID.</p>
             </div>
@@ -62,7 +61,7 @@
                     <p id="file-instruction" class="text-sm font-bold text-white mb-1">Select your event first.</p>
                     <p id="file-sub-instruction" class="text-xs text-slate-500">Max size: 15MB</p>
                     
-                    <!-- Hidden Input -->
+                    <!-- Hidden Input (Multiple allowed to trigger ZIP warning natively) -->
                     <input type="file" id="file-input" class="hidden" onchange="window.handleFileSelection(event)" multiple>
                 </div>
                 
@@ -137,12 +136,13 @@
     <script>
         lucide.createIcons();
 
-        // ⚠️ PASTE YOUR NEW GOOGLE DRIVE WEBHOOK URL HERE
+        // ⚠️ PASTE YOUR MASTER GOOGLE APPS SCRIPT WEBHOOK URL HERE
         const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzRD7ZkikOOxLBL3lmsGQMLcAzKUs-eonHNUj8yBYjmeQUqHT3RnKZnGxyID7RDftWt/exec';
         
         let selectedFile = null;
         let base64Data = null;
 
+        // UI Updates based on Event Selection
         window.updateFileConstraints = function() {
             const ev = document.getElementById('event-name').value;
             const uploadArea = document.getElementById('upload-area');
@@ -150,7 +150,7 @@
             const inst = document.getElementById('file-instruction');
             const subInst = document.getElementById('file-sub-instruction');
             
-            window.clearFile(); // Clear any previously selected file
+            window.clearFile();
 
             if (!ev) {
                 uploadArea.classList.add('opacity-50', 'pointer-events-none');
@@ -159,75 +159,91 @@
 
             uploadArea.classList.remove('opacity-50', 'pointer-events-none');
 
-            // Apply Smart Rules based on Event
             if (ev === "Dance") {
-                fileInput.accept = ".mp3, .wav, audio/*";
+                fileInput.accept = ".mp3, .wav";
                 inst.innerHTML = "Upload Dance Track (.mp3, .wav)";
-                subInst.innerHTML = "<span class='text-amber-400'>Strictly under 4 Minutes</span> | Max 15MB";
+                subInst.innerHTML = "<span class='text-amber-400'>Strictly under 4 Minutes</span> | No Size Limit";
             } 
             else if (ev === "PPT Presentation") {
                 fileInput.accept = ".ppt, .pptx, .pdf";
                 inst.innerHTML = "Upload Presentation (.ppt, .pdf)";
-                subInst.innerHTML = "Upload single file | Max 15MB";
+                subInst.innerHTML = "Upload exactly 1 file | Max 15MB";
             } 
             else {
-                // Creative Events (Techmeme, Photography, Poster)
-                fileInput.accept = ".jpg, .jpeg, .png, .pdf, .zip";
-                inst.innerHTML = "Upload Image/PDF or .ZIP";
+                fileInput.accept = ".jpg, .jpeg, .png, .zip";
+                inst.innerHTML = "Upload Image (.jpg, .png) or .ZIP";
                 subInst.innerHTML = "<span class='text-amber-400'>If submitting multiple files, you MUST zip them.</span> | Max 15MB";
             }
         };
 
+        // File Selection & Strict Validation
         window.handleFileSelection = function(event) {
             const files = event.target.files;
             if (files.length === 0) return;
 
             const ev = document.getElementById('event-name').value;
 
-            // RULE 1: Block multiple file selection natively. Force them to zip.
+            // RULE 1: MULTIPLE FILES -> MUST BE ZIP
             if (files.length > 1) {
-                alert("⚠️ Multiple Files Detected!\n\nTo submit multiple items for " + ev + ", please put them in a single .ZIP folder and upload the zip file.");
+                alert("⚠️ Multiple Files Detected!\n\nTo submit 2 or more files for " + ev + ", you MUST compress them into a single .ZIP file and upload the zip.");
                 window.clearFile();
                 return;
             }
 
             const file = files[0];
+            const ext = file.name.toLowerCase().split('.').pop();
 
-            // RULE 2: Max Size 15MB limit (Google Apps Script Payload constraint)
-            if (file.size > 15 * 1024 * 1024) {
+            // RULE 2: SPECIFIC EVENT VALIDATIONS
+            if (ev === "Dance") {
+                if (ext !== 'mp3' && ext !== 'wav') {
+                    alert("⚠️ Invalid file type!\n\nPlease upload ONLY .mp3 or .wav files for Dance.");
+                    window.clearFile();
+                    return;
+                }
+                // Check Audio Duration
+                const audio = new Audio();
+                audio.src = URL.createObjectURL(file);
+                audio.onloadedmetadata = function() {
+                    if (audio.duration > 241) { // 4 mins = 240 seconds
+                        alert("⚠️ Audio exceeds time limit!\n\nYour track is " + (audio.duration / 60).toFixed(2) + " minutes long. The limit is exactly 4 minutes.");
+                        window.clearFile();
+                    } else {
+                        window.acceptFile(file);
+                    }
+                };
+                return; // Wait for audio metadata to load
+            } 
+            else if (ev === "PPT Presentation") {
+                if (ext !== 'ppt' && ext !== 'pptx' && ext !== 'pdf') {
+                    alert("⚠️ Invalid file type!\n\nPlease upload ONLY .pdf, .ppt, or .pptx files.");
+                    window.clearFile();
+                    return;
+                }
+            } 
+            else {
+                // Creative Events (Photography, Techmeme, Poster Making)
+                if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png' && ext !== 'zip') {
+                    alert("⚠️ Invalid file type!\n\nPlease upload ONLY .png, .jpeg files, or a .zip file (if submitting multiple).");
+                    window.clearFile();
+                    return;
+                }
+            }
+
+            // RULE 3: SIZE LIMIT (15MB) for Non-Dance Events
+            if (ev !== "Dance" && file.size > 15 * 1024 * 1024) {
                 alert("⚠️ File too large!\n\nYour file is " + (file.size / 1024 / 1024).toFixed(1) + "MB. The maximum limit is 15MB.");
                 window.clearFile();
                 return;
             }
 
-            // RULE 3: Audio Duration constraint for Dance
-            if (ev === "Dance" && file.type.startsWith('audio/')) {
-                const audio = new Audio();
-                audio.src = URL.createObjectURL(file);
-                audio.onloadedmetadata = function() {
-                    // 240 seconds = 4 minutes
-                    if (audio.duration > 241) {
-                        alert("⚠️ Audio exceeds time limit!\n\nYour track is " + (audio.duration / 60).toFixed(2) + " minutes long. The limit is exactly 4 minutes. Please trim it and try again.");
-                        window.clearFile();
-                        return;
-                    } else {
-                        window.acceptFile(file);
-                    }
-                };
-            } else {
-                window.acceptFile(file);
-            }
+            window.acceptFile(file);
         };
 
         window.acceptFile = function(file) {
             selectedFile = file;
-            
-            // Read file as Base64 for the payload
             const reader = new FileReader();
             reader.onload = function(e) {
-                // Strip the "data:mime/type;base64," prefix
                 base64Data = e.target.result.split(",")[1];
-                
                 document.getElementById('file-name-display').innerText = file.name;
                 document.getElementById('file-preview').classList.remove('hidden');
                 document.getElementById('submit-btn').disabled = false;
@@ -243,14 +259,12 @@
             document.getElementById('submit-btn').disabled = true;
         };
 
-        // --- NEW: FIREBASE VALIDATION + UPLOAD PROCESS ---
         window.processUpload = async function(event) {
             event.preventDefault();
 
             const regIdInput = document.getElementById('reg-id').value.trim().toUpperCase();
             const eventName = document.getElementById('event-name').value;
 
-            // Ensure they don't just submit the prefix
             if (!regIdInput.startsWith("TF2K26-") || regIdInput === "TF2K26-") {
                 alert("Please enter a valid Registration ID (e.g., TF2K26-ANTO-0001).");
                 return;
@@ -261,7 +275,6 @@
                 return;
             }
 
-            // UI Changes - Lock Form
             const btn = document.getElementById('submit-btn');
             const formInputs = document.querySelectorAll('input, select');
             formInputs.forEach(inp => inp.disabled = true);
@@ -274,47 +287,37 @@
             
             loadingText.innerText = "Verifying Registration in Cloud...";
 
-            // ==========================================
-            // STEP 1: FIREBASE CLOUD VALIDATION
-            // ==========================================
             try {
                 const attendeesRef = window.firebaseCollection(window.firebaseDB, 'universal_attendees');
                 const q = window.firebaseQuery(attendeesRef, window.firebaseWhere('regId', '==', regIdInput));
                 const querySnapshot = await window.firebaseGetDocs(q);
 
-                // Check 1: Do they exist at all?
                 if (querySnapshot.empty) {
-                    alert("❌ You are not registered!\n\nWe couldn't find the ID: " + regIdInput + ". Please check your email receipt and try again.");
+                    alert("❌ You are not registered!\n\nWe couldn't find the ID: " + regIdInput + ".");
                     throw new Error("Validation Failed");
                 }
 
-                // Check 2: Are they registered for THIS specific event?
                 const userData = querySnapshot.docs[0].data();
                 const registeredEvents = userData.events || [];
                 const isRegisteredForEvent = registeredEvents.some(e => e.eventName === eventName);
 
                 if (!isRegisteredForEvent) {
-                    alert("❌ Event Mismatch!\n\nYour ID is valid, but you are not registered for '" + eventName + "'. Please choose the correct event you paid for.");
+                    alert("❌ Event Mismatch!\n\nYour ID is valid, but you are not registered for '" + eventName + "'.");
                     throw new Error("Validation Failed");
                 }
-
             } catch (error) {
                 console.error(error);
-                // Unlock form to try again
                 formInputs.forEach(inp => inp.disabled = false);
                 btn.classList.remove('hidden');
                 loadingUI.classList.add('hidden');
                 loadingUI.classList.remove('flex');
-                return; // Stop execution
+                return; 
             }
 
-            // ==========================================
-            // STEP 2: UPLOAD TO GOOGLE DRIVE
-            // ==========================================
-            loadingText.innerText = "Encrypting & Uploading File...";
+            loadingText.innerText = "Encrypting & Uploading File to Drive...";
 
             const payload = {
-                action: "upload",
+                action: "upload", // Tells the Master Google Script to handle this as an upload
                 regId: regIdInput,
                 eventName: eventName,
                 fileName: selectedFile.name,
@@ -323,24 +326,19 @@
             };
 
             try {
-                // Note: The new Drive-Only webhook goes here
-                if(WEBHOOK_URL === 'YOUR_NEW_GOOGLE_DRIVE_WEBHOOK_URL_HERE') {
-                    alert("Developer Note: Please paste the new Google Drive Apps Script URL into the HTML code to enable actual file uploading.");
-                }
-
+                // Ensure you have updated WEBHOOK_URL at the top!
                 await fetch(WEBHOOK_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // standard for GAS webhooks
+                    mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                // Fake a short delay to let the UI feel natural
                 setTimeout(() => {
                     document.getElementById('upload-form').classList.add('hidden');
                     document.getElementById('success-screen').classList.remove('hidden');
                     document.getElementById('success-screen').classList.add('flex');
-                }, 2000);
+                }, 1500);
 
             } catch (error) {
                 alert("Upload failed. Please check your connection and try again.");

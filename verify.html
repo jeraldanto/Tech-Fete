@@ -4,118 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scanner | Tech Fêté 2k26</title>
-    
-    <!-- External Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-
+    <script src="https://unpkg.com/html5-qrcode"></script>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: white; }
         h1, h2, h3, .brand-font { font-family: 'Antonio', sans-serif; }
-        
-        /* Scanner UI Overrides */
-        #reader { width: 100%; border-radius: 1rem; overflow: hidden; border: 2px solid rgba(245,158,11,0.2) !important; }
-        #reader__scan_region { background-color: black; }
-        #reader__dashboard_section_csr button { background-color: #f59e0b !important; color: #020617 !important; font-weight: bold !important; padding: 8px 16px !important; border-radius: 8px !important; text-transform: uppercase !important; letter-spacing: 1px !important; margin: 10px 5px !important; }
-        #reader__dashboard_section_swaplink { color: #fbbf24 !important; text-decoration: none !important; margin-top: 10px !important; display: inline-block !important; }
+        #reader { width: 100%; border-radius: 1rem; overflow: hidden; border: 2px solid rgba(245, 158, 11, 0.3); }
+        #reader video { object-fit: cover; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-8 px-4 relative">
-
-    <!-- Header Section -->
-    <div class="text-center mb-8 flex flex-col items-center z-10 w-full max-w-lg relative">
-        <div class="w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl p-1.5 flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.2)] mb-4">
-            <img src="college_logo.jpg" alt="PJPII Logo" class="w-full h-full object-contain rounded-xl" onerror="this.style.display='none'">
-        </div>
-        <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider">SMART SCANNER</h1>
-        <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fête 2k26 Universal Verification</p>
-    </div>
-
-    <div id="main-container" class="w-full max-w-lg bg-slate-900 border border-amber-500/20 rounded-3xl shadow-2xl p-6 relative overflow-hidden z-10">
-        
-        <!-- SECTION 1: The Camera Scanner -->
-        <div id="scanner-section" class="flex flex-col items-center w-full">
-            <p class="text-sm text-slate-400 mb-6 text-center">Point your camera at a participant's physical lanyard or digital pass to load their universal checklist.</p>
-            
-            <div id="reader" class="mb-6 w-full shadow-lg shadow-black"></div>
-            
-            <div class="w-full relative mt-4">
-                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-700"></div></div>
-                <div class="relative flex justify-center text-xs"><span class="bg-slate-900 px-4 text-slate-500 uppercase font-bold tracking-widest">Or enter manually</span></div>
-            </div>
-            
-            <div class="w-full mt-6 flex gap-2">
-                <input type="text" id="manual-id" value="TF2K26-" placeholder="TF2K26-NAME-0000" class="flex-1 bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm">
-                <button onclick="window.manualLookup()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-amber-500/20">Find</button>
-            </div>
+<body class="min-h-screen flex flex-col items-center py-6 px-4">
+    
+    <div class="w-full max-w-md">
+        <div class="text-center mb-6">
+            <h1 class="brand-font text-3xl font-black text-amber-500 tracking-wider">EVENT SCANNER</h1>
+            <p class="text-slate-400 uppercase text-[10px] tracking-[0.2em] font-bold mt-1">Tech Fête 2k26 Terminal</p>
         </div>
 
-        <!-- SECTION 2: Loading State -->
-        <div id="loading-section" class="hidden flex-col items-center justify-center py-12">
-            <i data-lucide="loader-2" class="w-12 h-12 text-amber-500 animate-spin mb-4"></i>
-            <h2 class="text-xl font-bold text-white tracking-widest">Searching Database...</h2>
+        <div id="auth-section" class="bg-slate-900/80 backdrop-blur-md p-6 rounded-3xl border border-amber-500/20 shadow-xl mb-6">
+            <h2 class="text-xl font-bold mb-4 text-center">Coordinator Login</h2>
+            <input type="password" id="pin-input" placeholder="Enter PIN" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-center text-white focus:outline-none focus:border-amber-500 tracking-[0.5em] font-mono text-lg mb-4">
+            <button onclick="window.verifyPin()" class="w-full bg-amber-500 text-slate-950 font-black py-3 rounded-xl uppercase tracking-widest hover:bg-amber-400">Unlock</button>
         </div>
 
-        <!-- SECTION 3: The Participant Profile & Checklist -->
-        <div id="profile-section" class="hidden flex-col w-full">
-            
-            <!-- Participant Identity Card -->
-            <div class="bg-gradient-to-br from-[#020617] to-black rounded-2xl p-5 border border-slate-700 mb-6 shadow-inner relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-bl-full -z-0"></div>
-                <div class="relative z-10 flex items-start gap-4">
-                    <div class="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400 shrink-0 border border-slate-600">
-                        <i data-lucide="user" class="w-6 h-6"></i>
-                    </div>
-                    <div class="flex-1">
-                        <h2 id="participant-name" class="text-2xl font-black text-white uppercase tracking-wide leading-none mb-1">Loading...</h2>
-                        <p id="participant-college" class="text-xs text-amber-400 font-bold tracking-wider mb-2">Loading...</p>
-                        <div class="flex items-center text-[10px] text-slate-500 font-mono tracking-widest">
-                            <i data-lucide="hash" class="w-3 h-3 mr-1"></i> <span id="participant-reg-id">...</span>
-                        </div>
-                    </div>
+        <div id="scanner-section" class="hidden">
+            <button id="scan-btn" onclick="window.startScanner()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl uppercase tracking-widest mb-4 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+                <i data-lucide="camera" class="mr-2 w-5 h-5"></i> Start Scanner
+            </button>
+
+            <!-- MANUAL ENTRY FALLBACK -->
+            <div id="manual-entry-ui" class="bg-slate-900/80 p-4 rounded-3xl border border-amber-500/20 mb-6">
+                <p class="text-xs text-center text-slate-400 uppercase font-bold tracking-widest mb-3">Or Enter Manually</p>
+                <div class="flex gap-2">
+                    <input type="text" id="manual-id" placeholder="TF2K26-NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 font-mono text-sm uppercase">
+                    <button onclick="window.manualLookup()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 rounded-xl font-bold transition-colors">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- The Live Checklist -->
-            <div>
-                <h3 class="text-xs font-black uppercase text-slate-500 tracking-[0.2em] mb-4 flex items-center">
-                    <i data-lucide="clipboard-check" class="w-4 h-4 mr-2 text-emerald-500"></i> LIVE ATTENDANCE CHECKLIST
-                </h3>
-                
-                <div id="checklist-container" class="space-y-3">
-                    <!-- Javascript will inject the dynamic buttons here -->
-                </div>
-            </div>
-
-            <!-- Actions -->
-            <div class="mt-8 pt-6 border-t border-slate-800 flex justify-between gap-4">
-                <button onclick="window.resetScanner()" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-sm tracking-widest uppercase transition-colors">
-                    <i data-lucide="scan" class="w-4 h-4 inline mr-2 -mt-1"></i> Scan Another
+            <!-- SCANNER UI: NO DROPDOWN NEEDED, IT FORCES REAR CAMERA -->
+            <div id="scanner-ui" class="hidden bg-slate-900/80 p-4 rounded-3xl border border-amber-500/20 mb-6">
+                <div id="reader" class="mb-4"></div>
+                <button onclick="window.stopScanner()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl uppercase tracking-widest text-sm">
+                    Cancel Scan
                 </button>
             </div>
-        </div>
 
-        <!-- SECTION 4: Error State -->
-        <div id="error-section" class="hidden flex-col items-center justify-center py-10 text-center">
-            <div class="w-20 h-20 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mb-6">
-                <i data-lucide="x-circle" class="w-10 h-10"></i>
+            <!-- PARTICIPANT PROFILE DISPLAY -->
+            <div id="result-card" class="hidden bg-slate-900/90 backdrop-blur-xl border border-amber-500/30 rounded-3xl p-6 shadow-2xl">
+                <div id="result-content"></div>
             </div>
-            <h2 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">Pass Not Found</h2>
-            <p id="error-msg" class="text-slate-400 mb-8 text-sm">This ID does not exist in the database or the QR code is invalid.</p>
-            <button onclick="window.resetScanner()" class="w-full bg-slate-800 hover:bg-slate-700 text-white px-8 py-3 rounded-xl font-bold uppercase tracking-widest transition-colors">Try Again</button>
         </div>
-
     </div>
 
-    <!-- FIREBASE & APP LOGIC -->
+    <!-- FIREBASE & LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, addDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // CRITICAL FIX: ALL imports must be at the top level of the module!
+        import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // IMPORTANT: Exact same Firebase config as index.html
+        lucide.createIcons();
+
         const firebaseConfig = {
             apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
             authDomain: "tech-fete-2026.firebaseapp.com",
@@ -130,256 +83,299 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Authenticate silently
+        // ⚠️ PASTE YOUR GOOGLE SCRIPT WEBHOOK URL HERE
+        const SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec";
+
         signInAnonymously(auth).catch(console.error);
 
         let html5QrcodeScanner = null;
         let currentParticipantData = null;
         let currentParticipantPhoneId = null;
 
-        // UI State Managers
-        function showSection(sectionId) {
-            ['scanner-section', 'loading-section', 'profile-section', 'error-section'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-                document.getElementById(id).classList.remove('flex');
-            });
-            const el = document.getElementById(sectionId);
-            el.classList.remove('hidden');
-            el.classList.add('flex');
-            lucide.createIcons();
-        }
-
-        window.resetScanner = function() {
-            // Remove uid from URL so it doesn't auto-load again
-            window.history.pushState({}, document.title, window.location.pathname);
-            
-            document.getElementById('manual-id').value = 'TF2K26-';
-            showSection('scanner-section');
-            if (html5QrcodeScanner) {
-                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        window.verifyPin = function() {
+            const pin = document.getElementById('pin-input').value;
+            if (pin === "1024") {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('scanner-section').classList.remove('hidden');
+            } else {
+                alert("Incorrect PIN");
+                document.getElementById('pin-input').value = '';
             }
         };
 
-        // Core Lookup Function
-        window.fetchUniversalProfile = async function(scannedId) {
-            showSection('loading-section');
+        // NEW SCANNER LOGIC: Forces rear camera automatically
+        window.startScanner = function() {
+            document.getElementById('scanner-ui').classList.remove('hidden');
+            document.getElementById('scan-btn').classList.add('hidden');
+            document.getElementById('manual-entry-ui').classList.add('hidden');
+            document.getElementById('result-card').classList.add('hidden');
             
-            const cleanId = scannedId.trim().toUpperCase();
+            html5QrcodeScanner = new Html5Qrcode("reader");
+            
+            // Bypass camera selection, force rear camera (environment) natively
+            html5QrcodeScanner.start(
+                { facingMode: "environment" }, 
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 }
+                },
+                (decodedText) => {
+                    // Success callback
+                    html5QrcodeScanner.stop().then(() => {
+                        document.getElementById('scanner-ui').classList.add('hidden');
+                        document.getElementById('scan-btn').classList.remove('hidden');
+                        document.getElementById('manual-entry-ui').classList.remove('hidden');
+                        window.lookupParticipant(decodedText);
+                    });
+                },
+                (errorMessage) => {
+                    // ignore rapid scan errors silently
+                }
+            ).catch((err) => {
+                console.error(err);
+                alert("Camera error. Please ensure you are on a mobile device and have granted camera permissions.");
+                document.getElementById('scanner-ui').classList.add('hidden');
+                document.getElementById('scan-btn').classList.remove('hidden');
+                document.getElementById('manual-entry-ui').classList.remove('hidden');
+            });
+        };
 
-            // Ensure they don't submit just the prefix alone
-            if (!cleanId.startsWith('TF2K26-') || cleanId === 'TF2K26-') {
-                document.getElementById('error-msg').innerText = "Invalid QR Code format. Expected full Registration ID (e.g., TF2K26-NAME-0000).";
-                showSection('error-section');
-                return;
+        window.stopScanner = function() {
+            if (html5QrcodeScanner) {
+                html5QrcodeScanner.stop().then(() => {
+                    document.getElementById('scanner-ui').classList.add('hidden');
+                    document.getElementById('scan-btn').classList.remove('hidden');
+                    document.getElementById('manual-entry-ui').classList.remove('hidden');
+                });
             }
+        };
+
+        window.manualLookup = function() {
+            const manualId = document.getElementById('manual-id').value.trim().toUpperCase();
+            if(!manualId) return;
+            window.lookupParticipant(manualId);
+            document.getElementById('manual-id').value = ''; // clear input
+        };
+
+        window.lookupParticipant = async function(scannedId) {
+            const resultCard = document.getElementById('result-card');
+            const resultContent = document.getElementById('result-content');
+            
+            resultCard.classList.remove('hidden');
+            resultContent.innerHTML = `<div class="text-center py-8"><i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin mx-auto mb-2"></i><p class="text-slate-400 text-sm">Fetching cloud records...</p></div>`;
+            lucide.createIcons();
 
             try {
-                // Query database to find who holds this exact Registration ID
-                const attendeesRef = collection(db, 'universal_attendees');
-                const q = query(attendeesRef, where('regId', '==', cleanId));
-                const querySnapshot = await getDocs(q);
-
-                if (!querySnapshot.empty) {
-                    const docSnap = querySnapshot.docs[0];
-                    currentParticipantData = docSnap.data();
-                    currentParticipantPhoneId = docSnap.id; // This is their actual phone number linking everything
-                    renderChecklist();
-                    showSection('profile-section');
+                // Determine ID type
+                let searchId = scannedId;
+                let searchField = 'regId';
+                
+                // Backward compatibility if they scan phone number
+                if (!scannedId.startsWith('TF2K26-')) {
+                    searchId = "+91 " + scannedId.replace(/\D/g, '').substring(0, 10);
+                    searchField = 'phone';
+                    currentParticipantPhoneId = searchId.replace(/\D/g, '');
                 } else {
-                    document.getElementById('error-msg').innerText = `No participant found with ID: ${cleanId}`;
-                    showSection('error-section');
+                    // If they scanned a Reg ID, we need to find the phone number document name
+                    const qRef = collection(db, 'universal_attendees');
+                    const q = query(qRef, where("regId", "==", scannedId));
+                    const querySnapshot = await getDocs(q);
+                    
+                    if (querySnapshot.empty) {
+                        throw new Error("ID Not Found");
+                    }
+                    const docData = querySnapshot.docs[0].data();
+                    currentParticipantPhoneId = docData.phone.replace(/\D/g, '');
+                }
+
+                // Get participant document
+                const docRef = doc(db, 'universal_attendees', currentParticipantPhoneId);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    currentParticipantData = docSnap.data();
+                    // Fallback to ensure currentParticipantData.regId exists for legacy records
+                    if (!currentParticipantData.regId) {
+                        currentParticipantData.regId = scannedId;
+                    }
+                    window.renderParticipantProfile();
+                } else {
+                    throw new Error("Participant Not Found");
                 }
             } catch (error) {
-                console.error("Database Error:", error);
-                document.getElementById('error-msg').innerText = "Network error connecting to database.";
-                showSection('error-section');
+                resultContent.innerHTML = `
+                    <div class="text-center py-6">
+                        <div class="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-500/20">
+                            <i data-lucide="x-circle" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Invalid Pass</h3>
+                        <p class="text-slate-400 text-sm">This QR code or ID is not registered in the system.</p>
+                        <button onclick="document.getElementById('result-card').classList.add('hidden')" class="mt-6 w-full bg-slate-800 text-white font-bold py-3 rounded-xl text-sm">Dismiss</button>
+                    </div>
+                `;
+                lucide.createIcons();
             }
         };
 
-        // Render the UI
-        function renderChecklist() {
-            document.getElementById('participant-name').innerText = currentParticipantData.name;
-            document.getElementById('participant-college').innerText = currentParticipantData.college || 'N/A';
-            document.getElementById('participant-reg-id').innerText = currentParticipantData.regId;
+        window.renderParticipantProfile = function() {
+            const data = currentParticipantData;
+            const checkIns = data.checkIns || {};
+            const events = data.events || [];
+            const resultContent = document.getElementById('result-content');
 
-            const checkIns = currentParticipantData.checkIns || {};
-            const registeredEvents = currentParticipantData.events || [];
-            
-            const container = document.getElementById('checklist-container');
-            let html = '';
-
-            // 1. MAIN GATE ENTRY (Always available for everyone)
-            html += createChecklistRow("Main Gate Entry", "Campus Access", checkIns["Main Gate Entry"], null);
-
-            // 2. DYNAMIC EVENTS
-            registeredEvents.forEach((ev, idx) => {
-                const isGroup = ev.type === "Team";
-                const subtitle = isGroup ? `Team: ${ev.teamName} (${ev.role})` : `Solo Event`;
-                html += createChecklistRow(ev.eventName, subtitle, checkIns[ev.eventName], ev);
-            });
-
-            container.innerHTML = html;
-            lucide.createIcons();
-        }
-
-        // HTML Generator for a single checklist item
-        function createChecklistRow(eventName, subtitle, checkInTimestamp, eventDetails) {
-            const isCheckedIn = !!checkInTimestamp;
-            
-            // Safe stringification of event details to pass into the onclick function
-            const detailsJson = eventDetails ? JSON.stringify(eventDetails).replace(/'/g, "\\'") : 'null';
-            
-            if (isCheckedIn) {
-                // GREEN - ALREADY CHECKED IN
-                return `
-                <div class="flex items-center justify-between p-4 bg-emerald-900/10 border border-emerald-500/30 rounded-xl transition-all">
-                    <div class="flex items-center">
-                        <div class="bg-emerald-500/20 p-2 rounded-full text-emerald-500 mr-3">
-                            <i data-lucide="check" class="w-5 h-5"></i>
-                        </div>
+            // Gate Entry Logic
+            const hasEnteredCampus = checkIns['Main Gate Entry'];
+            let gateEntryHtml = ``;
+            if (hasEnteredCampus) {
+                gateEntryHtml = `
+                    <div class="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-2xl flex items-center mb-4">
+                        <i data-lucide="check-circle-2" class="text-emerald-500 w-6 h-6 mr-3 shrink-0"></i>
                         <div>
-                            <div class="text-white font-bold text-sm">${eventName}</div>
-                            <div class="text-[10px] text-emerald-400 font-bold tracking-wider uppercase mt-0.5">Checked In: ${checkInTimestamp}</div>
+                            <h4 class="text-emerald-400 font-bold text-sm">Main Gate Entry</h4>
+                            <p class="text-emerald-500/70 text-[10px] font-bold tracking-wider">CHECKED IN: ${hasEnteredCampus}</p>
                         </div>
                     </div>
-                </div>
                 `;
             } else {
-                // GREY - PENDING CHECK IN (WITH BUTTON)
-                return `
-                <div class="flex items-center justify-between p-4 bg-slate-800/50 border border-slate-700 rounded-xl transition-all hover:border-amber-500/50 group">
-                    <div class="flex items-center flex-1 pr-4">
-                        <div class="bg-slate-900 p-2 rounded-full text-slate-500 mr-3 group-hover:text-amber-500 transition-colors">
-                            <i data-lucide="circle" class="w-5 h-5"></i>
+                gateEntryHtml = `
+                    <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl flex justify-between items-center mb-4 group hover:border-amber-500/30 transition-colors">
+                        <div class="flex items-center">
+                            <i data-lucide="shield-alert" class="text-amber-500 w-5 h-5 mr-3 shrink-0"></i>
+                            <h4 class="text-white font-bold text-sm">Main Gate Entry</h4>
                         </div>
-                        <div>
-                            <div class="text-slate-300 font-bold text-sm">${eventName}</div>
-                            <div class="text-[10px] text-slate-500 tracking-wider uppercase mt-0.5">${subtitle}</div>
-                        </div>
+                        <button onclick="window.processCheckIn('Main Gate Entry', null, this)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-colors shrink-0">
+                            Check In
+                        </button>
                     </div>
-                    <button onclick='window.processCheckIn("${eventName}", ${detailsJson}, this)' class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-lg font-black text-xs uppercase tracking-widest transition-all shadow-md shrink-0">
-                        Tap To Check-In
-                    </button>
-                </div>
                 `;
             }
-        }
 
-        // Action when Coordinator taps "Check-In"
-        window.processCheckIn = async function(eventName, eventDetails, btnElement) {
-            // UI Loading Lock
+            // Events Logic
+            let eventsHtml = '';
+            events.forEach((ev, idx) => {
+                const isCheckedIn = checkIns[ev.eventName];
+                
+                if (isCheckedIn) {
+                    eventsHtml += `
+                        <div class="bg-emerald-900/10 border border-emerald-500/20 p-4 rounded-2xl flex items-center mb-3">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center mr-3 shrink-0">
+                                <i data-lucide="check" class="text-emerald-500 w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">${ev.eventName}</h4>
+                                <p class="text-emerald-500 text-[10px] font-bold tracking-wider mt-0.5">CHECKED IN: ${isCheckedIn}</p>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const safeEventString = encodeURIComponent(JSON.stringify(ev));
+                    eventsHtml += `
+                        <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl flex justify-between items-center mb-3 hover:border-blue-500/30 transition-colors">
+                            <div class="flex items-start">
+                                <i data-lucide="circle" class="text-slate-500 w-5 h-5 mr-3 mt-0.5 shrink-0"></i>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm">${ev.eventName}</h4>
+                                    <p class="text-slate-500 text-[10px] uppercase tracking-wider font-bold mt-0.5">${ev.type === 'Team' ? `Team: ${ev.teamName} (${ev.role})` : 'Solo Event'}</p>
+                                </div>
+                            </div>
+                            <button onclick="window.processCheckIn('${ev.eventName}', decodeURIComponent('${safeEventString}'), this)" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-colors shrink-0">
+                                Check In
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+
+            if(eventsHtml === '') eventsHtml = `<p class="text-slate-500 text-xs text-center my-4">No events registered.</p>`;
+
+            resultContent.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="inline-block p-1 rounded-full bg-amber-500/20 mb-3">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg">
+                            ${data.name.charAt(0).toUpperCase()}
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-black text-white tracking-wide">${data.name}</h2>
+                    <p class="text-amber-400 text-sm font-bold mt-1">${data.college}</p>
+                    <p class="text-slate-500 text-xs font-mono mt-1 tracking-widest border border-slate-700 inline-block px-3 py-1 rounded-lg mt-3 bg-black/50"># ${data.regId}</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-3 flex items-center"><i data-lucide="clipboard-check" class="w-3 h-3 mr-2"></i> Attendance Checklist</h3>
+                    ${gateEntryHtml}
+                    ${eventsHtml}
+                </div>
+
+                <button onclick="document.getElementById('result-card').classList.add('hidden');" class="mt-4 w-full bg-slate-800 text-slate-300 font-bold py-4 rounded-xl text-xs tracking-widest uppercase hover:bg-slate-700 transition-colors flex items-center justify-center">
+                     Close Profile
+                </button>
+            `;
+            lucide.createIcons();
+        };
+
+        window.processCheckIn = async function(eventName, eventDetailsString, btnElement) {
             const originalText = btnElement.innerHTML;
             btnElement.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>`;
             btnElement.disabled = true;
             btnElement.classList.replace('bg-amber-500', 'bg-slate-600');
+            btnElement.classList.replace('bg-blue-600', 'bg-slate-600');
             lucide.createIcons();
 
             const timeNow = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' });
             const timestampFull = new Date().toISOString();
+            
+            let eventDetails = null;
+            if (eventDetailsString) {
+                eventDetails = JSON.parse(eventDetailsString);
+            }
 
             try {
-                // 1. Update the Participant's universal_attendee document (Firebase)
+                // 1. Update Firebase Check-ins Map
                 const docRef = doc(db, 'universal_attendees', currentParticipantPhoneId);
-                await setDoc(docRef, {
-                    checkIns: {
-                        [eventName]: timeNow
-                    }
-                }, { merge: true });
+                await setDoc(docRef, { checkIns: { [eventName]: timeNow } }, { merge: true });
 
-                // 2. Log to global attendance_logs (Firebase for Admin Excel Export)
+                // 2. Log to global attendance list (with Solo Fallbacks)
                 await addDoc(collection(db, "attendance_logs"), {
                     timestamp: timestampFull,
-                    checkInTime: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+                    checkInTime: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' }),
                     regId: currentParticipantData.regId || "N/A", 
                     primaryName: currentParticipantData.name,
                     college: currentParticipantData.college || "N/A",
                     phone: currentParticipantPhoneId,
-                    type: eventDetails ? (eventDetails.type || "Campus Entry") : "Campus Entry",
+                    type: eventDetails ? (eventDetails.type || "Solo") : "Campus Entry",
                     eventsCheckedIn: eventName,
                     teamName: eventDetails ? (eventDetails.teamName || "N/A") : "N/A",
                     role: eventDetails ? (eventDetails.role || "Solo") : "N/A"
                 });
 
-                // ==========================================
-                // 3. NEW: SEND SIGNAL TO GOOGLE SHEETS LIVE!
-                // ==========================================
-                const GOOGLE_SHEETS_WEBHOOK = "https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec";
-                
-                const sheetPayload = {
-                    action: "checkin",
-                    eventName: eventName,
-                    regId: currentParticipantData.regId,
-                    name: currentParticipantData.name,
-                    college: currentParticipantData.college || "N/A"
-                };
+                // 3. Update Google Sheets via Master Webhook
+                if (SHEET_WEBHOOK_URL.includes("script.google.com")) {
+                    const sheetPayload = {
+                        action: "checkin",
+                        eventName: eventName,
+                        regId: currentParticipantData.regId, // Critical: Send the Reg ID to match row
+                        name: currentParticipantData.name,
+                        college: currentParticipantData.college
+                    };
 
-                // Fire and forget, don't await so the UI stays snappy for the volunteer
-                fetch(GOOGLE_SHEETS_WEBHOOK, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(sheetPayload)
-                }).catch(e => console.error("Sheets update failed silently:", e));
-                // ==========================================
+                    await fetch(SHEET_WEBHOOK_URL, {
+                        method: 'POST', mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(sheetPayload)
+                    });
+                }
 
-
-                // Update local state so UI refreshes correctly
+                // Success update local UI
                 if (!currentParticipantData.checkIns) currentParticipantData.checkIns = {};
                 currentParticipantData.checkIns[eventName] = timeNow;
-
-                // Re-render checklist immediately
-                renderChecklist();
+                window.renderParticipantProfile();
 
             } catch (error) {
-                console.error("Check-in Error:", error);
-                alert("Network error: Could not save check-in to database.");
-                // Unlock button on failure
+                console.error(error);
+                alert("Network error: Could not complete check-in.");
                 btnElement.innerHTML = originalText;
                 btnElement.disabled = false;
-                btnElement.classList.replace('bg-slate-600', 'bg-amber-500');
-            }
-        };
-
-        // Manual Input logic
-        window.manualLookup = function() {
-            const input = document.getElementById('manual-id').value.trim().toUpperCase();
-            if (input) {
-                if (html5QrcodeScanner) html5QrcodeScanner.clear();
-                window.fetchUniversalProfile(input);
-            }
-        };
-
-        // QR Code Scanner Callbacks
-        function onScanSuccess(decodedText, decodedResult) {
-            // Stop scanning once we get a hit
-            html5QrcodeScanner.clear();
-            window.fetchUniversalProfile(decodedText);
-        }
-
-        function onScanFailure(error) {
-            // Ignore minor frame errors, they happen continuously until a code is found
-        }
-
-        // Initialize on Load
-        window.onload = function() {
-            lucide.createIcons();
-
-            // Check if we loaded the page via a QR link (e.g. verify.html?uid=TF2K26-ANTO-0001)
-            const urlParams = new URLSearchParams(window.location.search);
-            const uid = urlParams.get('uid');
-
-            if (uid) {
-                // Direct lookup, skip camera initialization
-                window.fetchUniversalProfile(uid);
-            } else {
-                // Initialize HTML5 QR Scanner UI
-                showSection('scanner-section');
-                html5QrcodeScanner = new Html5QrcodeScanner(
-                    "reader",
-                    { fps: 10, qrbox: {width: 250, height: 250}, aspectRatio: 1.0 },
-                    /* verbose= */ false
-                );
-                html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+                btnElement.classList.replace('bg-slate-600', eventName === 'Main Gate Entry' ? 'bg-amber-500' : 'bg-blue-600');
             }
         };
     </script>

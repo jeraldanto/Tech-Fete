@@ -3,23 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Fête 2k26</title>
+    <title>Tech Fête 2k26 | Home</title>
     <link rel="icon" type="image/png" href="tech_fete_logo.png">
     
     <!-- External Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    
-    <!-- Razorpay SDK -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         /* Custom Font Assignments */
-        body { font-family: 'Montserrat', sans-serif; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: #f1f5f9; }
         h1, h2, .brand-font { font-family: 'Antonio', sans-serif; }
 
         /* Animation Keyframes */
@@ -73,23 +67,20 @@
         }
     </script>
 </head>
-<body class="bg-[#050A18] text-slate-100 selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden">
+<body class="overflow-x-hidden selection:bg-amber-500/30 selection:text-amber-200">
 
     <!-- Dynamic Background -->
     <div id="star-container" class="fixed inset-0 pointer-events-none z-0">
-        <!-- Canvas for Realistic Starfield Video Effect -->
         <canvas id="starfield" class="absolute inset-0 w-full h-full"></canvas>
-        
-        <!-- Nebula Gradients -->
         <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-blue-900/20 blur-[120px] rounded-full"></div>
         <div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-indigo-900/20 blur-[150px] rounded-full"></div>
         <div class="absolute top-[40%] left-[50%] -translate-x-1/2 w-[40%] h-[40%] bg-amber-600/5 blur-[100px] rounded-full"></div>
     </div>
 
-    <!-- Navigation -->
+    <!-- GLOBAL NAVIGATION -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
         <div class="max-w-7xl mx-auto px-4 md:px-6 flex justify-between items-center gap-2">
-            <div class="flex items-center gap-2 md:gap-3 shrink-0">
+            <a href="#home" class="flex items-center gap-2 md:gap-3 shrink-0 cursor-pointer">
                 <!-- Navbar Logo -->
                 <div class="w-8 h-8 md:w-10 md:h-10 relative">
                      <img src="tech_fete_logo.png" alt="TF Logo" class="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">
@@ -98,14 +89,15 @@
                     <span class="brand-font text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 tracking-wider">TECH FÊTE</span>
                     <span class="text-[8px] md:text-[10px] font-bold text-amber-500/80 tracking-[0.4em] ml-0.5">2K26</span>
                 </div>
-            </div>
+            </a>
             
-            <div class="hidden md:flex space-x-8 font-medium text-sm tracking-wide">
-                <a href="#home" class="hover:text-amber-400 transition-colors">HOME</a>
-                <a href="#about" class="hover:text-amber-400 transition-colors">ABOUT</a>
-                <a href="#events" class="hover:text-amber-400 transition-colors">EVENTS</a>
-                <a href="#faq" class="hover:text-amber-400 transition-colors">FAQ</a>
-                <a href="#contact" class="hover:text-amber-400 transition-colors">CONTACT</a>
+            <!-- Desktop Links -->
+            <div class="hidden md:flex space-x-8 font-medium text-sm tracking-wide nav-links">
+                <a href="#home" class="hover:text-amber-400 transition-colors text-amber-400">HOME</a>
+                <a href="#about" class="hover:text-amber-400 transition-colors text-slate-100">ABOUT</a>
+                <a href="events.html" class="hover:text-amber-400 transition-colors text-slate-100">EVENTS</a>
+                <a href="#faq" class="hover:text-amber-400 transition-colors text-slate-100">FAQ</a>
+                <a href="#contact" class="hover:text-amber-400 transition-colors text-slate-100">CONTACT</a>
             </div>
             
             <div class="flex items-center gap-2 md:gap-4">
@@ -122,11 +114,11 @@
                     </a>
                 </div>
 
-                <!-- INNOVATIVE SMART BUNDLE BUTTON -->
-                <button onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-[10px] md:text-sm tracking-wide flex items-center overflow-hidden whitespace-nowrap shrink-0">
+                <!-- SMART BUNDLE BUTTON (Redirects to events.html) -->
+                <a href="events.html?wizard=true" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-[10px] md:text-sm tracking-wide flex items-center overflow-hidden whitespace-nowrap shrink-0">
                     <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-                    <i data-lucide="zap" class="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 fill-slate-950 animate-pulse"></i> SMART BUNDLES
-                </button>
+                    <i data-lucide="zap" class="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 fill-slate-950 animate-pulse"></i> BUNDLES
+                </a>
                 
                 <!-- Mobile Hamburger Button -->
                 <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-amber-500 p-1 hover:text-amber-400 transition-colors cursor-pointer">
@@ -139,11 +131,10 @@
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-[#020617]/95 backdrop-blur-xl border-b border-amber-500/20 shadow-2xl flex flex-col">
             <a href="#home" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">HOME</a>
             <a href="#about" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">ABOUT</a>
-            <a href="#events" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">EVENTS</a>
+            <a href="events.html" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">EVENTS</a>
             <a href="#faq" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">FAQ</a>
             <a href="#contact" onclick="document.getElementById('mobile-menu').classList.add('hidden')" class="px-6 py-4 border-b border-slate-800 text-slate-300 font-bold hover:text-amber-400 hover:bg-white/5 transition-colors tracking-widest text-sm">CONTACT</a>
             
-            <!-- Mobile Links -->
             <div class="grid grid-cols-2 gap-3 p-6 bg-black/50">
                 <a href="submit.html" target="_blank" class="flex items-center justify-center gap-2 py-3 px-2 text-amber-950 bg-amber-500 rounded-xl font-bold text-xs tracking-widest hover:brightness-110 transition-colors w-full shadow-[0_0_15px_rgba(245,158,11,0.3)]">
                     <i data-lucide="upload-cloud" class="w-4 h-4"></i> UPLOAD
@@ -155,1620 +146,472 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-36 pb-20 md:pt-40 md:pb-32 z-10 min-h-screen flex flex-col justify-center">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            
-            <!-- AESTHETIC COLLEGE BADGE WITH LOGO -->
-            <div class="inline-flex items-center gap-3 sm:gap-4 md:gap-5 py-2.5 px-4 sm:py-3 sm:px-5 md:py-4 md:px-10 rounded-full bg-amber-500/5 text-amber-300 font-bold text-sm min-[400px]:text-base sm:text-xl md:text-3xl mb-8 border border-amber-500/20 backdrop-blur-sm tracking-widest uppercase shadow-[0_0_20px_rgba(245,158,11,0.15)] hover:bg-amber-500/10 transition-colors group">
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative pt-36 pb-20 md:pt-40 md:pb-32 z-10 min-h-screen flex flex-col justify-center">
+            <div class="max-w-7xl mx-auto px-6 text-center">
                 
-                <!-- White Logo Container (Square/Rounded-xl instead of full circle) -->
-                <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-20 md:h-20 bg-white rounded-xl p-1 md:p-1.5 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:scale-110 transition-transform duration-300">
-                    <img src="college_logo.jpg" alt="PJPII Logo" class="w-full h-full object-contain rounded-xl" onerror="this.style.display='none'">
+                <!-- AESTHETIC COLLEGE BADGE WITH LOGO -->
+                <div class="inline-flex items-center gap-3 sm:gap-4 md:gap-5 py-2.5 px-4 sm:py-3 sm:px-5 md:py-4 md:px-10 rounded-full bg-amber-500/5 text-amber-300 font-bold text-sm min-[400px]:text-base sm:text-xl md:text-3xl mb-8 border border-amber-500/20 backdrop-blur-sm tracking-widest uppercase shadow-[0_0_20px_rgba(245,158,11,0.15)] hover:bg-amber-500/10 transition-colors group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 md:w-20 md:h-20 bg-white rounded-xl p-1 md:p-1.5 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:scale-110 transition-transform duration-300">
+                        <img src="college_logo.jpg" alt="PJPII Logo" class="w-full h-full object-contain rounded-xl" onerror="this.style.display='none'">
+                    </div>
+                    <span class="text-left leading-tight flex flex-col justify-center">
+                        <span class="whitespace-nowrap">Pope John Paul II</span>
+                        <span class="whitespace-nowrap">College of Education</span>
+                    </span>
                 </div>
-                
-                <span class="text-left leading-tight flex flex-col justify-center">
-                    <span class="whitespace-nowrap">Pope John Paul II</span>
-                    <span class="whitespace-nowrap">College of Education</span>
-                </span>
-            </div>
 
-            <!-- Department Info -->
-            <h3 class="text-amber-100/70 font-semibold mb-8 tracking-[0.2em] text-sm sm:text-base md:text-lg uppercase flex items-center justify-center gap-3">
-                <span class="w-10 h-[2px] bg-amber-500/30 hidden md:block"></span>
-                Department of Computer Applications Organises
-                <span class="w-10 h-[2px] bg-amber-500/30 hidden md:block"></span>
-            </h3>
-            
-            <!-- Flex Container for Logo and Title -->
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-12">
-                <!-- Main Logo -->
-                <div class="animate-pulse-slow shrink-0">
-                    <div class="relative w-52 h-52 md:w-80 md:h-80">
-                        <!-- Try loading Image, fallback to SVG -->
-                        <img src="tech_fete_logo.png" id="hero-img-logo" alt="TF Logo" class="w-full h-full object-contain hidden" onerror="this.style.display='none'; document.getElementById('hero-svg-logo').style.display='block';">
-                        
-                        <!-- SVG Fallback -->
-                        <svg id="hero-svg-logo" viewBox="0 0 100 100" fill="none" class="w-full h-full drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
-                            <defs>
-                                <linearGradient id="gold-grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stopColor="#FCD34D" />
-                                    <stop offset="50%" stopColor="#F59E0B" />
-                                    <stop offset="100%" stopColor="#B45309" />
-                                </linearGradient>
-                                <filter id="glow-hero">
-                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur"/>
-                                        <feMergeNode in="SourceGraphic"/>
-                                    </feMerge>
-                                </filter>
-                            </defs>
-                            <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="url(#gold-grad-hero)" filter="url(#glow-hero)" />
-                            <path d="M 52 15 H 90 V 35 H 70 V 45 H 85 L 80 60 H 70 V 80 L 52 100 V 15 Z" fill="url(#gold-grad-hero)" filter="url(#glow-hero)" />
-                        </svg>
+                <!-- Department Info -->
+                <h3 class="text-amber-100/70 font-semibold mb-8 tracking-[0.2em] text-sm sm:text-base md:text-lg uppercase flex items-center justify-center gap-3">
+                    <span class="w-10 h-[2px] bg-amber-500/30 hidden md:block"></span>
+                    Department of Computer Applications Organises
+                    <span class="w-10 h-[2px] bg-amber-500/30 hidden md:block"></span>
+                </h3>
+                
+                <!-- Flex Container for Logo and Title -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-12">
+                    <!-- Main Logo -->
+                    <div class="animate-pulse-slow shrink-0">
+                        <div class="relative w-52 h-52 md:w-80 md:h-80">
+                            <img src="tech_fete_logo.png" id="hero-img-logo" alt="TF Logo" class="w-full h-full object-contain hidden" onerror="this.style.display='none'; document.getElementById('hero-svg-logo').style.display='block';">
+                            <svg id="hero-svg-logo" viewBox="0 0 100 100" fill="none" class="w-full h-full drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
+                                <defs>
+                                    <linearGradient id="gold-grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stopColor="#FCD34D" />
+                                        <stop offset="50%" stopColor="#F59E0B" />
+                                        <stop offset="100%" stopColor="#B45309" />
+                                    </linearGradient>
+                                    <filter id="glow-hero">
+                                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                        <feMerge>
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="url(#gold-grad-hero)" filter="url(#glow-hero)" />
+                                <path d="M 52 15 H 90 V 35 H 70 V 45 H 85 L 80 60 H 70 V 80 L 52 100 V 15 Z" fill="url(#gold-grad-hero)" filter="url(#glow-hero)" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Title Block -->
+                    <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                        <h1 class="brand-font text-7xl md:text-[9rem] font-black leading-none tracking-tight">
+                            <span class="block text-transparent bg-clip-text bg-gradient-to-b from-amber-100 via-amber-300 to-amber-600 drop-shadow-2xl py-4">
+                                TECH FÊTE
+                            </span>
+                        </h1>
+                        <div class="text-4xl md:text-6xl text-amber-500 font-bold tracking-[0.2em] brand-font mt-2 md:mt-0">2K26</div>
                     </div>
                 </div>
-
-                <!-- Title Block -->
-                <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                    <h1 class="brand-font text-7xl md:text-[9rem] font-black leading-none tracking-tight">
-                        <span class="block text-transparent bg-clip-text bg-gradient-to-b from-amber-100 via-amber-300 to-amber-600 drop-shadow-2xl py-4">
-                            TECH FÊTE
-                        </span>
-                    </h1>
-                    <div class="text-4xl md:text-6xl text-amber-500 font-bold tracking-[0.2em] brand-font mt-2 md:mt-0">2K26</div>
-                </div>
-            </div>
-            
-            <!-- Date -->
-            <div class="flex justify-center items-center gap-3 mb-12 text-xl md:text-2xl font-bold text-amber-100/90 border-y border-amber-500/20 py-4 max-w-2xl mx-auto bg-black/20 backdrop-blur-sm">
-                 <i data-lucide="calendar" class="w-6 h-6 text-amber-500"></i>
-                 <span class="uppercase tracking-widest">Happening On: 28 March 2026</span>
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="#events" class="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-10 py-4 rounded-xl font-bold flex items-center justify-center hover:scale-105 transition-all group shadow-[0_0_20px_rgba(245,158,11,0.3)]">
-                    EXPLORE EVENTS <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
-                </a>
                 
-                <a href="https://drive.google.com/file/d/1gXN61Om3Lk1byB27f9CRaxSfssUwYI6H/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-slate-900/40 backdrop-blur-md border border-amber-500/30 text-amber-400 px-10 py-4 rounded-xl font-bold hover:bg-amber-500/10 transition-all uppercase tracking-wide text-center flex items-center justify-center gap-2">
-                    <i data-lucide="download" class="w-4 h-4"></i> Download Brochure
-                </a>
-            </div>
-        </div>
-    </section>
+                <!-- Date and Time -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-8 mb-12 text-lg md:text-2xl font-bold text-amber-100/90 border-y border-amber-500/20 py-4 max-w-3xl mx-auto bg-black/20 backdrop-blur-sm">
+                     <div class="flex items-center gap-3">
+                         <i data-lucide="calendar" class="w-6 h-6 text-amber-500"></i>
+                         <span class="uppercase tracking-widest">28 March 2026</span>
+                     </div>
+                     <div class="hidden md:block w-2 h-2 rounded-full bg-amber-500"></div>
+                     <div class="flex items-center gap-3 text-amber-400">
+                         <i data-lucide="clock" class="w-6 h-6"></i>
+                         <span class="uppercase tracking-widest">Starts at 9:00 AM</span>
+                     </div>
+                </div>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 relative z-10 bg-[#020617] border-t border-amber-500/10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col lg:flex-row gap-16 items-center">
-                <!-- Text Content -->
-                <div class="lg:w-1/2">
-                    <div class="inline-block py-2 px-6 rounded-full bg-amber-500/10 text-amber-400 font-bold text-sm mb-6 border border-amber-500/20 tracking-widest uppercase shadow-[0_0_15px_rgba(245,158,11,0.05)]">
-                        About The Fest
-                    </div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white brand-font tracking-wide leading-tight">
-                        Where <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">Innovation</span> Meets <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Celebration</span>
-                    </h2>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-6">
-                        The <strong>Department of Computer Applications</strong> proudly presents <strong>Tech Fête 2K26</strong>, a grand technical and cultural extravaganza happening at Pope John Paul II College of Education, Puducherry.
-                    </p>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-6">
-                        Tech Fête 2K26 is designed to bring together creativity, innovation, logic, and talent under one platform. This event aims to inspire students to showcase their technical expertise, problem-solving skills, artistic creativity, and teamwork through a series of exciting competitions and activities.
-                    </p>
-                    <p class="text-slate-400 text-lg leading-relaxed mb-8">
-                        Whether you are a tech enthusiast, a creative thinker, or a performer at heart, Tech Fête offers something for everyone. Join us for a day filled with learning, competition, collaboration, and unforgettable memories.
-                    </p>
+                <!-- Buttons -->
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 md:space-x-6">
+                    <a href="events.html" class="w-full sm:w-auto bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-10 py-4 rounded-xl font-bold flex items-center justify-center hover:scale-105 transition-all group shadow-[0_0_20px_rgba(245,158,11,0.3)] tracking-widest text-sm">
+                        EXPLORE EVENTS <i data-lucide="chevron-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
-                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tech+F%C3%AAte+2K26&dates=20260328T033000Z/20260328T113000Z&details=Join+us+for+Tech+F%C3%AAte+2K26,+a+grand+technical+and+cultural+extravaganza!&location=Pope+John+Paul+II+College+of+Education,+Puducherry" target="_blank" rel="noopener noreferrer" title="Add to Google Calendar" class="flex-1 flex items-center text-slate-300 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-amber-500/40 transition-all group cursor-pointer relative z-50">
-                            <i data-lucide="calendar" class="w-8 h-8 text-amber-500 mr-4 shrink-0 group-hover:scale-110 transition-transform"></i>
-                            <div>
-                                <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Date</div>
-                                <div class="font-semibold text-sm leading-tight group-hover:text-amber-400 transition-colors">
-                                    28 March 2026
-                                    <i data-lucide="external-link" class="inline-block w-3 h-3 ml-1 opacity-60 group-hover:opacity-100"></i>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="https://maps.app.goo.gl/wJay78bBBCbAwdDL7" target="_blank" rel="noopener noreferrer" title="View on Google Maps" class="flex-1 flex items-center text-slate-300 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-amber-500/40 transition-all group cursor-pointer relative z-50">
-                            <i data-lucide="map-pin" class="w-8 h-8 text-amber-500 mr-4 shrink-0 group-hover:scale-110 transition-transform"></i>
-                            <div>
-                                <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Venue</div>
-                                <div class="font-semibold text-sm leading-tight group-hover:text-amber-400 transition-colors">
-                                    Pope John Paul II College of Education
-                                    <i data-lucide="external-link" class="inline-block w-3 h-3 ml-1 opacity-60 group-hover:opacity-100"></i>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <p class="text-amber-400 font-bold text-xl brand-font tracking-wide uppercase">
-                        <i data-lucide="zap" class="w-5 h-5 inline-block mr-2 -mt-1"></i>
-                        Be ready to compete, connect, and celebrate innovation!
-                    </p>
-                </div>
-
-                <!-- Event Lists Cards -->
-                <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mt-8 lg:mt-0">
-                    <!-- Technical Box -->
-                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
-                        <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="cpu" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white brand-font mb-6 tracking-wide">🚀 Technical Events</h3>
-                        <ul class="space-y-4 text-slate-300 text-sm font-medium">
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> PPT Presentation</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Debugging</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Vibe Coding</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Quiz</li>
-                        </ul>
-                    </div>
-
-                    <!-- Non-Technical Box -->
-                    <div class="glass-card p-8 rounded-3xl relative overflow-hidden group sm:translate-y-12">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
-                        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="palette" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white brand-font mb-6 tracking-wide">🎭 Non-Technical & Fun</h3>
-                        <ul class="space-y-4 text-slate-300 text-sm font-medium">
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Techmeme</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Poster Making</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Photography</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Creative Writing</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Dance</li>
-                            <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Chess</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Events Section -->
-    <section id="events" class="py-24 relative z-10 bg-[#050A18]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 space-y-6 md:space-y-0 border-b border-amber-500/10 pb-8">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 flex items-center text-white brand-font tracking-wide">
-                        <span class="w-2 h-12 bg-amber-500 mr-6 rounded-full"></span>
-                        EVENT CATEGORIES
-                    </h2>
-                    <p class="text-slate-400 ml-8 text-lg">Filter through our diverse range of competitions.</p>
+                    <a href="submit.html" target="_blank" class="w-full sm:w-auto bg-[#050A18] border border-amber-500/50 text-white px-10 py-4 rounded-xl font-bold hover:bg-amber-500/10 transition-all uppercase tracking-widest text-sm flex items-center justify-center gap-2">
+                        <i data-lucide="cloud-upload" class="w-5 h-5 text-amber-500"></i> SUBMIT FILES
+                    </a>
                 </div>
                 
-                <div class="flex flex-wrap gap-2" id="category-filters">
-                    <button class="filter-btn active px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-amber-500 border-amber-400 text-slate-950 shadow-lg shadow-amber-500/20" onclick="window.filterEvents('All', this)">All</button>
-                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Technical', this)">Technical</button>
-                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Creative', this)">Creative</button>
-                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Cultural', this)">Cultural</button>
-                    <button class="filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400" onclick="window.filterEvents('Gaming', this)">Gaming</button>
+                <!-- Subtle Brochure Link below buttons -->
+                <div class="mt-8">
+                    <a href="https://drive.google.com/file/d/1gXN61Om3Lk1byB27f9CRaxSfssUwYI6H/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-slate-400 hover:text-amber-400 transition-colors uppercase tracking-widest flex items-center justify-center gap-2">
+                        <i data-lucide="download" class="w-3 h-3"></i> Download Brochure
+                    </a>
                 </div>
             </div>
+        </section>
 
-            <!-- Grid Container -->
-            <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Events will be injected via JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ & Helpline Section -->
-    <section id="faq" class="py-24 relative z-10 bg-[#020617] border-t border-amber-500/10 shadow-[inset_0_20px_50px_rgba(0,0,0,0.5)]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                
-                <!-- FAQ Accordion (Left side, takes 2 columns) -->
-                <div class="lg:col-span-2">
-                    <h2 class="text-4xl font-bold mb-2 flex items-center text-white brand-font tracking-wide">
-                        <i data-lucide="help-circle" class="w-8 h-8 text-amber-500 mr-4"></i>
-                        FREQUENTLY ASKED QUESTIONS
-                    </h2>
-                    <p class="text-slate-400 text-lg mb-8 ml-12">Everything you need to know before registering.</p>
-
-                    <div class="space-y-4">
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Who can participate in Tech Fête 2K26?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Students from any recognized college or university pursuing UG/PG courses can participate. Please ensure you bring a valid college ID card on the day of the event, as it is mandatory for entry.
-                            </div>
-                        </details>
-
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Can I register for multiple events?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Absolutely! You can participate in any number of individual events, and up to a maximum of 2 group events (maximum 3 events total). However, please make sure the timings of the events do not clash. Our system will automatically alert you if you select events happening at the exact same time.
-                            </div>
-                        </details>
-
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Are on-spot registrations available?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Yes, on-spot registrations will be open from 8:30 AM to 9:30 AM at the reception desk on the day of the event. However, this is strictly subject to slot availability. We highly recommend registering online in advance to secure your spot.
-                            </div>
-                        </details>
-
-                        <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
-                            <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
-                                <span class="text-base md:text-lg">Will food and refreshments be provided?</span>
-                                <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
-                                    <i data-lucide="chevron-down" class="w-6 h-6"></i>
-                                </span>
-                            </summary>
-                            <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
-                                Lunch will be provided complimentary for participants who register for 2 or more events. For others, a canteen is available on campus. Basic refreshments and water will be available for all attendees throughout the day.
-                            </div>
-                        </details>
-                    </div>
-                </div>
-
-                <!-- Dedicated Helpline Box (Right side, takes 1 column) -->
-                <div class="lg:col-span-1 flex flex-col justify-center">
-                    <div class="bg-gradient-to-br from-[#0f172a] to-black p-8 rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative overflow-hidden group">
-                        <!-- Glowing backdrop effect inside the card -->
-                        <div class="absolute top-[-50px] right-[-50px] w-32 h-32 bg-amber-500/20 blur-[50px] rounded-full group-hover:bg-amber-500/30 transition-colors"></div>
-                        
-                        <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-6 border border-amber-500/20">
-                            <i data-lucide="headset" class="w-7 h-7"></i>
+        <!-- About Section -->
+        <section id="about" class="py-24 relative z-10 bg-[#020617] border-t border-amber-500/10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col lg:flex-row gap-16 items-center">
+                    <!-- Text Content -->
+                    <div class="lg:w-1/2">
+                        <div class="inline-block py-2 px-6 rounded-full bg-amber-500/10 text-amber-400 font-bold text-sm mb-6 border border-amber-500/20 tracking-widest uppercase shadow-[0_0_15px_rgba(245,158,11,0.05)]">
+                            About The Fest
                         </div>
+                        <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white brand-font tracking-wide leading-tight">
+                            Where <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500">Innovation</span> Meets <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">Celebration</span>
+                        </h2>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                            The <strong>Department of Computer Applications</strong> proudly presents <strong>Tech Fête 2K26</strong>, a grand technical and cultural extravaganza happening at Pope John Paul II College of Education, Puducherry.
+                        </p>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                            Tech Fête 2K26 is designed to bring together creativity, innovation, logic, and talent under one platform. This event aims to inspire students to showcase their technical expertise, problem-solving skills, artistic creativity, and teamwork through a series of exciting competitions and activities.
+                        </p>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                            Whether you are a tech enthusiast, a creative thinker, or a performer at heart, Tech Fête offers something for everyone. Join us for a day filled with learning, competition, collaboration, and unforgettable memories.
+                        </p>
                         
-                        <h3 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">24/7 Helpline</h3>
-                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Having trouble with registration, payment, or finding your way? We are here to help.</p>
-                        
-                        <div class="space-y-4">
-                            <!-- Helpline Contact 1 -->
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/50 transition-colors group/contact">
-                                <div class="flex items-center">
-                                    <div class="bg-black/50 p-2 rounded-lg text-emerald-400 mr-4 group-hover/contact:text-emerald-300 transition-colors">
-                                        <i data-lucide="message-circle" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Mr.Anto</div>
-                                        <div class="text-white font-bold text-sm">+91 63854 27635</div>
-                                    </div>
-                                </div>
-                                <button onclick="window.copyToClipboard('+91 91504 06749', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
-                                </button>
-                            </div>
-                            
-                            <!-- Helpline Contact 2 -->
-                            <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/50 transition-colors group/contact">
-                                <div class="flex items-center">
-                                    <div class="bg-black/50 p-2 rounded-lg text-blue-400 mr-4 group-hover/contact:text-blue-300 transition-colors">
-                                        <i data-lucide="phone-call" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Mr.Vibin Isaac</div>
-                                        <div class="text-white font-bold text-sm">+91 89257 45388</div>
-                                    </div>
-                                </div>
-                                <button onclick="window.copyToClipboard('+91 97918 01597', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
-                                </button>
-                            </div>
-
-                            <!-- Explicit Direct Webmail Compose Contact -->
-                            <a href="#" onclick="window.openEmail(event)" class="relative z-50 flex items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-amber-500 hover:text-black transition-all group/email cursor-pointer">
-                                <div class="bg-black/50 group-hover/email:bg-black/20 p-2 rounded-lg text-amber-400 group-hover/email:text-black mr-4 transition-colors">
-                                    <i data-lucide="mail" class="w-5 h-5"></i>
-                                </div>
+                        <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tech+F%C3%AAte+2K26&dates=20260328T033000Z/20260328T113000Z&details=Join+us+for+Tech+F%C3%AAte+2K26,+a+grand+technical+and+cultural+extravaganza!&location=Pope+John+Paul+II+College+of+Education,+Puducherry" target="_blank" rel="noopener noreferrer" title="Add to Google Calendar" class="flex-1 flex items-center text-slate-300 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-amber-500/40 transition-all group cursor-pointer relative z-50">
+                                <i data-lucide="calendar" class="w-8 h-8 text-amber-500 mr-4 shrink-0 group-hover:scale-110 transition-transform"></i>
                                 <div>
-                                    <div class="text-[10px] text-slate-500 group-hover/email:text-black/70 font-bold uppercase tracking-widest mb-1 transition-colors">Email Us</div>
-                                    <div class="text-white group-hover/email:text-black font-bold text-sm transition-colors">techfete2026@gmail.com</div>
+                                    <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Date & Time</div>
+                                    <div class="font-semibold text-sm leading-tight group-hover:text-amber-400 transition-colors">
+                                        28 March 2026, 9:00 AM
+                                        <i data-lucide="external-link" class="inline-block w-3 h-3 ml-1 opacity-60 group-hover:opacity-100"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://maps.app.goo.gl/wJay78bBBCbAwdDL7" target="_blank" rel="noopener noreferrer" title="View on Google Maps" class="flex-1 flex items-center text-slate-300 bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-amber-500/40 transition-all group cursor-pointer relative z-50">
+                                <i data-lucide="map-pin" class="w-8 h-8 text-amber-500 mr-4 shrink-0 group-hover:scale-110 transition-transform"></i>
+                                <div>
+                                    <div class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-1">Venue</div>
+                                    <div class="font-semibold text-sm leading-tight group-hover:text-amber-400 transition-colors">
+                                        Pope John Paul II College of Education
+                                        <i data-lucide="external-link" class="inline-block w-3 h-3 ml-1 opacity-60 group-hover:opacity-100"></i>
+                                    </div>
                                 </div>
                             </a>
                         </div>
+                        <p class="text-amber-400 font-bold text-xl brand-font tracking-wide uppercase">
+                            <i data-lucide="zap" class="w-5 h-5 inline-block mr-2 -mt-1"></i>
+                            Be ready to compete, connect, and celebrate innovation!
+                        </p>
+                    </div>
+
+                    <!-- Event Lists Cards -->
+                    <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mt-8 lg:mt-0">
+                        <!-- Technical Box -->
+                        <a href="events.html" class="glass-card p-8 rounded-3xl relative overflow-hidden group cursor-pointer block">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+                            <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="cpu" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white brand-font mb-6 tracking-wide">🚀 Technical Events</h3>
+                            <ul class="space-y-4 text-slate-300 text-sm font-medium">
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> PPT Presentation</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Debugging</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Vibe Coding</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Quiz</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Tech Memes</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-amber-500 mr-3 shrink-0"></i> Poster Making</li>
+                            </ul>
+                            <div class="mt-8 text-xs font-bold text-amber-500 tracking-widest uppercase flex items-center group-hover:translate-x-2 transition-transform">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </div>
+                        </a>
+
+                        <!-- Non-Technical Box -->
+                        <a href="events.html" class="glass-card p-8 rounded-3xl relative overflow-hidden group sm:translate-y-12 cursor-pointer block">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+                            <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center mb-6">
+                                <i data-lucide="palette" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white brand-font mb-6 tracking-wide">🎭 Non-Technical</h3>
+                            <ul class="space-y-4 text-slate-300 text-sm font-medium">
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Photography</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Creative Writing</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Dance</li>
+                                <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500 mr-3 shrink-0"></i> Chess</li>
+                            </ul>
+                            <div class="mt-8 text-xs font-bold text-emerald-500 tracking-widest uppercase flex items-center group-hover:translate-x-2 transition-transform">
+                                View Details <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </div>
+                        </a>
                     </div>
                 </div>
-
             </div>
+        </section>
+
+        <!-- FAQ & Helpline Section -->
+        <section id="faq" class="py-24 relative z-10 bg-[#020617] border-t border-amber-500/10 shadow-[inset_0_20px_50px_rgba(0,0,0,0.5)]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    
+                    <!-- FAQ Accordion -->
+                    <div class="lg:col-span-2">
+                        <h2 class="text-4xl font-bold mb-2 flex items-center text-white brand-font tracking-wide">
+                            <i data-lucide="help-circle" class="w-8 h-8 text-amber-500 mr-4"></i>
+                            FREQUENTLY ASKED QUESTIONS
+                        </h2>
+                        <p class="text-slate-400 text-lg mb-8 ml-12">Everything you need to know before registering.</p>
+
+                        <div class="space-y-4">
+                            <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
+                                <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
+                                    <span class="text-base md:text-lg">Who can participate in Tech Fête 2K26?</span>
+                                    <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
+                                        <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                                    </span>
+                                </summary>
+                                <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
+                                    Students from any recognized college or university pursuing UG/PG courses can participate. Please ensure you bring a valid college ID card on the day of the event, as it is mandatory for entry.
+                                </div>
+                            </details>
+
+                            <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
+                                <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
+                                    <span class="text-base md:text-lg">Can I register for multiple events?</span>
+                                    <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
+                                        <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                                    </span>
+                                </summary>
+                                <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
+                                    Absolutely! You can participate in any number of individual events, and up to a maximum of 2 group events (maximum 3 events total per checkout). However, please make sure the timings of the events do not clash.
+                                </div>
+                            </details>
+
+                            <details class="group bg-slate-900/40 rounded-2xl border border-amber-500/10 overflow-hidden open:bg-slate-900/60 transition-all duration-300 shadow-sm hover:border-amber-500/30">
+                                <summary class="flex justify-between items-center font-bold cursor-pointer p-6 text-white hover:text-amber-400 transition-colors">
+                                    <span class="text-base md:text-lg">Will food and refreshments be provided?</span>
+                                    <span class="transition-transform duration-300 group-open:rotate-180 text-amber-500 shrink-0 ml-4">
+                                        <i data-lucide="chevron-down" class="w-6 h-6"></i>
+                                    </span>
+                                </summary>
+                                <div class="text-slate-400 p-6 pt-0 text-sm md:text-base leading-relaxed border-t border-slate-800/50 mt-2">
+                                    Lunch and refreshments will be provided to anyone who is registering for the events.
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Dedicated Helpline Box -->
+                    <div class="lg:col-span-1 flex flex-col justify-center">
+                        <div class="bg-gradient-to-br from-[#0f172a] to-black p-8 rounded-3xl border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative overflow-hidden group">
+                            <!-- Glowing backdrop effect inside the card -->
+                            <div class="absolute top-[-50px] right-[-50px] w-32 h-32 bg-amber-500/20 blur-[50px] rounded-full group-hover:bg-amber-500/30 transition-colors"></div>
+                            
+                            <div class="w-14 h-14 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mb-6 border border-amber-500/20">
+                                <i data-lucide="headset" class="w-7 h-7"></i>
+                            </div>
+                            
+                            <h3 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">24/7 Helpline</h3>
+                            <p class="text-sm text-slate-400 mb-8 leading-relaxed">Having trouble with registration, payment, or finding your way? We are here to help.</p>
+                            
+                            <div class="space-y-4">
+                                <!-- Helpline Contact 1 -->
+                                <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/50 transition-colors group/contact">
+                                    <div class="flex items-center">
+                                        <div class="bg-black/50 p-2 rounded-lg text-emerald-400 mr-4 group-hover/contact:text-emerald-300 transition-colors">
+                                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Mr.Anto</div>
+                                            <div class="text-white font-bold text-sm">+91 63854 27635</div>
+                                        </div>
+                                    </div>
+                                    <button onclick="window.copyToClipboard('+91 91504 06749', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
+                                        <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
+                                        <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
+                                    </button>
+                                </div>
+                                
+                                <!-- Helpline Contact 2 -->
+                                <div class="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:border-amber-500/50 transition-colors group/contact">
+                                    <div class="flex items-center">
+                                        <div class="bg-black/50 p-2 rounded-lg text-blue-400 mr-4 group-hover/contact:text-blue-300 transition-colors">
+                                            <i data-lucide="phone-call" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Mr.Vibin Isaac</div>
+                                            <div class="text-white font-bold text-sm">+91 89257 45388</div>
+                                        </div>
+                                    </div>
+                                    <button onclick="window.copyToClipboard('+91 97918 01597', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/40 hover:bg-black/60 rounded-md transition-all relative z-50 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]" title="Copy Number">
+                                        <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
+                                        <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Explicit Direct Webmail Compose Contact -->
+                                <a href="#" onclick="window.openEmail(event)" class="relative z-50 flex items-center p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-amber-500 hover:text-black transition-all group/email cursor-pointer">
+                                    <div class="bg-black/50 group-hover/email:bg-black/20 p-2 rounded-lg text-amber-400 group-hover/email:text-black mr-4 transition-colors">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] text-slate-500 group-hover/email:text-black/70 font-bold uppercase tracking-widest mb-1 transition-colors">Email Us</div>
+                                        <div class="text-white group-hover/email:text-black font-bold text-sm transition-colors">techfete2026@gmail.com</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PREMIUM EDUCATIONAL SPONSOR SECTION -->
+    <section class="py-20 relative z-10 bg-[#020617] border-t border-amber-500/20 overflow-hidden shadow-[inset_0_20px_50px_rgba(0,0,0,0.5)]">
+        <!-- Background Glows -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl h-64 bg-blue-600/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <div class="inline-flex items-center justify-center py-1.5 px-6 rounded-full bg-blue-500/10 text-blue-400 font-bold text-xs mb-8 border border-blue-500/30 tracking-[0.3em] uppercase shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+                <i data-lucide="award" class="w-4 h-4 mr-2"></i> Official Educational Sponsor
+            </div>
+
+            <div class="flex justify-center items-center">
+                <a href="https://www.fita.in/" target="_blank" rel="noopener noreferrer" title="Visit FITA Academy" class="relative group block">
+                    <!-- Glowing Border Effect -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-blue-400 to-amber-500 rounded-3xl blur opacity-40 group-hover:opacity-75 transition duration-500 animate-pulse-slow"></div>
+
+                    <!-- Card Content -->
+                    <div class="relative bg-[#ffffff] px-10 py-8 md:px-16 md:py-12 rounded-3xl flex flex-col items-center justify-center transform group-hover:-translate-y-2 transition-all duration-300 min-w-[280px] md:min-w-[400px] shadow-2xl">
+                        <img src="fita_logo.png" alt="FITA Academy" class="h-16 md:h-20 object-contain transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-4xl md:text-5xl font-black text-[#1e3a8a] tracking-wider\'>FITA <span class=\'text-slate-600 font-medium\'>Academy</span></span>'">
+                    </div>
+                </a>
+            </div>
+            
+            <p class="mt-8 text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed font-medium">
+                Empowering students with industry-ready skills. Proud to partner with FITA Academy for Tech Fête 2K26.
+            </p>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact" class="py-20 bg-black/90 backdrop-blur-xl border-t border-amber-500/10 relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+    <!-- GLOBAL FOOTER -->
+    <footer id="contact" class="py-16 bg-black/90 backdrop-blur-xl border-t border-amber-500/10 relative z-10 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:grid md:grid-cols-3 gap-12 mb-16">
-                <!-- Branding & Address (Moved to Bottom on Mobile) -->
-                <div class="col-span-1 order-2 md:order-1">
+            <div class="flex flex-col md:grid md:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Column 1: Branding -->
+                <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center mb-6">
-                         <div class="w-12 h-12 mr-4 relative">
+                         <div class="w-10 h-10 mr-3 relative">
                             <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
                                 <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="#f59e0b" />
                                 <path d="M 52 15 H 90 V 35 H 70 V 45 H 85 L 80 60 H 70 V 80 L 52 100 V 15 Z" fill="#f59e0b" />
                             </svg>
                         </div>
                         <div class="leading-none">
-                            <span class="block text-3xl brand-font font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 tracking-wider py-1">TECH FÊTE</span>
-                            <span class="text-sm text-amber-500/80 tracking-[0.3em] font-bold">2K26</span>
+                            <span class="block text-2xl brand-font font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 tracking-wider py-1">TECH FÊTE</span>
+                            <span class="text-xs text-amber-500/80 tracking-[0.3em] font-bold">2K26</span>
                         </div>
                     </div>
-                    <p class="text-slate-500 max-w-sm mb-8 text-sm leading-relaxed font-medium">
+                    <p class="text-slate-500 mb-6 text-sm leading-relaxed font-medium">
                         Pope John Paul II College of Education<br>
                         Puducherry - 605 010<br>
                         Dept of Computer Applications
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" title="Visit our Instagram" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
-                            <i data-lucide="instagram" class="w-6 h-6"></i>
+                    <div class="flex space-x-3">
+                        <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" title="Visit our Instagram" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
                         </a>
-                        <a href="#" onclick="window.openEmail(event)" title="Email Us" class="relative z-50 cursor-pointer w-12 h-12 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
-                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        <a href="#" onclick="window.openEmail(event)" title="Email Us" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
+
+                <!-- Column 2: Quick Links -->
+                <div class="col-span-1 md:col-span-1">
+                    <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-6 border-b border-amber-500/20 pb-2 inline-block">Quick Links</h4>
+                    <ul class="space-y-3 text-slate-400 text-sm font-medium">
+                        <li><a href="#home" class="hover:text-amber-400 transition-colors flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2"></i> Home</a></li>
+                        <li><a href="#about" class="hover:text-amber-400 transition-colors flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2"></i> About Fest</a></li>
+                        <li><a href="events.html" class="hover:text-amber-400 transition-colors flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2"></i> All Events</a></li>
+                        <li><a href="#faq" class="hover:text-amber-400 transition-colors flex items-center"><i data-lucide="chevron-right" class="w-3 h-3 mr-2"></i> FAQ & Rules</a></li>
+                        <li><a href="submit.html" target="_blank" class="hover:text-amber-400 transition-colors flex items-center"><i data-lucide="upload-cloud" class="w-3 h-3 mr-2 text-amber-500"></i> Submit Files Portal</a></li>
+                    </ul>
+                </div>
                 
-                <!-- Contact Details (Moved to Top on Mobile) -->
-                <div class="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8 order-1 md:order-2">
+                <!-- Column 3 & 4: Contact Details -->
+                <div class="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div>
-                        <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-8 border-b border-amber-500/20 pb-2 inline-block">Student Co-ordinators</h4>
-                        <ul class="space-y-4 text-slate-400 text-sm">
-                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-3 rounded-lg group">
+                        <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-6 border-b border-amber-500/20 pb-2 inline-block">Student Co-ordinators</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-2.5 rounded-lg group">
                                 <div class="flex items-center">
-                                    <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                    <i data-lucide="phone" class="w-4 h-4 mr-3 text-amber-600"></i>
                                     <div class="flex flex-col">
-                                        <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Ms. Hemadharshini</span>
-                                        <span class="font-bold tracking-wide text-white">+91 91504 06749</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Ms. Pravina </span>
+                                        <span class="font-bold tracking-wide text-white text-xs">+91 84389 94720</span>
                                     </div>
                                 </div>
-                                <button onclick="window.copyToClipboard('+91 91504 06749', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded-md transition-all relative z-50" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
+                                <button onclick="window.copyToClipboard('+91 84389 94720', this)" class="p-1.5 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded transition-all relative z-50" title="Copy Number">
+                                    <i data-lucide="copy" class="w-3 h-3 copy-icon"></i>
+                                    <i data-lucide="check" class="w-3 h-3 check-icon hidden text-emerald-500"></i>
                                 </button>
                             </li>
-                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-3 rounded-lg group">
+                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-2.5 rounded-lg group">
                                 <div class="flex items-center">
-                                    <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                    <i data-lucide="phone" class="w-4 h-4 mr-3 text-amber-600"></i>
                                     <div class="flex flex-col">
-                                        <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Mr. Jean Claude</span>
-                                        <span class="font-bold tracking-wide text-white">+91 97918 01597</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Mr. Jean Claude</span>
+                                        <span class="font-bold tracking-wide text-white text-xs">+91 97918 01597</span>
                                     </div>
                                 </div>
-                                <button onclick="window.copyToClipboard('+91 97918 01597', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded-md transition-all relative z-50" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
+                                <button onclick="window.copyToClipboard('+91 97918 01597', this)" class="p-1.5 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded transition-all relative z-50" title="Copy Number">
+                                    <i data-lucide="copy" class="w-3 h-3 copy-icon"></i>
+                                    <i data-lucide="check" class="w-3 h-3 check-icon hidden text-emerald-500"></i>
                                 </button>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-8 border-b border-amber-500/20 pb-2 inline-block">Staff Co-ordinators</h4>
-                        <ul class="space-y-4 text-slate-400 text-sm">
-                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-3 rounded-lg group">
+                        <h4 class="text-sm font-black uppercase tracking-[0.2em] text-amber-500 mb-6 border-b border-amber-500/20 pb-2 inline-block">Staff Co-ordinators</h4>
+                        <ul class="space-y-3 text-slate-400 text-sm">
+                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-2.5 rounded-lg group">
                                 <div class="flex items-center">
-                                    <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                    <i data-lucide="phone" class="w-4 h-4 mr-3 text-amber-600"></i>
                                     <div class="flex flex-col">
-                                        <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Mrs. Sona</span>
-                                        <span class="font-bold tracking-wide text-white">+91 98840 99806</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Mrs. Sona</span>
+                                        <span class="font-bold tracking-wide text-white text-xs">+91 98840 99806</span>
                                     </div>
                                 </div>
-                                <button onclick="window.copyToClipboard('+91 98840 99806', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded-md transition-all relative z-50" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
+                                <button onclick="window.copyToClipboard('+91 98840 99806', this)" class="p-1.5 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded transition-all relative z-50" title="Copy Number">
+                                    <i data-lucide="copy" class="w-3 h-3 copy-icon"></i>
+                                    <i data-lucide="check" class="w-3 h-3 check-icon hidden text-emerald-500"></i>
                                 </button>
                             </li>
-                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-3 rounded-lg group">
+                            <li class="flex items-center justify-between hover:border-amber-500/30 border border-transparent transition-colors bg-white/5 p-2.5 rounded-lg group">
                                 <div class="flex items-center">
-                                    <i data-lucide="phone" class="w-5 h-5 mr-4 text-amber-600"></i>
+                                    <i data-lucide="phone" class="w-4 h-4 mr-3 text-amber-600"></i>
                                     <div class="flex flex-col">
-                                        <span class="text-xs text-slate-500 uppercase font-bold mb-0.5">Mrs. Yazhini</span>
-                                        <span class="font-bold tracking-wide text-white">+91 73970 73362</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Mrs. Yazhini</span>
+                                        <span class="font-bold tracking-wide text-white text-xs">+91 73970 73362</span>
                                     </div>
                                 </div>
-                                <button onclick="window.copyToClipboard('+91 73970 73362', this)" class="p-2 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded-md transition-all relative z-50" title="Copy Number">
-                                    <i data-lucide="copy" class="w-4 h-4 copy-icon"></i>
-                                    <i data-lucide="check" class="w-4 h-4 check-icon hidden text-emerald-500"></i>
+                                <button onclick="window.copyToClipboard('+91 73970 73362', this)" class="p-1.5 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded transition-all relative z-50" title="Copy Number">
+                                    <i data-lucide="copy" class="w-3 h-3 copy-icon"></i>
+                                    <i data-lucide="check" class="w-3 h-3 check-icon hidden text-emerald-500"></i>
                                 </button>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="pt-8 border-t border-slate-900 text-center text-slate-600 text-sm tracking-wider">
+            <div class="pt-6 border-t border-slate-900 text-center text-slate-600 text-[10px] tracking-widest uppercase font-bold">
                 © 2026 Tech Fête. Pope John Paul II College of Education.
             </div>
         </div>
     </footer>
 
-    <!-- Smart Wizard Modal -->
-    <div id="wizard-modal" onclick="if(event.target === this) window.closeWizardModal()" class="fixed inset-0 z-[120] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_60px_rgba(245,158,11,0.15)] relative transform scale-95 transition-transform duration-300" id="wizard-content">
-            <button onclick="window.closeWizardModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            
-            <div class="p-8 md:p-12">
-                <div class="text-center mb-10">
-                    <span class="inline-block py-1.5 px-4 rounded-full bg-amber-500/10 text-amber-500 font-bold text-xs mb-4 border border-amber-500/20 uppercase tracking-[0.2em]"><i data-lucide="sparkles" class="w-3 h-3 inline mr-1 -mt-0.5"></i> Curated Packages</span>
-                    <h2 class="text-3xl md:text-5xl font-black text-white brand-font tracking-wide mb-4">What's Your Vibe?</h2>
-                    <p class="text-slate-400 max-w-xl mx-auto">Skip the hassle of choosing. Pick a persona and we will auto-fill your cart with the perfect clash-free event combo!</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Bundle 1 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="terminal" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹350</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Hardcore Techie</h3>
-                        <p class="text-sm text-slate-400 mb-6">For the ones who speak in code and logic. Dominate the technical arenas.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> PPT Presentation (10:00 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> Vibe Coding (02:00 PM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> Tech Quiz (01:00 PM)</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([1, 3, 5])" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(59,130,246,0.3)]">Auto-Fill Cart</button>
-                    </div>
-
-                    <!-- Bundle 2 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-pink-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-pink-500/20 text-pink-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="palette" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹200</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Creative Soul</h3>
-                        <p class="text-sm text-slate-400 mb-6">Art, aesthetics, and humor. Show off your imaginative and artistic side.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-pink-500 mr-2"></i> Poster Making (10:30 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-pink-500 mr-2"></i> Techmeme (All Day)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-pink-500 mr-2"></i> Photography (All Day)</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([9, 4, 10])" class="w-full py-3 bg-pink-600 hover:bg-pink-500 text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(236,72,153,0.3)]">Auto-Fill Cart</button>
-                    </div>
-
-                    <!-- Bundle 3 (Redesigned) -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="mic-2" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹300</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">2 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Expressive Mind</h3>
-                        <p class="text-sm text-slate-400 mb-6">Born for the stage and the pen. Show off your writing and dancing skills.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mr-2"></i> Creative Writing (11:00 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-500 mr-2"></i> Dance (03:00 PM)</li>
-                            <li class="flex items-center opacity-0"><i class="w-4 h-4 mr-2"></i> Spacer</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([11, 6])" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(16,185,129,0.3)]">Auto-Fill Cart</button>
-                    </div>
-
-                    <!-- Bundle 4 -->
-                    <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-amber-500/50 transition-all group relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center">
-                                <i data-lucide="gamepad-2" class="w-6 h-6"></i>
-                            </div>
-                            <div class="text-right">
-                                <div class="text-xl font-black text-white">₹150</div>
-                                <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">2 Events</div>
-                            </div>
-                        </div>
-                        <h3 class="text-xl font-bold text-white brand-font tracking-wide mb-2">The Strategist</h3>
-                        <p class="text-sm text-slate-400 mb-6">Patience, focus, and sharp execution. Outplay your opponents in silence.</p>
-                        <ul class="space-y-2 mb-8 text-xs font-medium text-slate-300">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-amber-500 mr-2"></i> Chess (10:00 AM)</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-amber-500 mr-2"></i> Vibe Coding (02:00 PM)</li>
-                            <li class="flex items-center opacity-0"><i class="w-4 h-4 mr-2"></i> Spacer</li>
-                        </ul>
-                        <button onclick="window.applyWizardBundle([12, 3])" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl font-black uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(245,158,11,0.3)]">Auto-Fill Cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="event-modal" onclick="if(event.target === this) window.closeModal()" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative transform scale-95 transition-transform duration-300" id="modal-content">
-            <button onclick="window.closeModal()" class="absolute top-6 right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-10">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <div id="modal-body" class="p-8 md:p-12">
-                <!-- Content injected via JS -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Floating Cart Bar -->
-    <div id="floating-cart" class="fixed bottom-0 left-0 w-full bg-black/95 backdrop-blur-md border-t border-amber-500/30 p-4 transform translate-y-full transition-transform duration-300 z-[90] flex justify-between items-center px-6 md:px-12 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
-        <div>
-            <div class="text-amber-500 font-bold text-xs tracking-widest uppercase mb-1">Your Selection</div>
-            <div class="text-white font-black text-xl"><span id="cart-count">0</span> Events | <span class="text-emerald-400">₹<span id="cart-total">0</span></span></div>
-        </div>
-        <button onclick="window.openCheckoutModal()" class="bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-8 py-3 rounded-xl font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center shadow-[0_0_15px_rgba(245,158,11,0.3)]">
-            Checkout <i data-lucide="arrow-right" class="ml-2 w-5 h-5"></i>
-        </button>
-    </div>
-
-    <!-- Razorpay Checkout Modal -->
-    <div id="checkout-modal" onclick="if(event.target === this) window.closeCheckoutModal()" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="checkout-content">
-            <button onclick="window.closeCheckoutModal()" class="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-20 shadow-lg">
-                <i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i>
-            </button>
-            
-            <!-- Selected Events List -->
-            <div class="w-full md:w-1/2 p-6 pt-16 md:p-10 md:pt-10 bg-black/40 border-b md:border-b-0 md:border-r border-amber-500/10 flex flex-col">
-                <h3 class="text-xl md:text-2xl font-black text-white brand-font tracking-wide mb-4 md:mb-6">Selected Events</h3>
-                <div id="checkout-events-list" class="space-y-3 max-h-[35vh] md:max-h-[60vh] overflow-y-auto pr-2">
-                    <!-- Cart items injected here -->
-                </div>
-                <div class="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-slate-800">
-                    <div id="combo-discount-display" class="flex justify-between items-center text-sm font-bold text-amber-400 mb-2 hidden">
-                        <span>Multi-Event Discount</span>
-                        <span>-₹<span id="combo-discount-amt">0</span></span>
-                    </div>
-                    <div id="discount-display" class="flex justify-between items-center text-sm font-bold text-emerald-400 mb-2 hidden">
-                        <span>Promo Discount</span>
-                        <span>-₹<span id="promo-discount-amt">100</span></span>
-                    </div>
-                    <div class="flex justify-between items-center text-lg md:text-xl font-black text-white">
-                        <span>Total Amount</span>
-                        <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Registration Form -->
-            <div class="w-full md:w-1/2 p-6 pb-10 md:p-10 flex flex-col justify-start relative">
-                
-                <!-- STEP 1: Registration Details & Razorpay Trigger -->
-                <form id="checkout-step-1" onsubmit="window.processPayment(event)" class="space-y-4 transition-all duration-300">
-                    <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1">Secure Checkout</h3>
-                    <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-6">Participant Details</h2>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Primary Member Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors"placeholder="Enter Your Full Name">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">College / Institution <span class="text-red-500">*</span></label>
-                        <div class="relative">
-                            <input type="text" id="reg-college" required autocomplete="off" oninput="window.filterColleges()" onfocus="window.showCollegeList()" onblur="window.handleCollegeBlur()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Type to search your college...">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-500">
-                                <i data-lucide="search" class="w-4 h-4"></i>
-                            </div>
-                            <!-- Custom Dropdown Menu -->
-                            <div id="custom-college-list" class="hidden absolute top-full left-0 right-0 z-[120] mt-2 bg-[#0f172a] border border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] max-h-52 overflow-y-auto">
-                                <!-- Options are injected here via JS -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="other-college-div" class="hidden transition-all duration-300">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center text-amber-500"><i data-lucide="info" class="w-3 h-3 mr-1"></i> Please Specify Your College</label>
-                        <input type="text" id="reg-college-other" class="w-full bg-[#020617] border border-amber-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[0_0_15px_rgba(245,158,11,0.1)]" placeholder="Enter full college name">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phone <span class="text-red-500">*</span></label>
-                            <div class="relative flex items-center">
-                                <span class="absolute left-4 text-slate-500 font-bold">+91</span>
-                                <input type="tel" id="reg-phone" required minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="window.formatPhoneNumber(this)" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="XXXXXXXXXX">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email  <span class="text-red-500">*</span></label>
-                            <input type="email" id="reg-email" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Email id">
-                        </div>
-                    </div>
-
-                    <!-- DYNAMIC TEAM MEMBERS SECTION -->
-                    <div id="team-members-container" class="hidden">
-                        <!-- Auto-injected by JavaScript based on selected events -->
-                    </div>
-
-                    <!-- Promo Code Section -->
-                    <div class="mt-2 pt-2 border-b border-slate-800 pb-6 mb-6">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Promo Code (Optional)</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="promo-code-input" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-amber-500 transition-colors uppercase font-mono tracking-wider" placeholder="ENTER CODE">
-                            <button type="button" id="promo-apply-btn" onclick="window.applyPromoCode()" class="bg-slate-800 text-amber-400 px-6 py-2 rounded-xl font-bold hover:bg-amber-500 hover:text-slate-950 transition-colors text-sm w-32 flex justify-center items-center shrink-0">APPLY</button>
-                            <button type="button" id="promo-remove-btn" onclick="window.removePromoCode()" class="hidden bg-red-900/30 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-colors text-sm flex justify-center items-center shrink-0" title="Remove Promo Code">
-                                <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
-                            </button>
-                        </div>
-                        <p id="promo-message" class="text-xs mt-2 hidden"></p>
-                    </div>
-
-                    <!-- IMPORTANT RULES / NOTE (UPDATED FOR MAXIMUM VISIBILITY) -->
-                    <div class="mt-6 bg-red-950/40 border-2 border-red-500/60 rounded-xl p-5 mb-6 shadow-[0_0_20px_rgba(239,68,68,0.2)] animate-[pulse_3s_ease-in-out_infinite]">
-                        <h4 class="text-sm font-black text-red-400 uppercase tracking-widest mb-3 flex items-center">
-                            <i data-lucide="alert-octagon" class="w-5 h-5 mr-2"></i> IMPORTANT NOTE - READ CAREFULLY
-                        </h4>
-                        <ol class="text-[11px] md:text-xs text-slate-200 space-y-2.5 list-decimal pl-5 leading-relaxed font-bold">
-                            <li>Participants must carry a valid <strong>College ID card</strong> during the entire event.</li>
-                            <li>You can select a maximum of <strong>3 events per checkout</strong>. For more events, please make multiple registrations.</li>
-                            <li><strong>Quiz</strong> and <strong>Chess</strong> are mutually exclusive; you cannot participate in both. The same applies for <strong>PPT Presentation</strong> and <strong>Debugging</strong>.</li>
-                            <li>Participants must check the timings before registration. Clashing event timings will be considered participant negligence, and our team is not responsible.</li>
-                            <li class="text-amber-400 bg-amber-950/30 p-1.5 rounded border border-amber-500/30"><strong>If the same person registers for the same event again (e.g., for a friend), Event Management is not responsible and no amount will be refunded. Ensure all participant details are correct.</strong></li>
-                            <li>Report to the venue at least <strong>15 minutes before</strong> the event begins. Late entries may not be entertained once the event has started.</li>
-                            <li>Once you enter the premises, please collect your <strong>token for food and snacks</strong> at the registration desk.</li>
-                            <li>Participants must follow the instructions of the event coordinators and volunteers. Any form of misconduct or inappropriate behavior will lead to disqualification.</li>
-                            <li>Use of unfair means or plagiarism in any event will result in <strong>immediate disqualification</strong>.</li>
-                            <li>The decision of the judges and organizing committee will be <strong>final</strong>. The organizers reserve the right to modify the rules if necessary.</li>
-                            <li>If a person violates the above rules, the amount will <strong>not be refunded</strong> and only the first entry will be taken into account.</li>
-                            <li>The Fête Co-ordinators have all rights to disqualify the Individual Participant / Team if the above conditions are not met.</li>
-                        </ol>
-                    </div>
-
-                    <!-- Notice: Razorpay removes the need for manual UPI selection -->
-                    <button type="submit" id="razorpay-btn" class="w-full mt-6 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-center py-4 rounded-xl font-black text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 active:scale-95 uppercase tracking-widest flex justify-center items-center">
-                       Proceed to Pay <i data-lucide="shield-check" class="ml-2 w-5 h-5"></i>
-                    </button>
-                    <div class="flex justify-center items-center mt-3 space-x-2 text-slate-500">
-                        <i data-lucide="lock" class="w-3 h-3"></i>
-                        <p class="text-[10px] uppercase tracking-wider font-bold">100% Secure Payments via Cards, UPI & Netbanking</p>
-                    </div>
-                </form>
-
-                <!-- STEP 2: Payment Success Confirmation (Hidden by default) -->
-                <div id="checkout-step-2" class="hidden flex-col justify-center items-center h-full text-center transition-all duration-300">
-                    <div class="w-24 h-24 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
-                        <i data-lucide="check-circle" class="w-12 h-12"></i>
-                    </div>
-                    <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-2">Registration Successful!</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">
-                        Thank you, <span id="success-name" class="text-white font-bold"></span>! We have received your payment and registration for the selected events.
-                    </p>
-                    
-                    <div class="bg-black/40 p-5 rounded-2xl border border-white/5 w-full max-w-sm mb-10">
-                        <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-1">Razorpay Payment ID</div>
-                        <div id="success-utr" class="font-mono text-emerald-400 font-black text-xl tracking-widest break-all"></div>
-                    </div>
-                    
-                    <p class="text-xs text-slate-500 mb-8">A confirmation email acting as your official receipt has been sent to your email address. See you at the fest!</p>
-
-                    <button type="button" onclick="window.closeSuccessModal()" class="bg-slate-800 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-colors w-full">
-                        Done & Close
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript Application Logic -->
+    <!-- Essential Scripts for Home Page -->
     <script>
-        // Init Icons
-        if (typeof window.lucide !== 'undefined') {
-            window.lucide.createIcons();
-        }
+        lucide.createIcons();
 
-        // 1. Data Definitions (Updated Pricing and Constraints)
-        const eventsData = [
-            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 1, maxTeam: 2, shortDesc: "Present your innovative ideas and technical research.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills. Choose a trending topic in technology and present it to the judges.", rules: ["Maximum 2 members per team.", "Time limit: 8 minutes + 2 minutes Q&A.", "Bring soft copy in pen drive.", "Topics must be related to Computer Science/IT."], date: "Mar 28, 2026", time: "10:00 AM", venue: "Seminar Hall 1", prize: "Gold Trophy + Certificate", icon: "monitor" },
-            { id: 2, title: "Debugging", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Find and fix bugs in the given code snippets.", fullDesc: "Test your programming logic and sharp eyes. Participants will be given a set of buggy code. The one who fixes the most bugs in the least time wins.", rules: ["Individual participation.", "Two rounds: Prelims and Finals.", "No internet access allowed.", "IDE provided: VS Code / Turbo C."], date: "Mar 28, 2026", time: "11:30 AM", venue: "Computer Lab A", prize: "Gold Medal + Cash Prize", icon: "code" },
-            { id: 3, title: "Vibe Coding", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Code with the rhythm! A unique coding challenge.", fullDesc: "Can you focus when the beat drops? Solve coding problems while navigating distractions and music. It's about 'vibing' while you code.", rules: ["Individual participation.", "Headphones provided.", "Languages: Python, Java, C++.", "Judged on logic and efficiency."], date: "Mar 28, 2026", time: "02:00 PM", venue: "Computer Lab B", prize: "Tech Gadgets", icon: "music" },
-            { id: 4, title: "Techmeme", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create the funniest and most relatable tech memes.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Individual participation.", "No offensive content.", "Templates provided or create your own.", "Judged on humor."], date: "Mar 28, 2026", time: "All Day", venue: "Online / Gallery", prize: "Merchandise", icon: "image" },
-            { id: 5, title: "Quiz", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, shortDesc: "Battle of brains covering Tech & General Knowledge.", fullDesc: "Put your knowledge to the test. The quiz will cover a wide range of topics from latest tech trends to general trivia.", rules: ["Team of 2.", "Rounds: Prelims, Visual, Rapid Fire.", "Quiz master's decision is final."], date: "Mar 28, 2026", time: "01:00 PM", venue: "Main Auditorium", prize: "Cash Prize", icon: "brain" },
-            { id: 6, title: "Dance", category: "Cultural", fee: "200", minTeam: 4, maxTeam: 4, shortDesc: "Group dance competition.", fullDesc: "Express yourself through movement. Classical, Western, Folk - all styles are welcome to set the stage on fire.", rules: ["Exactly 4 members per team.", "Time limit: 4-6 minutes.", "Audio track submitted 1 hour prior.", "Props allowed.", "Decent attire mandatory."], date: "Mar 28, 2026", time: "03:00 PM", venue: "Open Air Theater", prize: "Trophy + Certificates", icon: "users" },
-            { id: 9, title: "Poster Making", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Design a poster on the given theme.", fullDesc: "Unleash your artistic skills. Design a poster that communicates a strong message effectively.", rules: ["Individual participation.", "Duration: 1.5 Hours.", "Theme on spot.", "Bring own materials."], date: "Mar 28, 2026", time: "10:30 AM", venue: "Art Room", prize: "Art Kit", icon: "palette" },
-            { id: 10, title: "Photography", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Capture the best moments of Tech Fête 2K26.", fullDesc: "A shutterbug contest. Roam the campus and capture the vibrancy of the fest. Themes: 'Candid', 'Tech', 'Emotion'.", rules: ["Individual participation.", "Mobile & DSLR categories.", "No heavy editing.", "Submit raw files."], date: "Mar 28, 2026", time: "All Day", venue: "Campus Wide", prize: "Photography Gear", icon: "camera" },
-            { id: 11, title: "Creative Writing", category: "Literary", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Weave words into magic. Story or Poem.", fullDesc: "For the wordsmiths. Write a compelling story or poem based on a prompt or image shown.", rules: ["Individual participation.", "Time limit: 1 Hour.", "English or Tamil.", "Judged on imagination."], date: "Mar 28, 2026", time: "11:00 AM", venue: "Room 101", prize: "Books", icon: "pen-tool" },
-            { id: 12, title: "Chess", category: "Gaming", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Strategic warfare on the 64 squares.", fullDesc: "A battle of patience and strategy. Standard FIDE rules apply for rapid chess format.", rules: ["Individual.", "Rapid format (10 min + 5s).", "Touch-move rule.", "Arbiter's decision final."], date: "Mar 28, 2026", time: "10:00 AM", venue: "Indoor Sports Hall", prize: "Trophy", icon: "pawn" }
-        ];
-
-        let selectedEventsList = [];
-        let localPurchasedEvents = []; // Fallback memory
-
-        // GLOBAL DISCOUNT CALCULATION LOGIC (Checkout Session Based)
-        window.calculateSubtotal = function(currentList) {
-            let baseTotal = 0;
-            let comboDisc = 0;
-            let effectiveFees = {}; // { eventId: finalPrice }
-
-            // Sort current list so Group events are evaluated first, treating them as the "first" event.
-            // If both are individual, sort by highest fee first to act as the primary full-priced event.
-            const sortedCurrentList = [...currentList].sort((a, b) => {
-                const aIsGroup = a.maxTeam > 1 ? 1 : 0;
-                const bIsGroup = b.maxTeam > 1 ? 1 : 0;
-                if (bIsGroup !== aIsGroup) return bIsGroup - aIsGroup;
-                return parseInt(b.fee) - parseInt(a.fee);
-            });
-
-            // Discounts apply ONLY to the current checkout session
-            for (let i = 0; i < sortedCurrentList.length; i++) {
-                const ev = sortedCurrentList[i];
-                
-                // Group events
-                const isGroup = ev.maxTeam > 1;
-                // The first event in the CURRENT cart is full price
-                const isFirstInCart = (i === 0);
-
-                let finalFee = parseInt(ev.fee);
-
-                // RULE: First event in cart is full price. Group events are full price.
-                // RULE: 2nd or 3rd event IN THIS CART (Individual) drops to 50!
-                if (!isFirstInCart && !isGroup) {
-                    finalFee = 50;
-                }
-
-                baseTotal += parseInt(ev.fee);
-                effectiveFees[ev.id] = finalFee;
-                if (finalFee < parseInt(ev.fee)) {
-                    comboDisc += (parseInt(ev.fee) - finalFee);
-                }
-            }
-
-            return {
-                subtotal: baseTotal - comboDisc,
-                comboDisc: comboDisc,
-                baseTotal: baseTotal,
-                effectiveFees: effectiveFees
-            };
-        };
-        
-        // --- LOAD CART & LOCAL PURCHASED EVENTS FROM STORAGE ---
-        try {
-            const savedCart = localStorage.getItem('techFeteCart');
-            if (savedCart) {
-                const parsedCart = JSON.parse(savedCart);
-                selectedEventsList = parsedCart.filter(e => eventsData.some(validEvent => validEvent.id === e.id));
-            }
-            const savedPurchased = localStorage.getItem('techFeteLocalPurchases');
-            if (savedPurchased) {
-                localPurchasedEvents = JSON.parse(savedPurchased);
-            }
-        } catch(e) {
-            console.error("Error loading storage", e);
-        }
-
-        let userData = {};
-
-        // PROMO CODE CONFIGURATION (Code: Discount Amount)
-        const promoCodesConfig = {
-            // ₹50 Promo Codes (5 codes)
-            "SAVE50": 50, "TECH50": 50, "FUN50": 50, "VIBE50": 50, "CODE50": 50,"A50":50,"B50":50,"C50":50,"D50":50,"E50":50,"F50":50,
-            
-            // ₹150 Promo Codes (5 codes)
-            "SAVE150": 150, "TECH150": 150, "FUN150": 150, "VIBE150": 150, "CODE150": 150,"A150":150,"B150":150,"C150":150,"D150":150,"E150":150,"F150":150,
-            
-            // ₹200 Promo Codes (5 codes)
-            "SAVE200": 200, "TECH200": 200, "FUN200": 200, "VIBE200": 200, "FEST200": 200,"A350":350,"B350":350,"C350":350,"D350":350,"E350":350,
-
-            // Keeping a few legacy ₹100 ones just in case someone already has them
-            "TECH100": 100, "WIN100": 100, "DISC100": 100,
-            
-            // MASTER TEST CODE (Infinite uses, nullifies entire cart)
-            "TESTFREE": 9999
-        };
-        let discountApplied = 0;
-        let appliedPromoCode = "";
-
-        // --- SMART COLLEGE SEARCH LOGIC ---
-        const officialColleges = [
-            "Pondicherry University (PU)",
-            "Puducherry Technological University (PTU)",
-            "Sri Manakula Vinayagar Engineering College (SMVEC)",
-            "Manakula Vinayagar Institute of Technology (MVIT)",
-            "Rajiv Gandhi College of Engineering and Technology (RGCET)",
-            "Christ College of Engineering and Technology",
-            "Achariya College of Engineering Technology",
-            "Sri Ganesh College of Engineering and Technology",
-            "Alpha College of Engineering and Technology",
-            "Perunthalaivar Kamarajar Institute of Engineering and Technology (PKIET)",
-            "NIT Puducherry (Karaikal)",
-            "JIPMER",
-            "Indira Gandhi Medical College and Research Institute (IGMCRI)",
-            "Mahatma Gandhi Medical College and Research Institute (MGMCRI)",
-            "Sri Venkateshwaraa Medical College Hospital (SVMCH)",
-            "Pondicherry Institute of Medical Sciences (PIMS)",
-            "Aarupadai Veedu Medical College (AVMC)",
-            "Mother Theresa Post Graduate and Research Institute of Health Sciences",
-            "Mahatma Gandhi Postgraduate Institute of Dental Sciences",
-            "Rajiv Gandhi Institute of Veterinary Education and Research (RIVER)",
-            "Pope John Paul II College of Education",
-            "Kanchi Mamunivar Govt Institute for Postgraduate Studies",
-            "Bharathidasan Govt College for Women",
-            "Tagore Arts College",
-            "Saradha Gangadharan College",
-            "Raak Arts and Science College",
-            "Idhaya College of Arts and Science",
-            "Indira Gandhi College of Arts and Science",
-            "Rajiv Gandhi Arts and Science College",
-            "Kasthurba College for Women",
-            "Perunthalaivar Kamarajar Arts College",
-            "Pandit Jawaharlal Nehru College of Agriculture (PAJANCOA&RI)",
-            "Other College / University"
-        ];
-
-        window.showCollegeList = function() {
-            window.filterColleges();
-            const listDiv = document.getElementById('custom-college-list');
-            if(listDiv) listDiv.classList.remove('hidden');
-        };
-
-        window.filterColleges = function() {
-            const input = document.getElementById('reg-college');
-            const listDiv = document.getElementById('custom-college-list');
-            if(!input || !listDiv) return;
-            
-            const val = input.value.toLowerCase().trim();
-            let filtered = officialColleges;
-            
-            if (val) {
-                filtered = officialColleges.filter(c => c.toLowerCase().includes(val));
-                if (filtered.length === 0) {
-                    filtered = ["Other College / University"];
-                }
-            }
-
-            listDiv.innerHTML = filtered.map(c => 
-                `<div onmousedown="event.preventDefault(); window.selectCollege('${c}')" class="px-4 py-3 hover:bg-amber-500 hover:text-slate-950 cursor-pointer text-slate-300 transition-colors text-sm border-b border-slate-800 last:border-0">${c}</div>`
-            ).join('');
-        };
-
-        window.selectCollege = function(val) {
-            const input = document.getElementById('reg-college');
-            if(input) input.value = val;
-            const listDiv = document.getElementById('custom-college-list');
-            if(listDiv) listDiv.classList.add('hidden');
-            window.handleCollegeChangeCustom();
-        };
-
-        window.handleCollegeBlur = function() {
-            setTimeout(() => {
-                const listDiv = document.getElementById('custom-college-list');
-                if(listDiv) listDiv.classList.add('hidden');
-                window.handleCollegeChangeCustom();
-            }, 200);
-        };
-
-        window.handleCollegeChangeCustom = function() {
-            const input = document.getElementById('reg-college');
-            const otherDiv = document.getElementById('other-college-div');
-            const otherInput = document.getElementById('reg-college-other');
-            if(!input || !otherDiv || !otherInput) return;
-            
-            const inputValueLower = input.value.trim().toLowerCase();
-            const validOptions = officialColleges.map(c => c.toLowerCase());
-
-            if (input.value.trim()) {
-                if (inputValueLower === "other college / university") {
-                    otherDiv.classList.remove('hidden');
-                    otherInput.required = true;
-                } else if (!validOptions.includes(inputValueLower)) {
-                    // They typed a custom college not in the official list
-                    const typedValue = input.value;
-                    input.value = "Other College / University";
-                    otherInput.value = typedValue;
-                    otherDiv.classList.remove('hidden');
-                    otherInput.required = true;
-                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                } else {
-                    // Selected a valid existing college (Fixes casing if they typed it manually)
-                    const exactMatch = officialColleges.find(c => c.toLowerCase() === inputValueLower);
-                    if (exactMatch) input.value = exactMatch;
-                    
-                    otherDiv.classList.add('hidden');
-                    otherInput.required = false;
-                    otherInput.value = "";
-                }
-            } else {
-                otherDiv.classList.add('hidden');
-                otherInput.required = false;
-            }
-        };
-
-        // --- PHONE NUMBER FORMATTER ---
-        window.formatPhoneNumber = function(input) {
-            let val = input.value;
-            
-            // Handle +91 auto-fill from mobile keyboards gracefully
-            if (val.startsWith('+91')) {
-                val = val.replace('+91', '');
-            } else if (val.startsWith('91') && val.length > 10) {
-                val = val.substring(2);
-            }
-            
-            let cleaned = val.replace(/\D/g, '').substring(0, 10);
-            
-            // Only update if it changed to prevent annoying cursor jumps
-            if (input.value !== cleaned) {
-                input.value = cleaned;
-            }
-        };
-
-        // 2. Global UI Functions
-        window.renderEvents = function(category) {
-            const grid = document.getElementById('events-grid');
-            if(!grid) return;
-            
-            grid.innerHTML = '';
-            const filtered = category === 'All' ? eventsData : eventsData.filter(e => e.category === category);
-            
-            filtered.forEach(event => {
-                const card = document.createElement('div');
-                card.className = "group glass-card rounded-3xl overflow-hidden hover:-translate-y-2 transition-all duration-500 relative";
-                
-                // Add tag based on min/max team setup
-                const typeTag = event.maxTeam > 1 ? `<i data-lucide="users" class="w-3 h-3 mr-1 inline"></i> Team Event` : `<i data-lucide="user" class="w-3 h-3 mr-1 inline"></i> Solo Event`;
-
-                card.innerHTML = `
-                    <div class="absolute inset-0 bg-gradient-to-b from-amber-500/0 via-amber-500/0 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                    <div class="p-8 relative z-10 h-full flex flex-col">
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="w-12 h-12 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center border border-amber-500/20 text-amber-400 group-hover:scale-110 group-hover:border-amber-500 transition-all duration-300">
-                                ${event.icon === 'pawn' 
-                                    ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><circle cx="12" cy="5.5" r="3.5"/><rect x="8.5" y="9.5" width="7" height="1.5" rx="0.5"/><path d="M10.5 11 C10.5 14.5 8 17 6 18 L18 18 C16 17 13.5 14.5 13.5 11 Z"/><rect x="5.5" y="18.5" width="13" height="1.5" rx="0.5"/><path d="M4.5 22.5 C4.5 21 6 20.5 6 20.5 L18 20.5 C18 20.5 19.5 21 19.5 22.5 Z"/></svg>` 
-                                    : `<i data-lucide="${event.icon}" class="w-6 h-6"></i>`}
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 text-[10px] font-bold uppercase border border-amber-500/20 tracking-wider">
-                                ${event.category}
-                            </span>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors brand-font tracking-wide">${event.title}</h3>
-                        <p class="text-slate-400 mb-6 text-sm flex-grow leading-relaxed">${event.shortDesc}</p>
-                        
-                        <div class="text-xs text-amber-500/80 mb-4 font-bold tracking-widest uppercase">${typeTag}</div>
-                        
-                        <div class="flex flex-wrap items-center text-xs text-slate-500 gap-y-2 gap-x-4 mb-8 font-medium">
-                            <div class="flex items-center group-hover:text-amber-500/70 transition-colors"><i data-lucide="calendar" class="w-3 h-3 mr-1.5"></i> ${event.date}</div>
-                            <div class="flex items-center group-hover:text-amber-500/70 transition-colors"><i data-lucide="clock" class="w-3 h-3 mr-1.5"></i> ${event.time}</div>
-                            <div class="flex items-center group-hover:text-amber-500/70 transition-colors"><i data-lucide="indian-rupee" class="w-3 h-3 mr-1.5"></i> ${event.fee}</div>
-                        </div>
-                        <button onclick="window.openModal(${event.id})" class="w-full py-3 bg-[#020617] border border-amber-500/20 rounded-xl font-bold text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500 transition-all uppercase text-xs tracking-widest">
-                            View Details
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-        };
-
-        window.filterEvents = function(category, btn) {
-            window.renderEvents(category);
-            document.querySelectorAll('.filter-btn').forEach(b => {
-                b.className = "filter-btn px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-slate-900/50 border-slate-800 text-slate-400 hover:text-amber-400";
-            });
-            btn.className = "filter-btn active px-6 py-2 rounded-lg text-sm font-bold transition-all border bg-amber-500 border-amber-400 text-slate-950 shadow-lg shadow-amber-500/20";
-        };
-
-        window.openModal = function(id) {
-            const event = eventsData.find(e => e.id === id);
-            if(!event) return;
-            const modalBody = document.getElementById('modal-body');
-            const modal = document.getElementById('event-modal');
-            if(!modal || !modalBody) return;
-            
-            const isSelected = selectedEventsList.some(e => e.id === id);
-            
-            let btnText = isSelected ? "Remove from Selection" : "Add to Selection";
-            let btnColor = isSelected ? "bg-red-500 hover:bg-red-400 shadow-red-500/10 text-white" : "bg-amber-500 hover:bg-amber-400 shadow-amber-500/10 text-slate-950";
-            let onClickAction = `window.toggleEventSelection(${event.id})`;
-            let cursorStyle = "cursor-pointer active:scale-95";
-
-            let teamSizeText = event.maxTeam > 1 
-                ? (event.minTeam === event.maxTeam ? `Exactly ${event.minTeam} Members` : `${event.minTeam} to ${event.maxTeam} Members`)
-                : `Solo Event`;
-
-            modalBody.innerHTML = `
-                <div class="flex items-center mb-8">
-                    <div class="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mr-6 border border-amber-500/20">
-                        ${event.icon === 'pawn' ? `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5.5" r="3.5"/><rect x="8.5" y="9.5" width="7" height="1.5" rx="0.5"/><path d="M10.5 11 C10.5 14.5 8 17 6 18 L18 18 C16 17 13.5 14.5 13.5 11 Z"/><rect x="5.5" y="18.5" width="13" height="1.5" rx="0.5"/><path d="M4.5 22.5 C4.5 21 6 20.5 6 20.5 L18 20.5 C18 20.5 19.5 21 19.5 22.5 Z"/></svg>` : `<i data-lucide="${event.icon}" class="w-8 h-8"></i>`}
-                    </div>
-                    <div>
-                        <span class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1 block">${event.category} Event</span>
-                        <h2 class="text-3xl md:text-4xl font-black text-white brand-font tracking-wide">${event.title}</h2>
-                    </div>
-                </div>
-                <p class="text-slate-300 text-base md:text-lg mb-10 leading-relaxed border-l-2 border-amber-500/50 pl-6">${event.fullDesc}</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                    <div class="bg-black/30 border border-amber-500/10 p-6 rounded-2xl">
-                        <h4 class="font-bold text-amber-400 flex items-center mb-4 uppercase text-xs tracking-widest"><i data-lucide="info" class="w-4 h-4 mr-2"></i> Logistics</h4>
-                        <ul class="space-y-3 text-sm text-slate-300">
-                            <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Date</span> <span class="font-bold">${event.date}</span></li>
-                            <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Time</span> <span class="font-bold">${event.time}</span></li>
-                            <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Team Size</span> <span class="text-amber-400 font-bold">${teamSizeText}</span></li>
-                            <li class="flex justify-between"><span class="text-slate-500">Reg. Fee</span> <span class="font-bold text-emerald-400">₹${event.fee}</span></li>
-                        </ul>
-                    </div>
-                    <div class="bg-gradient-to-br from-amber-600/10 to-transparent border border-amber-500/20 p-6 rounded-2xl flex flex-col justify-center items-center text-center">
-                        <h4 class="font-bold text-amber-400 flex items-center mb-2 uppercase text-xs tracking-widest"><i data-lucide="trophy" class="w-4 h-4 mr-2"></i> Prize</h4>
-                        <p class="text-white font-black text-xl tracking-tight">${event.prize}</p>
-                    </div>
-                </div>
-                
-                <div class="mb-12">
-                    <h4 class="font-bold text-lg text-white mb-6 flex items-center brand-font tracking-wide">RULES & REGULATIONS</h4>
-                    <ul class="space-y-4">
-                        ${event.rules.map((rule, idx) => `<li class="flex items-start text-slate-400 group"><span class="w-6 h-6 border border-amber-500/30 rounded flex items-center justify-center text-[10px] font-bold mr-4 shrink-0 text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">${idx + 1}</span><span class="text-sm leading-relaxed">${rule}</span></li>`).join('')}
-                    </ul>
-                </div>
-                
-                <button onclick="${onClickAction}" class="w-full ${btnColor} text-center py-4 rounded-xl font-black text-lg transition-all shadow-xl uppercase tracking-widest flex justify-center items-center ${cursorStyle}">
-                    ${btnText}
-                </button>
-            `;
-            
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-            modal.classList.remove('hidden', 'opacity-0');
-            modal.classList.add('flex', 'opacity-100');
-            setTimeout(() => {
-                const mc = document.getElementById('modal-content');
-                if(mc) { mc.classList.remove('scale-95'); mc.classList.add('scale-100'); }
-            }, 10);
-        };
-
-        window.closeModal = function() {
-            const modal = document.getElementById('event-modal');
-            const mc = document.getElementById('modal-content');
-            if(!modal || !mc) return;
-            mc.classList.remove('scale-100'); mc.classList.add('scale-95');
-            modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
-        };
-
-        // --- SAVE CART TO STORAGE ---
-        window.saveCartState = function() {
-            localStorage.setItem('techFeteCart', JSON.stringify(selectedEventsList));
-        };
-
-        window.toggleEventSelection = function(id) {
-            const event = eventsData.find(e => e.id === id);
-            const index = selectedEventsList.findIndex(e => e.id === id);
-
-            if (index > -1) {
-                // If it's already in the cart, remove it
-                selectedEventsList.splice(index, 1);
-            } else {
-                // Mutual Exclusivity Constraint (Quiz vs Chess)
-                const hasQuiz = selectedEventsList.some(e => e.id === 5);
-                const hasChess = selectedEventsList.some(e => e.id === 12);
-                if ((event.id === 5 && hasChess) || (event.id === 12 && hasQuiz)) {
-                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both Quiz and Chess in the same checkout as they are mutually exclusive.`);
-                    return;
-                }
-
-                // Mutual Exclusivity Constraint (PPT vs Debugging)
-                const hasPPT = selectedEventsList.some(e => e.id === 1);
-                const hasDebugging = selectedEventsList.some(e => e.id === 2);
-                if ((event.id === 1 && hasDebugging) || (event.id === 2 && hasPPT)) {
-                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both PPT Presentation and Debugging in the same checkout.`);
-                    return;
-                }
-
-                // Cart Max 3 Events Constraint
-                if (selectedEventsList.length >= 3) {
-                    alert(`⚠️ Cart Limit Reached!\n\nYou can only checkout a maximum of 3 events at a time. Please complete this registration first.`);
-                    return;
-                }
-                
-                // Valid! Add it to the end of the cart array
-                selectedEventsList.push(event);
-            }
-            window.saveCartState();
-            window.updateCartUI();
-            window.closeModal();
-        };
-
-        window.updateCartUI = function() {
-            const floatingCart = document.getElementById('floating-cart');
-            const cartCount = document.getElementById('cart-count');
-            const cartTotal = document.getElementById('cart-total');
-            if(!floatingCart) return;
-            
-            if (selectedEventsList.length > 0) {
-                floatingCart.classList.remove('translate-y-full');
-                if(cartCount) cartCount.innerText = selectedEventsList.length;
-                if(cartTotal) cartTotal.innerText = window.calculateSubtotal(selectedEventsList).subtotal;
-            } else {
-                floatingCart.classList.add('translate-y-full');
-            }
-        };
-
-        window.updateCheckoutTotal = function() {
-            const checkoutTotal = document.getElementById('checkout-total');
-            const discountDisplay = document.getElementById('discount-display');
-            const promoAmountDisplay = document.getElementById('promo-discount-amt');
-            const comboDisplay = document.getElementById('combo-discount-display');
-            const comboAmt = document.getElementById('combo-discount-amt');
-            
-            const pricing = window.calculateSubtotal(selectedEventsList);
-            const finalTotal = Math.max(0, pricing.subtotal - discountApplied);
-            
-            if (checkoutTotal) checkoutTotal.innerText = finalTotal;
-
-            if (comboDisplay && comboAmt) {
-                if (pricing.comboDisc > 0) {
-                    comboAmt.innerText = pricing.comboDisc;
-                    comboDisplay.classList.remove('hidden');
-                    comboDisplay.classList.add('flex');
-                } else {
-                    comboDisplay.classList.add('hidden');
-                    comboDisplay.classList.remove('flex');
-                }
-            }
-            
-            if (discountDisplay) {
-                if (discountApplied > 0) {
-                    if(promoAmountDisplay) promoAmountDisplay.innerText = discountApplied;
-                    discountDisplay.classList.remove('hidden');
-                    discountDisplay.classList.add('flex');
-                } else {
-                    discountDisplay.classList.add('hidden');
-                    discountDisplay.classList.remove('flex');
-                }
-            }
-        };
-
-        window.applyPromoCode = async function() {
-            const inputField = document.getElementById('promo-code-input');
-            const applyBtn = document.getElementById('promo-apply-btn');
-            const input = inputField.value.trim().toUpperCase();
-            const msgEl = document.getElementById('promo-message');
-            const subtotal = window.calculateSubtotal(selectedEventsList).subtotal;
-            
-            // Get email strictly to bind the code to the user, not just the browser
-            const userEmailInput = document.getElementById('reg-email').value.toLowerCase().trim();
-            
-            msgEl.classList.remove('hidden');
-
-            if (discountApplied > 0) {
-                msgEl.innerText = "A promo code is already applied.";
-                msgEl.className = "text-xs mt-2 text-amber-500 block font-bold";
-                return;
-            }
-
-            if (subtotal <= 0) {
-                msgEl.innerText = "Add events to your selection first.";
-                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                return;
-            }
-
-            if (!input) {
-                msgEl.innerText = "Please enter a code.";
-                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                return;
-            }
-
-            if (!promoCodesConfig.hasOwnProperty(input)) {
-                msgEl.innerText = "Invalid or expired promo code.";
-                msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                return;
-            }
-
-            if (!userEmailInput) {
-                msgEl.innerText = "Please enter your Email ID above first.";
-                msgEl.className = "text-xs mt-2 text-amber-500 block font-bold";
-                document.getElementById('reg-email').focus();
-                return;
-            }
-
-            // ONLY run usage checks if it is NOT the infinite test code
-            if (input !== "TESTFREE") {
-                // CHECK 1: Local Storage Code Check (Prevents reuse on same device immediately)
-                const usedPromoCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-                if (usedPromoCodes.includes(input)) {
-                    msgEl.innerText = "This promo code has already been redeemed.";
-                    msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                    return;
-                }
-
-                // UI loading state
-                applyBtn.innerHTML = "<i data-lucide='loader-2' class='w-4 h-4 animate-spin'></i>";
-                applyBtn.disabled = true;
-                if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-
-                // CHECK 2: Global Cloud Firebase check (Prevents reuse across different devices)
-                if (typeof window.checkPromoCodeGlobal === 'function') {
-                    const globalCheck = await window.checkPromoCodeGlobal(input);
-                    if (!globalCheck.valid) {
-                        msgEl.innerText = globalCheck.message;
-                        msgEl.className = "text-xs mt-2 text-red-400 block font-bold";
-                        applyBtn.innerText = "APPLY";
-                        applyBtn.disabled = false;
-                        return;
-                    }
-                }
-            } else {
-                // Keep the UI consistent even though TESTFREE skips the cloud check
-                applyBtn.innerHTML = "<i data-lucide='loader-2' class='w-4 h-4 animate-spin'></i>";
-                applyBtn.disabled = true;
-            }
-
-            // Determine discount amount directly from the configuration map
-            let amountToDeduct = promoCodesConfig[input];
-            
-            // If it's the test code, dynamically set the discount to exactly the subtotal!
-            if (input === "TESTFREE") {
-                amountToDeduct = subtotal;
-            }
-
-            discountApplied = amountToDeduct;
-            appliedPromoCode = input;
-            msgEl.innerText = `Promo code applied! ₹${amountToDeduct} deducted.`;
-            msgEl.className = "text-xs mt-2 text-emerald-400 block font-bold";
-            inputField.disabled = true;
-            
-            // Swap buttons
-            applyBtn.classList.add('hidden');
-            applyBtn.innerText = "APPLY"; // Reset text for later
-            applyBtn.disabled = false;
-            document.getElementById('promo-remove-btn').classList.remove('hidden');
-            
-            window.updateCheckoutTotal();
-        };
-
-        // --- REMOVE PROMO CODE ---
-        window.removePromoCode = function() {
-            discountApplied = 0;
-            appliedPromoCode = "";
-            
-            const inputField = document.getElementById('promo-code-input');
-            const applyBtn = document.getElementById('promo-apply-btn');
-            const removeBtn = document.getElementById('promo-remove-btn');
-            const msgEl = document.getElementById('promo-message');
-
-            inputField.disabled = false;
-            inputField.value = ""; // Clear the old code
-            
-            applyBtn.classList.remove('hidden');
-            removeBtn.classList.add('hidden');
-            
-            msgEl.classList.add('hidden');
-            msgEl.innerText = "";
-            
-            window.updateCheckoutTotal();
-        };
-
-        // --- FORM DATA PERSISTENCE ACROSS REFRESHES ---
-        window.saveFormData = function() {
-            const form = document.getElementById('checkout-step-1');
-            if(!form) return;
-            const inputs = form.querySelectorAll('input');
-            const data = {};
-            inputs.forEach(inp => {
-                // Save everything except the promo code input
-                if (inp.id && inp.id !== 'promo-code-input') {
-                    data[inp.id] = inp.value;
-                }
-            });
-            localStorage.setItem('techFeteFormData', JSON.stringify(data));
-        };
-
-        window.restoreFormData = function() {
-            try {
-                const saved = localStorage.getItem('techFeteFormData');
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    Object.keys(data).forEach(id => {
-                        const el = document.getElementById(id);
-                        if (el) el.value = data[id];
-                    });
-                    
-                    // Re-trigger the college dropdown logic to show the "Other" field if needed
-                    if (typeof window.handleCollegeChangeCustom === 'function') {
-                        window.handleCollegeChangeCustom();
-                    }
-                }
-            } catch(e) {
-                console.error("Error restoring form data", e);
-            }
-        };
-
-        // --- NEW DYNAMIC TEAM FIELDS GENERATOR ---
-        window.updateTeamFields = function() {
-            const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
-            const teamContainer = document.getElementById('team-members-container');
-            if(!teamContainer) return;
-
-            // PRESERVE EXISTING VALUES
-            let existingValues = {};
-            const inputs = teamContainer.querySelectorAll('input');
-            inputs.forEach(inp => {
-                if (inp.id) existingValues[inp.id] = inp.value;
-            });
-
-            if (teamEvents.length > 0) {
-                teamContainer.classList.remove('hidden');
-                let html = '<div class="mt-4 mb-6 space-y-4">';
-                
-                teamEvents.forEach(event => {
-                    const minT = event.minTeam;
-                    const maxT = event.maxTeam;
-                    
-                    html += '<div class="bg-amber-500/5 p-4 rounded-2xl border border-amber-500/10">';
-                    html += `<h3 class="text-xs font-black text-amber-500 uppercase tracking-[0.2em] mb-4 flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2"></i> ${event.title} - Team Details</h3>`;
-                    
-                    html += `
-                        <div class="mb-4">
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Team Name ${minT > 1 ? '<span class="text-red-500">*</span>' : '(Optional)'}</label>
-                            <input type="text" id="reg-team-name-${event.id}" ${minT > 1 ? 'required' : ''} class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]" placeholder="E.g. The Innovators">
-                        </div>
-                    `;
-                    
-                    html += '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
-                    for (let i = 2; i <= maxT; i++) {
-                        let isReq = i <= minT;
-                        html += `
-                            <div>
-                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Member ${i} Name ${isReq ? '<span class="text-red-500">*</span>' : '(Optional)'}</label>
-                                <input type="text" id="reg-member-name-${event.id}-${i}" ${isReq ? 'required' : ''} class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] mb-3" placeholder="Full Name">
-                                
-                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Member ${i} Phone ${isReq ? '<span class="text-red-500">*</span>' : ''}</label>
-                                <div class="relative flex items-center">
-                                    <span class="absolute left-4 text-slate-500 font-bold">+91</span>
-                                    <input type="tel" id="reg-member-phone-${event.id}-${i}" ${isReq ? 'required' : ''} minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="window.formatPhoneNumber(this)" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]" placeholder="XXXXXXXXXX">
-                                </div>
-                            </div>
-                        `;
-                    }
-                    html += '</div></div>';
-                });
-                
-                html += '</div>';
-                teamContainer.innerHTML = html;
-                
-                // RESTORE EXISTING VALUES
-                Object.keys(existingValues).forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.value = existingValues[id];
-                });
-
-                if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-            } else {
-                teamContainer.classList.add('hidden');
-                teamContainer.innerHTML = '';
-            }
-        };
-
-        // --- NEW REFRESH CART FUNCTION ---
-        window.refreshCheckoutCart = function() {
-            const listContainer = document.getElementById('checkout-events-list');
-            if(!listContainer) return;
-            
-            const pricing = window.calculateSubtotal(selectedEventsList);
-
-            listContainer.innerHTML = selectedEventsList.map(e => {
-                const finalFee = pricing.effectiveFees[e.id];
-                const originalFee = parseInt(e.fee);
-                
-                let priceDisplay = '';
-                if (finalFee < originalFee) {
-                    priceDisplay = `
-                        <div class="flex flex-col items-end">
-                            <span class="text-slate-500 line-through text-[10px] leading-none mb-1">₹${originalFee}</span>
-                            <span class="font-bold text-amber-400 leading-none">₹${finalFee}</span>
-                        </div>
-                    `;
-                } else {
-                    priceDisplay = `<div class="font-bold text-emerald-400">₹${finalFee}</div>`;
-                }
-
-                return `
-                <div class="flex justify-between items-center bg-black/60 p-4 rounded-xl border border-slate-800 relative pr-14 shadow-sm event-cart-item transition-all">
-                    <div>
-                        <div class="font-bold text-amber-400">${e.title}</div>
-                        <div class="text-[10px] text-slate-500 mt-1 uppercase tracking-wider font-bold">${e.time} ${e.maxTeam > 1 ? '• Team Event' : '• Individual'}</div>
-                    </div>
-                    ${priceDisplay}
-                    <button type="button" onclick="window.removeEventFromCart(${e.id})" class="delete-event-btn absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white rounded-lg transition-all z-50 cursor-pointer shadow-sm" title="Remove Event">
-                        <i data-lucide="trash-2" class="w-4 h-4 pointer-events-none"></i>
-                    </button>
-                </div>
-                `;
-            }).join('');
-            
-            window.updateTeamFields(); // Calculate if we need team boxes based on the updated cart!
-            window.updateCheckoutTotal();
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-        };
-
-        window.openCheckoutModal = function() {
-            const checkoutModal = document.getElementById('checkout-modal');
-            if(!checkoutModal) return;
-            
-            window.refreshCheckoutCart();
-            window.restoreFormData(); // Restore all typed details automatically
-            
-            checkoutModal.classList.remove('hidden', 'opacity-0'); checkoutModal.classList.add('flex', 'opacity-100');
-            setTimeout(() => {
-                const cc = document.getElementById('checkout-content');
-                if(cc) { cc.classList.remove('scale-95'); cc.classList.add('scale-100'); }
-            }, 10);
-        };
-
-        window.closeCheckoutModal = function() {
-            const checkoutModal = document.getElementById('checkout-modal');
-            const cc = document.getElementById('checkout-content');
-            if(!checkoutModal || !cc) return;
-            cc.classList.remove('scale-100'); cc.classList.add('scale-95');
-            checkoutModal.classList.remove('opacity-100'); checkoutModal.classList.add('opacity-0');
-            setTimeout(() => { 
-                checkoutModal.classList.remove('flex'); 
-                checkoutModal.classList.add('hidden'); 
-                
-                // Only reset the form entirely if the cart is empty (e.g., they cleared it)
-                // Otherwise, preserve their input details!
-                if (selectedEventsList.length === 0) {
-                    window.resetCheckoutForm(); 
-                }
-            }, 300);
-        };
-
-        // NEW: Specific closer for successful payments
-        window.closeSuccessModal = function() {
-            window.closeCheckoutModal();
-            setTimeout(() => {
-                window.resetCheckoutForm();
-            }, 300);
-        }
-
-        // --- RESTORED MISSING DELETE FUNCTION ---
-        window.removeEventFromCart = function(id) {
-            const index = selectedEventsList.findIndex(e => e.id === id);
-            if (index > -1) {
-                selectedEventsList.splice(index, 1);
-                window.saveCartState();
-                window.updateCartUI();
-                
-                // Re-evaluate discount if cart is empty
-                if (selectedEventsList.length === 0) {
-                    window.removePromoCode();
-                }
-                
-                if (selectedEventsList.length === 0) { 
-                    window.closeCheckoutModal(); // Form resets automatically here now due to length === 0
-                } else { 
-                    window.refreshCheckoutCart(); // Preserves typed inputs now!
-                }
-            }
-        };
-
-        // --- RESTORED SMART WIZARD FUNCTION ---
-        window.openWizardModal = function() {
-            const modal = document.getElementById('wizard-modal');
-            const wc = document.getElementById('wizard-content');
-            if(!modal || !wc) return;
-            
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            // Timeout to allow the browser to register display: flex before animating opacity
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.classList.add('opacity-100');
-                wc.classList.remove('scale-95');
-                wc.classList.add('scale-100');
-            }, 10);
-        };
-
-        window.closeWizardModal = function() {
-            const modal = document.getElementById('wizard-modal');
-            const wc = document.getElementById('wizard-content');
-            if(!modal || !wc) return;
-            wc.classList.remove('scale-100'); wc.classList.add('scale-95');
-            modal.classList.remove('opacity-100'); modal.classList.add('opacity-0');
-            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
-        };
-
-        window.applyWizardBundle = function(eventIdsArray) {
-            let validAdds = [];
-            let warnings = [];
-
-            for (const id of eventIdsArray) {
-                const event = eventsData.find(e => e.id === id);
-                if (!event) continue;
-
-                const allEvents = [...validAdds, event];
-                
-                const hasQuiz = allEvents.some(e => e.id === 5);
-                const hasChess = allEvents.some(e => e.id === 12);
-                if (hasQuiz && hasChess) {
-                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in bundle.`);
-                     continue;
-                }
-
-                const hasPPT = allEvents.some(e => e.id === 1);
-                const hasDebugging = allEvents.some(e => e.id === 2);
-                if (hasPPT && hasDebugging) {
-                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in bundle.`);
-                     continue;
-                }
-
-                if (validAdds.length >= 3) {
-                     warnings.push(`Skipped "${event.title}": 3 events max limit reached.`);
-                     continue;
-                }
-
-                if (event.maxTeam > 1) {
-                    const selectedGroupCount = validAdds.filter(e => e.maxTeam > 1).length;
-                    if (selectedGroupCount >= 2) {
-                        warnings.push(`Skipped "${event.title}": 2 group events max limit reached per checkout.`);
-                        continue;
-                    }
-                }
-
-                if (event.time !== 'All Day') {
-                    const clash = validAdds.find(e => e.time === event.time && e.time !== 'All Day');
-                    if (clash) {
-                         warnings.push(`Skipped "${event.title}": Time clash with "${clash.title}".`);
-                         continue;
-                    }
-                }
-
-                validAdds.push(event);
-            }
-
-            if (warnings.length > 0) {
-                alert("Some events in the bundle were modified or skipped:\n\n" + warnings.join("\n"));
-            }
-
-            if (validAdds.length > 0) {
-                selectedEventsList = validAdds;
-                window.saveCartState();
-                window.updateCartUI();
-                window.closeWizardModal();
-                setTimeout(() => { window.openCheckoutModal(); }, 350);
-            } else if (warnings.length > 0) {
-                window.closeWizardModal();
-            }
-        };
-
-        // --- SMART EMAIL ROUTING ---
+        // Utilities
         window.openEmail = function(e) {
             e.preventDefault();
             const email = "techfete2026@gmail.com";
-            // Check if the user is on a mobile device
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            if (isMobile) {
-                // Mobile: Open native mail app directly
-                window.location.href = `mailto:${email}`;
-            } else {
-                // Desktop: Open Gmail web compose in a new tab
-                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
-            }
+            if (isMobile) { window.location.href = `mailto:${email}`; } 
+            else { window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank'); }
         };
 
-        // --- CLIPBOARD COPY FUNCTION ---
         window.copyToClipboard = function(text, btn) {
             const tempInput = document.createElement("input");
             tempInput.value = text;
@@ -1785,430 +628,16 @@
             }
         };
 
-        // --- SECURE RAZORPAY INTEGRATION & FIREBASE GATE ---
-        window.processPayment = async function(e) {
-            e.preventDefault(); 
-            
-            const submitBtn = document.getElementById('razorpay-btn');
-            const originalBtnContent = submitBtn.innerHTML;
-            submitBtn.innerHTML = "Verifying Details... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
-            submitBtn.disabled = true;
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-
-            const userEmailInput = document.getElementById('reg-email').value.toLowerCase().trim();
-
-            // PRE-CHECK 1: Make sure they didn't fake the promo code local storage right before clicking pay
-            if (appliedPromoCode && appliedPromoCode !== "TESTFREE") {
-                const usedPromoCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-                if (usedPromoCodes.includes(appliedPromoCode)) {
-                    alert("This promo code has already been redeemed.");
-                    submitBtn.innerHTML = originalBtnContent;
-                    submitBtn.disabled = false;
-                    return;
-                }
-            }
-
-            // 2. RUN CONSTRAINTS (Current Cart Only - Ignored Past Purchases for Friend Booking)
-            let warnings = [];
-
-            // Exclusivity Checks
-            const hasQuiz = selectedEventsList.some(e => e.id === 5);
-            const hasChess = selectedEventsList.some(e => e.id === 12);
-            if (hasQuiz && hasChess) warnings.push(`- You cannot register for both Quiz and Chess in the same checkout.`);
-
-            const hasPPT = selectedEventsList.some(e => e.id === 1);
-            const hasDebugging = selectedEventsList.some(e => e.id === 2);
-            if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging in the same checkout.`);
-
-            // Check Cart Max Total (3)
-            if (selectedEventsList.length > 3) {
-                warnings.push(`- Cart limit exceeded. You can only checkout 3 events at a time.`);
-            }
-
-            // If validation fails, stop everything and show errors!
-            if (warnings.length > 0) {
-                alert("REGISTRATION BLOCKED:\n\n" + warnings.join("\n") + "\n\nPlease modify your cart and try again.");
-                submitBtn.innerHTML = originalBtnContent;
-                submitBtn.disabled = false;
-                if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                return;
-            }
-
-            // If validation passes, proceed to standard checkout prep
-            submitBtn.innerHTML = "Opening Secure Checkout... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-
-            let finalCollege = document.getElementById('reg-college').value;
-            if (finalCollege === "Other College / University") {
-                finalCollege = document.getElementById('reg-college-other').value;
-            }
-            
-            userData = {
-                name: document.getElementById('reg-name').value,
-                pureName: document.getElementById('reg-name').value, 
-                college: finalCollege,
-                phone: "+91 " + document.getElementById('reg-phone').value,
-                email: userEmailInput, 
-                payerUpi: "Paid securely via Razorpay"
-            };
-
-            const pricing = window.calculateSubtotal(selectedEventsList);
-            const totalAmount = Math.max(0, pricing.subtotal - discountApplied);
-            
-            // --- FREE REGISTRATION BY bypass (Total = ₹0) ---
-            if (totalAmount === 0) {
-                const promoUtr = "PROMO-" + Math.floor(10000000 + Math.random() * 90000000);
-                userData.payerUpi = "N/A (Free via Promo Code)";
-                window.triggerEmailAndSuccess(promoUtr, totalAmount, submitBtn, originalBtnContent);
-                return; 
-            }
-
-            // --- RAZORPAY CHECKOUT OPTIONS ---
-            var options = {
-                "key": "rzp_live_SJV3kgUcRfxEZX", // YOUR RAZORPAY TEST KEY
-                "amount": totalAmount * 100, // Amount must be in paise (₹100 = 10000 paise)
-                "currency": "INR",
-                "name": "Tech Fête 2K26",
-                "description": "Event Registration for " + document.getElementById('reg-name').value,
-                "image": "https://i.imgur.com/your-hosted-logo.png", // Optional: Link to your logo
-                "handler": function (response) {
-                    // This function triggers automatically when payment is successful!
-                    const paymentId = response.razorpay_payment_id;
-                    window.triggerEmailAndSuccess(paymentId, totalAmount, submitBtn, originalBtnContent);
-                },
-                "prefill": {
-                    "name": document.getElementById('reg-name').value,
-                    "email": userData.email,
-                    "contact": userData.phone
-                },
-                "notes": {
-                    "college": userData.college,
-                    "events": selectedEventsList.map(ev => ev.title).join(", ")
-                },
-                "theme": {
-                    "color": "#e23636"
-                },
-                "modal": {
-                    "ondismiss": function() {
-                        // This fires perfectly when the user closes the Razorpay window
-                        submitBtn.innerHTML = originalBtnContent;
-                        submitBtn.disabled = false;
-                        if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                    }
-                }
-            };
-            
-            try {
-                var rzp1 = new Razorpay(options);
-                rzp1.on('payment.failed', function (response){
-                    alert("Payment Failed. Reason: " + response.error.description);
-                    submitBtn.innerHTML = originalBtnContent;
-                    submitBtn.disabled = false;
-                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-                });
-
-                rzp1.open();
-            } catch (err) {
-                console.error(err);
-                alert("Razorpay failed to load. Please check your internet connection.");
-                submitBtn.innerHTML = originalBtnContent;
-                submitBtn.disabled = false;
-            }
-        };
-
-        window.triggerEmailAndSuccess = async function(paymentId, totalAmount, submitBtn, originalBtnContent) {
-            const eventNames = selectedEventsList.map(ev => ev.title).join(", ");
-            const paymentTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-            
-            // --- UNIVERSAL QR CODE GENERATION & DATABASE SAVING ---
-            let basePath = window.location.pathname.replace(/\/index\.html$/, '');
-            if (basePath === '/' || basePath === '/index.html') basePath = '';
-            const baseVerifyUrl = window.location.origin + basePath + "/verify.html";
-            
-            const indEvents = selectedEventsList.filter(e => e.maxTeam === 1);
-            const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
-            
-            let emailQrHtml = "";
-            let teamData = []; // Array to hold structured team data for Google Sheets
-            let leaderEventsToAdd = []; // Accumulates all events the primary buyer is in
-
-            // 1. Fetch Sequential Base Values
-            let baseAttendeeCount = 0;
-            if (typeof window.getUniversalAttendeeCount === 'function') {
-                baseAttendeeCount = await window.getUniversalAttendeeCount();
-            }
-            let newAttendeesThisSession = 0;
-
-            // Helper function to safely fetch existing ID or generate the sequential TF2K26-NAME-XXXX format
-            async function resolveRegId(phone, name) {
-                if (typeof window.getExistingRegId === 'function') {
-                    const existing = await window.getExistingRegId(phone);
-                    if (existing) return existing;
-                }
-                newAttendeesThisSession++;
-                const count = baseAttendeeCount + newAttendeesThisSession;
-                const xxxx = count.toString().padStart(4, '0');
-                const firstName = name.split(' ')[0].toUpperCase().replace(/[^A-Z]/g, '');
-                return `TF2K26-${firstName}-${xxxx}`;
-            }
-
-            // A. PRE-GENERATE THE LEADER'S ID FIRST
-            const leaderRegId = await resolveRegId(userData.phone, userData.pureName);
-
-            // 2. Process Individual Events for the Leader
-            if (indEvents.length > 0) {
-                indEvents.forEach(e => {
-                    leaderEventsToAdd.push({
-                        eventName: e.title,
-                        type: "Solo",
-                        teamName: "N/A",
-                        role: "Solo"
-                    });
-                });
-            }
-
-            // 3. Process Team Events (Leader & Members)
-            for (const ev of teamEvents) {
-                const teamName = document.getElementById(`reg-team-name-${ev.id}`)?.value || 'Unnamed Team';
-                
-                // Add this team event to the Leader's universal pass
-                leaderEventsToAdd.push({
-                    eventName: ev.title,
-                    type: "Team",
-                    teamName: teamName,
-                    role: "Leader"
-                });
-                
-                let members = [];
-                for(let i=2; i<=ev.maxTeam; i++) {
-                    const mNameInput = document.getElementById(`reg-member-name-${ev.id}-${i}`);
-                    const mPhoneInput = document.getElementById(`reg-member-phone-${ev.id}-${i}`);
-                    
-                    if (mNameInput && mNameInput.value.trim() && mPhoneInput && mPhoneInput.value.trim()) {
-                        const pureName = mNameInput.value.trim();
-                        const purePhone = "+91 " + mPhoneInput.value.trim();
-                        
-                        const memberRegId = await resolveRegId(purePhone, pureName);
-                        members.push({ name: pureName, phone: purePhone, regId: memberRegId });
-
-                        // A. Generate Universal Ticket for Team Member in Firebase
-                        const memberEventsToAdd = [{
-                            eventName: ev.title,
-                            type: "Team",
-                            teamName: teamName,
-                            role: `Member ${i}`
-                        }];
-                        
-                        if (typeof window.saveUniversalTicket === 'function') {
-                            await window.saveUniversalTicket(purePhone, pureName, userData.college, memberEventsToAdd, memberRegId);
-                        }
-
-                        // B. Generate Member QR for Email Display
-                        const memberVerifyLink = `${baseVerifyUrl}?uid=${memberRegId}`;
-                        const memberQrUrl = `https://quickchart.io/qr?text=${memberRegId}&size=200`;
-
-                        emailQrHtml += `<div style="border:2px dashed #10b981; padding:15px; margin-bottom:20px; text-align:center; background-color:#ecfdf5;"><h3 style="color:#047857; margin-top:0;">Team Pass: ${ev.title} (Member)</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Pass Holder: <b>${pureName} (${memberRegId})</b></p><a href="${memberVerifyLink}"><img src="${memberQrUrl}" width="200" height="200" alt="Universal QR Code" style="display:inline-block;" /></a><br><br><a href="${memberVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view live digital pass</a></div>`;
-                    }
-                }
-
-                // Push structured team data for Google Sheets (NOW INCLUDING PHONE NUMBER)
-                teamData.push({
-                    event: ev.title,
-                    name: teamName,
-                    members: members.map(m => `${m.name} (${m.regId}) [${m.phone}]`).join(' | ') || 'None'
-                });
-            }
-
-            // 4. Finalize & Save Leader's Universal Pass
-            if (leaderEventsToAdd.length > 0) {
-                if (typeof window.saveUniversalTicket === 'function') {
-                    await window.saveUniversalTicket(userData.phone, userData.pureName, userData.college, leaderEventsToAdd, leaderRegId);
-                }
-
-                const leaderVerifyLink = `${baseVerifyUrl}?uid=${leaderRegId}`;
-                const leaderQrUrl = `https://quickchart.io/qr?text=${leaderRegId}&size=200`;
-
-                const allEventsString = leaderEventsToAdd.map(e => e.eventName).join(", ");
-
-                // Put the Leader's Universal Pass at the very top of the email
-                const leaderPassHtml = `<div style="border:2px dashed #f59e0b; padding:15px; margin-bottom:20px; text-align:center; background-color:#fffbeb;"><h3 style="color:#b45309; margin-top:0;">Your Universal Festival Pass</h3><p style="font-size:14px; margin-bottom:5px;">Participant: <b>${userData.pureName} (${leaderRegId})</b></p><p style="font-size:14px; margin-bottom:10px;">Access To: <b>${allEventsString}</b></p><a href="${leaderVerifyLink}"><img src="${leaderQrUrl}" width="200" height="200" alt="Universal QR Code" style="display:inline-block;" /></a><br><br><a href="${leaderVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view live digital pass</a></div>`;
-                
-                emailQrHtml = leaderPassHtml + emailQrHtml;
-            }
-
-            // IMMEDIATELY SAVE NEW PURCHASE TO FIREBASE CLOUD
-            if (typeof window.saveGlobalPurchasedEvents === 'function') {
-                const newIds = selectedEventsList.map(e => e.id);
-                window.saveGlobalPurchasedEvents(userData.email, newIds);
-            }
-
-            const templateParams = {
-                to_name: userData.pureName, 
-                to_email: userData.email,
-                user_phone: userData.phone,
-                college_name: userData.college,
-                payer_upi: userData.payerUpi,
-                total_amount: totalAmount,
-                promo_code: appliedPromoCode || "None",
-                event_names: eventNames,
-                utr_number: paymentId,
-                payment_time: paymentTime,
-                qr_codes_html: emailQrHtml 
-            };
-            
-            // --- Google Sheets Data Export (Event-Specific Logic) ---
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec';
-            
-            // Build an array of individual registrations for each event booked
-            const registrationsData = selectedEventsList.map(ev => {
-                let tName = "N/A";
-                let tMembers = "N/A";
-                if (ev.maxTeam > 1) {
-                    const td = teamData.find(t => t.event === ev.title);
-                    if (td) {
-                        tName = td.name;
-                        tMembers = td.members;
-                    }
-                }
-                return {
-                    eventName: ev.title, 
-                    name: userData.pureName, 
-                    regId: leaderRegId, // Automatically passes the sequential TF2K26 ID
-                    email: userData.email,
-                    phone: "'" + userData.phone, 
-                    college: userData.college,
-                    teamName: tName,
-                    teamMembers: tMembers,
-                    amount: totalAmount,
-                    paymentId: paymentId,
-                    promoCode: appliedPromoCode || "None"
-                };
-            });
-
-            const sheetPayload = {
-                action: "register",
-                data: registrationsData
-            };
-
-            // Send to Google Sheets asynchronously
-            if (scriptURL !== 'YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE') {
-                fetch(scriptURL, {
-                    method: 'POST',
-                    mode: 'no-cors', 
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(sheetPayload)
-                }).catch(err => console.error("Sheet error:", err));
-            }
-
-            // Send Email via EmailJS
-            if (typeof emailjs !== 'undefined') {
-                emailjs.send('service_8p8w7u3', 'template_ex83rhf', templateParams)
-                    .then(function() {
-                        console.log('Email sent!');
-                    }, function(error) {
-                        console.log('Email failed...', error);
-                    })
-                    .finally(function() {
-                        window.showSuccessScreen(paymentId);
-                        submitBtn.innerHTML = originalBtnContent;
-                        submitBtn.disabled = false;
-                    });
-            } else {
-                window.showSuccessScreen(paymentId);
-                submitBtn.innerHTML = originalBtnContent;
-                submitBtn.disabled = false;
-            }
-        }
-
-        window.showSuccessScreen = function(utr) {
-            // Save used promo code to localStorage so it can't be used again (UNLESS IT IS TESTFREE)
-            if (appliedPromoCode && appliedPromoCode !== "TESTFREE") {
-                const usedPromoCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-                if (!usedPromoCodes.includes(appliedPromoCode)) {
-                    usedPromoCodes.push(appliedPromoCode);
-                    localStorage.setItem('techFeteUsedPromos', JSON.stringify(usedPromoCodes));
-                }
-                if (typeof window.markPromoCodeUsedGlobal === 'function') {
-                    window.markPromoCodeUsedGlobal(appliedPromoCode, userData);
-                }
-            }
-
-            // Permanently save the purchased events to this device's memory as a fallback
-            localPurchasedEvents = [...localPurchasedEvents, ...selectedEventsList];
-            localStorage.setItem('techFeteLocalPurchases', JSON.stringify(localPurchasedEvents));
-
-            document.getElementById('checkout-step-1').classList.add('hidden');
-            document.getElementById('checkout-step-2').classList.remove('hidden');
-            document.getElementById('checkout-step-2').classList.add('flex');
-            
-            // Use only the primary name for the success greeting
-            const firstName = document.getElementById('reg-name').value.split(' ')[0] || "Participant";
-            document.getElementById('success-name').innerText = firstName;
-            document.getElementById('success-utr').innerText = utr;
-
-            // Remove delete buttons from the selected events list so user can't modify it post-payment
-            const deleteBtns = document.querySelectorAll('.delete-event-btn');
-            deleteBtns.forEach(btn => btn.remove());
-            
-            // Remove padding to center the UI nicely without the trash button
-            const cartItems = document.querySelectorAll('.event-cart-item');
-            cartItems.forEach(item => item.classList.remove('pr-14'));
-            
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
-            
-            selectedEventsList = [];
-            window.saveCartState(); // Clears the storage after successful payment
-            window.updateCartUI();
-        };
-
-        window.resetCheckoutForm = function() {
-            const form1 = document.getElementById('checkout-step-1');
-            if(form1) form1.reset();
-            
-            // Clear local storage for form so the next registration starts fresh
-            localStorage.removeItem('techFeteFormData');
-            
-            // Reset College custom input box
-            const otherDiv = document.getElementById('other-college-div');
-            const otherInput = document.getElementById('reg-college-other');
-            if(otherDiv) otherDiv.classList.add('hidden');
-            if(otherInput) { otherInput.required = false; otherInput.value = ""; }
-            
-            // Clean up team container
-            const teamContainer = document.getElementById('team-members-container');
-            if(teamContainer) { teamContainer.innerHTML = ''; teamContainer.classList.add('hidden'); }
-            
-            window.removePromoCode(); // Use the new function to cleanly reset the promo section
-            
-            document.getElementById('checkout-step-2').classList.add('hidden');
-            document.getElementById('checkout-step-2').classList.remove('flex');
-            document.getElementById('checkout-step-1').classList.remove('hidden');
-        };
-
-        // 3. System Initialisation (Safe Execution)
+        // Starfield Canvas Logic
         window.addEventListener('load', function() {
-            
-            // Initialise EmailJS safely
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init("axvXXO83vzZ-jHNQn");
-            }
-
-            // Safe Initialisation of Icons
-            if (typeof window.lucide !== 'undefined') {
-                window.lucide.createIcons();
-            }
-
-            // Canvas Starfield Logic Initialisation
             const canvas = document.getElementById('starfield');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
                 let width, height, stars = [];
 
                 function initStars() {
-                    width = window.innerWidth;
-                    height = window.innerHeight;
-                    canvas.width = width;
-                    canvas.height = height;
+                    width = window.innerWidth; height = window.innerHeight;
+                    canvas.width = width; canvas.height = height;
                     stars = [];
                     const count = Math.floor(width * height / 10000);
                     for (let i = 0; i < count; i++) {
@@ -2239,7 +668,7 @@
                 animateStars();
             }
 
-            // Navbar Scroll Logic
+            // Navbar Scroll Styling
             window.addEventListener('scroll', () => {
                 const nav = document.getElementById('navbar');
                 if (nav) {
@@ -2252,18 +681,8 @@
                     }
                 }
             });
-
-            // Initial UI renders
-            window.renderEvents('All');
-            window.updateCartUI(); // This instantly triggers the cart UI if items were loaded from storage
             
-            // Attach auto-save listener to form so it saves as user types
-            const checkoutForm = document.getElementById('checkout-step-1');
-            if(checkoutForm) {
-                checkoutForm.addEventListener('input', window.saveFormData);
-            }
-            
-            // Try to load hero image safely
+            // Hero Logo Fallback Load
             const heroImg = document.getElementById('hero-img-logo');
             if (heroImg) {
                 if(heroImg.complete && heroImg.naturalWidth > 0) {
@@ -2279,199 +698,6 @@
                 }
             }
         });
-    </script>
-    
-    <!-- FIREBASE CLOUD DATABASE LOGIC -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // =======================================================================
-        // IMPORTANT: PASTE YOUR OWN FIREBASE CONFIG OBJECT HERE
-        // (You get this from your Firebase Console -> Project Settings -> General)
-        // =======================================================================
-        const myOwnFirebaseConfig = {
-            apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
-            authDomain: "tech-fete-2026.firebaseapp.com",
-            projectId: "tech-fete-2026",
-            storageBucket: "tech-fete-2026.firebasestorage.app",
-            messagingSenderId: "588004541639",
-            appId: "1:588004541639:web:e9c9d79bfd27d3242b6ae2",
-            measurementId: "G-R67C2YD74F"
-        };
-        // =======================================================================
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'techfete-app-id';
-        
-        let finalFirebaseConfig = myOwnFirebaseConfig;
-        
-        // If myOwnFirebaseConfig is empty (not pasted yet), try to fall back to Canvas env
-        if (finalFirebaseConfig.apiKey === "YOUR_API_KEY_HERE") {
-             try {
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    finalFirebaseConfig = JSON.parse(__firebase_config);
-                }
-            } catch (e) { console.error(e); }
-        }
-
-        if (Object.keys(finalFirebaseConfig).length > 0 && finalFirebaseConfig.apiKey !== "YOUR_API_KEY_HERE") {
-            const app = initializeApp(finalFirebaseConfig);
-            const auth = getAuth(app);
-            const db = getFirestore(app);
-
-            const initAuth = async () => {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        try {
-                            await signInWithCustomToken(auth, __initial_auth_token);
-                        } catch (e) {
-                            console.warn("Custom token sign-in failed (likely using own Firebase config). Falling back to anonymous auth.");
-                            await signInAnonymously(auth);
-                        }
-                    } else {
-                        await signInAnonymously(auth); // Uses anonymous login
-                    }
-                } catch (error) {
-                    console.error("Auth Error:", error);
-                }
-            };
-            initAuth();
-
-            // Helpers for Sequential Ticket Generation
-            window.getUniversalAttendeeCount = async function() {
-                try {
-                    const collSnap = await getDocs(collection(db, 'universal_attendees'));
-                    return collSnap.size;
-                } catch(e) { return 0; }
-            };
-            
-            window.getExistingRegId = async function(phone) {
-                try {
-                    const sanitizedPhone = phone.replace(/\D/g, '');
-                    const docSnap = await getDoc(doc(db, 'universal_attendees', sanitizedPhone));
-                    if (docSnap.exists() && docSnap.data().regId) return docSnap.data().regId;
-                    return null;
-                } catch(e) { return null; }
-            };
-
-            window.checkPromoCodeGlobal = async function(code) {
-                if (!code) return { valid: true }; 
-                try {
-                    const promoRef = doc(db, 'promocodes', code);
-                    const promoSnap = await getDoc(promoRef);
-                    if (promoSnap.exists() && promoSnap.data().used) {
-                        return { valid: false, message: "This promo code has already been redeemed globally." };
-                    }
-                    return { valid: true };
-                } catch (err) {
-                    console.error("Firestore DB Error:", err);
-                    return { valid: true }; 
-                }
-            };
-
-            window.markPromoCodeUsedGlobal = async function(code, userDetails) {
-                try {
-                    const promoRef = doc(db, 'promocodes', code);
-                    await setDoc(promoRef, {
-                        used: true,
-                        usedBy: userDetails.email,
-                        usedAt: new Date().toISOString()
-                    }, { merge: true });
-                } catch (err) {
-                    console.error("Firestore DB Write Error:", err);
-                }
-            };
-
-            window.getGlobalPurchasedEvents = async function(email) {
-                try {
-                    const sanitizedEmail = email.toLowerCase().trim();
-                    const userRef = doc(db, 'user_registrations', sanitizedEmail);
-                    const userSnap = await getDoc(userRef);
-                    if (userSnap.exists()) {
-                        return userSnap.data().purchasedIds || [];
-                    }
-                    return [];
-                } catch (err) {
-                    console.error("Firestore Read Error:", err);
-                    return []; 
-                }
-            };
-
-            window.saveGlobalPurchasedEvents = async function(email, newIds) {
-                try {
-                    const sanitizedEmail = email.toLowerCase().trim();
-                    const userRef = doc(db, 'user_registrations', sanitizedEmail);
-                    const userSnap = await getDoc(userRef);
-                    
-                    let existingIds = [];
-                    if (userSnap.exists()) {
-                        existingIds = userSnap.data().purchasedIds || [];
-                    }
-                    
-                    // Combine old and new securely without duplicates
-                    const combinedIds = [...new Set([...existingIds, ...newIds])];
-                    
-                    await setDoc(userRef, {
-                        email: sanitizedEmail,
-                        purchasedIds: combinedIds,
-                        lastUpdate: new Date().toISOString()
-                    }, { merge: true });
-                } catch (err) {
-                    console.error("Firestore Write Error:", err);
-                }
-            };
-
-            // UNIVERSAL TICKET LOGIC
-            window.saveUniversalTicket = async function(phone, attendeeName, college, newEventsArray, regId) {
-                try {
-                    const sanitizedPhone = phone.replace(/\D/g, ''); // Extract just numbers e.g. 919876543210
-                    const docRef = doc(db, 'universal_attendees', sanitizedPhone);
-                    const docSnap = await getDoc(docRef);
-
-                    let existingEvents = [];
-                    if (docSnap.exists() && docSnap.data().events) {
-                        existingEvents = docSnap.data().events;
-                    }
-
-                    // Append new events safely, preventing exact duplicates
-                    newEventsArray.forEach(newEv => {
-                        if (!existingEvents.some(e => e.eventName === newEv.eventName)) {
-                            existingEvents.push(newEv);
-                        }
-                    });
-
-                    const qrUrl = `https://quickchart.io/qr?text=${regId}&size=200`;
-
-                    await setDoc(docRef, {
-                        id: regId, // The beautiful sequential ID
-                        regId: regId, // Saved explicitly so the scanner can find it easily
-                        phone: phone,
-                        name: attendeeName,
-                        college: college,
-                        events: existingEvents,
-                        qrUrl: qrUrl,
-                        lastUpdated: new Date().toISOString()
-                    }, { merge: true });
-
-                    console.log("Universal Pass Updated for:", regId);
-                } catch (err) { 
-                    console.error("Universal Ticket Save Error:", err); 
-                }
-            };
-
-        } else {
-            // Fallbacks
-            window.checkPromoCodeGlobal = async (code) => {
-                const usedCodes = JSON.parse(localStorage.getItem('techFeteUsedPromos') || '[]');
-                if(usedCodes.includes(code)) return { valid: false, message: "This promo code has already been redeemed." };
-                return { valid: true };
-            };
-            window.markPromoCodeUsedGlobal = async () => {};
-            window.getGlobalPurchasedEvents = async () => { return []; };
-            window.saveGlobalPurchasedEvents = async () => {};
-            window.saveUniversalTicket = async () => {};
-        }
     </script>
 </body>
 </html>
