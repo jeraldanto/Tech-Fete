@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Fête 2k26 | Events & Checkout</title>
+    <title>TECH FÊTE 2K26 | Events & Checkout</title>
     <link rel="icon" type="image/png" href="tech_fete_logo.png">
     
     <!-- External Scripts -->
@@ -179,7 +179,7 @@
             </div>
             
             <p class="mt-8 text-slate-400 max-w-2xl mx-auto text-sm leading-relaxed font-medium">
-                Empowering students with industry-ready skills. Proud to partner with FITA Academy for Tech Fête 2K26.
+                Empowering students with industry-ready skills. Proud to partner with FITA Academy for TECH FÊTE 2K26.
             </p>
         </div>
     </section>
@@ -239,7 +239,7 @@
                                 <div class="flex items-center">
                                     <i data-lucide="phone" class="w-4 h-4 mr-3 text-amber-600"></i>
                                     <div class="flex flex-col">
-                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Ms. Hemadharshini</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Ms. Pravina</span>
                                         <span class="font-bold tracking-wide text-white text-xs">+91 91504 06749</span>
                                     </div>
                                 </div>
@@ -297,7 +297,7 @@
                 </div>
             </div>
             <div class="pt-6 border-t border-slate-900 text-center text-slate-600 text-[10px] tracking-widest uppercase font-bold">
-                © 2026 Tech Fête. Pope John Paul II College of Education.
+                © 2026 TECH FÊTE 2K26. Pope John Paul II College of Education.
             </div>
         </div>
     </footer>
@@ -362,7 +362,7 @@
                                 <i data-lucide="mic-2" class="w-6 h-6"></i>
                             </div>
                             <div class="text-right">
-                                <div class="text-xl font-black text-white">₹300</div>
+                                <div class="text-xl font-black text-white">₹200</div>
                                 <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">2 Events</div>
                             </div>
                         </div>
@@ -423,129 +423,141 @@
 
     <!-- Razorpay Checkout Modal -->
     <div id="checkout-modal" onclick="if(event.target === this) window.closeCheckoutModal()" class="fixed inset-0 z-[110] hidden items-center justify-center p-4 md:p-6 bg-black/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col md:flex-row transform scale-95 transition-transform duration-300" id="checkout-content">
+        <div class="bg-[#050505] w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 shadow-[0_0_50px_rgba(0,0,0,0.8)] relative flex flex-col transform scale-95 transition-transform duration-300" id="checkout-content">
             <button onclick="window.closeCheckoutModal()" class="absolute top-4 right-4 md:top-6 md:right-6 p-2 bg-slate-800 text-amber-400 rounded-full hover:bg-amber-500 hover:text-slate-950 transition-all z-20 shadow-lg">
                 <i data-lucide="x" class="w-5 h-5 md:w-6 md:h-6"></i>
             </button>
             
-            <div class="w-full md:w-1/2 p-6 pt-16 md:p-10 md:pt-10 bg-black/40 border-b md:border-b-0 md:border-r border-amber-500/10 flex flex-col">
-                <h3 class="text-xl md:text-2xl font-black text-white brand-font tracking-wide mb-4 md:mb-6">Selected Events</h3>
-                <div id="checkout-events-list" class="space-y-3 max-h-[35vh] md:max-h-[60vh] overflow-y-auto pr-2"></div>
-                <div class="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-slate-800">
-                    <div id="combo-discount-display" class="flex justify-between items-center text-sm font-bold text-amber-400 mb-2 hidden">
-                        <span>Multi-Event Discount</span>
-                        <span>-₹<span id="combo-discount-amt">0</span></span>
+            <form id="checkout-step-1" onsubmit="window.processPayment(event)" class="w-full flex flex-col transition-all duration-300">
+                <div class="flex flex-col md:flex-row w-full">
+                    <!-- Left Side: Cart -->
+                    <div class="w-full md:w-1/2 p-6 pt-16 md:p-10 md:pt-10 bg-black/40 border-b md:border-b-0 md:border-r border-amber-500/10 flex flex-col">
+                        <h3 class="text-xl md:text-2xl font-black text-white brand-font tracking-wide mb-4 md:mb-6">Selected Events</h3>
+                        <div id="checkout-events-list" class="space-y-3 max-h-[35vh] md:max-h-[45vh] overflow-y-auto pr-2"></div>
+                        <div class="mt-4 pt-4 md:mt-6 md:pt-6 border-t border-slate-800">
+                            <div id="combo-discount-display" class="flex justify-between items-center text-sm font-bold text-amber-400 mb-2 hidden">
+                                <span>Multi-Event Discount</span>
+                                <span>-₹<span id="combo-discount-amt">0</span></span>
+                            </div>
+                            <div id="discount-display" class="flex justify-between items-center text-sm font-bold text-emerald-400 mb-2 hidden">
+                                <span>Promo Discount</span>
+                                <span>-₹<span id="promo-discount-amt">100</span></span>
+                            </div>
+                            <div class="flex justify-between items-center text-lg md:text-xl font-black text-white">
+                                <span>Total Amount</span>
+                                <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
+                            </div>
+                        </div>
                     </div>
-                    <div id="discount-display" class="flex justify-between items-center text-sm font-bold text-emerald-400 mb-2 hidden">
-                        <span>Promo Discount</span>
-                        <span>-₹<span id="promo-discount-amt">100</span></span>
-                    </div>
-                    <div class="flex justify-between items-center text-lg md:text-xl font-black text-white">
-                        <span>Total Amount</span>
-                        <span class="text-emerald-400">₹<span id="checkout-total">0</span></span>
+
+                    <!-- Right Side: Inputs -->
+                    <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-start relative">
+                        <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1">Secure Checkout</h3>
+                        <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-6">Participant Details</h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Primary Member Name <span class="text-red-500">*</span></label>
+                                <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors"placeholder="Enter Your Full Name">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">College / Institution <span class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <input type="text" id="reg-college" required autocomplete="off" oninput="window.filterColleges()" onfocus="window.showCollegeList()" onblur="window.handleCollegeBlur()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Type to search your college...">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-500">
+                                        <i data-lucide="search" class="w-4 h-4"></i>
+                                    </div>
+                                    <div id="custom-college-list" class="hidden absolute top-full left-0 right-0 z-[120] mt-2 bg-[#0f172a] border border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] max-h-52 overflow-y-auto"></div>
+                                </div>
+                            </div>
+
+                            <div id="other-college-div" class="hidden transition-all duration-300">
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center text-amber-500"><i data-lucide="info" class="w-3 h-3 mr-1"></i> Please Specify Your College</label>
+                                <input type="text" id="reg-college-other" class="w-full bg-[#020617] border border-amber-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[0_0_15px_rgba(245,158,11,0.1)]" placeholder="Enter full college name">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phone <span class="text-red-500">*</span></label>
+                                    <div class="relative flex items-center">
+                                        <span class="absolute left-4 text-slate-500 font-bold">+91</span>
+                                        <input type="tel" id="reg-phone" required minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="window.formatPhoneNumber(this)" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="XXXXXXXXXX">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email  <span class="text-red-500">*</span></label>
+                                    <input type="email" id="reg-email" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Email id">
+                                </div>
+                            </div>
+
+                            <div id="team-members-container" class="hidden"></div>
+
+                            <div class="mt-2 pt-2 pb-2">
+                                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Promo Code (Optional)</label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="promo-code-input" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-amber-500 transition-colors uppercase font-mono tracking-wider" placeholder="ENTER CODE">
+                                    <button type="button" id="promo-apply-btn" onclick="window.applyPromoCode()" class="bg-slate-800 text-amber-400 px-6 py-2 rounded-xl font-bold hover:bg-amber-500 hover:text-slate-950 transition-colors text-sm w-32 flex justify-center items-center shrink-0">APPLY</button>
+                                    <button type="button" id="promo-remove-btn" onclick="window.removePromoCode()" class="hidden bg-red-900/30 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-colors text-sm flex justify-center items-center shrink-0" title="Remove Promo Code">
+                                        <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
+                                    </button>
+                                </div>
+                                <p id="promo-message" class="text-xs mt-2 hidden"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="w-full md:w-1/2 p-6 pb-10 md:p-10 flex flex-col justify-start relative">
-                <form id="checkout-step-1" onsubmit="window.processPayment(event)" class="space-y-4 transition-all duration-300">
-                    <h3 class="text-xs font-black uppercase text-amber-500 tracking-[0.2em] mb-1">Secure Checkout</h3>
-                    <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-6">Participant Details</h2>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Primary Member Name <span class="text-red-500">*</span></label>
-                        <input type="text" id="reg-name" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors"placeholder="Enter Your Full Name">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">College / Institution <span class="text-red-500">*</span></label>
-                        <div class="relative">
-                            <input type="text" id="reg-college" required autocomplete="off" oninput="window.filterColleges()" onfocus="window.showCollegeList()" onblur="window.handleCollegeBlur()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 pr-10 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Type to search your college...">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-500">
-                                <i data-lucide="search" class="w-4 h-4"></i>
-                            </div>
-                            <div id="custom-college-list" class="hidden absolute top-full left-0 right-0 z-[120] mt-2 bg-[#0f172a] border border-slate-700 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.8)] max-h-52 overflow-y-auto"></div>
+                <!-- Full Width Bottom Area: Important Note & Checkout Button -->
+                <div class="w-full p-6 pt-0 md:px-10 pb-10">
+                    <div class="mt-4 border-t border-slate-800 pt-8 mb-6">
+                        <div class="bg-red-950/40 border-2 border-red-500/60 rounded-xl p-5 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
+                            <h4 class="text-sm font-black text-red-400 uppercase tracking-widest mb-4 flex items-center">
+                                <i data-lucide="alert-octagon" class="w-5 h-5 mr-2"></i> IMPORTANT NOTE
+                            </h4>
+                            <ol class="text-[11px] md:text-xs text-slate-200 list-decimal pl-5 leading-relaxed font-bold md:columns-2 md:gap-x-12 text-justify">
+                                <li class="pl-1 mb-3 break-inside-avoid">Participants must carry a valid <strong>College ID card</strong> during the entire event.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">You can select a maximum of <strong>3 events per checkout</strong>. For more events, please make multiple registrations.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid"><strong>Quiz</strong> and <strong>Chess</strong> are mutually exclusive; you cannot participate in both. The same applies for <strong>PPT Presentation</strong> and <strong>Debugging</strong>.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid text-amber-400 bg-amber-950/30 p-2 rounded border border-amber-500/30 block"><strong>If the same person registers for the same event again (e.g., for a friend), Event Management is not responsible and no amount will be refunded. Ensure all participant details are correct.</strong></li>
+                                <li class="pl-1 mb-3 break-inside-avoid">Report to the venue at least <strong>15 minutes before</strong> the event begins. Late entries may not be entertained once the event has started.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">Once you enter the premises, please collect your <strong>token for food and snacks</strong> at the registration desk.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">Participants must follow the instructions of the event coordinators and volunteers. Any form of misconduct or inappropriate behavior will lead to disqualification.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">Use of unfair means or plagiarism in any event will result in <strong>immediate disqualification</strong>.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">The decision of the judges and organizing committee will be <strong>final</strong>. The organizers reserve the right to modify the rules if necessary.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">If a person violates the above rules, the amount will <strong>not be refunded</strong> and only the first entry will be taken into account.</li>
+                                <li class="pl-1 mb-3 break-inside-avoid">The Fête Co-ordinators have all rights to disqualify the Individual Participant / Team if the above conditions are not met.</li>
+                            </ol>
                         </div>
                     </div>
 
-                    <div id="other-college-div" class="hidden transition-all duration-300">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center text-amber-500"><i data-lucide="info" class="w-3 h-3 mr-1"></i> Please Specify Your College</label>
-                        <input type="text" id="reg-college-other" class="w-full bg-[#020617] border border-amber-500/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[0_0_15px_rgba(245,158,11,0.1)]" placeholder="Enter full college name">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phone <span class="text-red-500">*</span></label>
-                            <div class="relative flex items-center">
-                                <span class="absolute left-4 text-slate-500 font-bold">+91</span>
-                                <input type="tel" id="reg-phone" required minlength="10" maxlength="10" pattern="[0-9]{10}" oninput="window.formatPhoneNumber(this)" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="XXXXXXXXXX">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Email  <span class="text-red-500">*</span></label>
-                            <input type="email" id="reg-email" required class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors" placeholder="Email id">
-                        </div>
-                    </div>
-
-                    <div id="team-members-container" class="hidden"></div>
-
-                    <div class="mt-2 pt-2 border-b border-slate-800 pb-6 mb-6">
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Promo Code (Optional)</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="promo-code-input" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-amber-500 transition-colors uppercase font-mono tracking-wider" placeholder="ENTER CODE">
-                            <button type="button" id="promo-apply-btn" onclick="window.applyPromoCode()" class="bg-slate-800 text-amber-400 px-6 py-2 rounded-xl font-bold hover:bg-amber-500 hover:text-slate-950 transition-colors text-sm w-32 flex justify-center items-center shrink-0">APPLY</button>
-                            <button type="button" id="promo-remove-btn" onclick="window.removePromoCode()" class="hidden bg-red-900/30 text-red-400 border border-red-500/30 px-4 py-2 rounded-xl font-bold hover:bg-red-600 hover:text-white transition-colors text-sm flex justify-center items-center shrink-0" title="Remove Promo Code">
-                                <i data-lucide="trash-2" class="w-5 h-5 pointer-events-none"></i>
-                            </button>
-                        </div>
-                        <p id="promo-message" class="text-xs mt-2 hidden"></p>
-                    </div>
-
-                    <div class="mt-6 bg-red-950/40 border-2 border-red-500/60 rounded-xl p-5 mb-6 shadow-[0_0_20px_rgba(239,68,68,0.2)] animate-[pulse_3s_ease-in-out_infinite]">
-                        <h4 class="text-sm font-black text-red-400 uppercase tracking-widest mb-3 flex items-center">
-                            <i data-lucide="alert-octagon" class="w-5 h-5 mr-2"></i> IMPORTANT NOTE
-                        </h4>
-                        <ol class="text-[11px] md:text-xs text-slate-200 space-y-2.5 list-decimal pl-5 leading-relaxed font-bold">
-                            <li>Participants must carry a valid <strong>College ID card</strong> during the entire event.</li>
-                            <li>You can select a maximum of <strong>3 events per checkout</strong>. For more events, please make multiple registrations.</li>
-                            <li><strong>Quiz</strong> and <strong>Chess</strong> are mutually exclusive; you cannot participate in both. The same applies for <strong>PPT Presentation</strong> and <strong>Debugging</strong>.</li>
-                            <li class="text-amber-400 bg-amber-950/30 p-1.5 rounded border border-amber-500/30"><strong>If the same person registers for the same event again (e.g., for a friend), Event Management is not responsible and no amount will be refunded. Ensure all participant details are correct.</strong></li>
-                            <li>Report to the venue at least <strong>15 minutes before</strong> the event begins. Late entries may not be entertained once the event has started.</li>
-                            <li>Once you enter the premises, please collect your <strong>token for food and snacks</strong> at the registration desk.</li>
-                            <li>Participants must follow the instructions of the event coordinators and volunteers. Any form of misconduct or inappropriate behavior will lead to disqualification.</li>
-                            <li>Use of unfair means or plagiarism in any event will result in <strong>immediate disqualification</strong>.</li>
-                            <li>The decision of the judges and organizing committee will be <strong>final</strong>. The organizers reserve the right to modify the rules if necessary.</li>
-                            <li>If a person violates the above rules, the amount will <strong>not be refunded</strong> and only the first entry will be taken into account.</li>
-                            <li>The Fête Co-ordinators have all rights to disqualify the Individual Participant / Team if the above conditions are not met.</li>
-                        </ol>
-                    </div>
-
-                    <button type="submit" id="razorpay-btn" class="w-full mt-6 bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-center py-4 rounded-xl font-black text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 active:scale-95 uppercase tracking-widest flex justify-center items-center">
+                    <button type="submit" id="razorpay-btn" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 text-center py-4 md:py-5 rounded-xl font-black text-lg transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 active:scale-95 uppercase tracking-widest flex justify-center items-center">
                        Proceed to Pay <i data-lucide="shield-check" class="ml-2 w-5 h-5"></i>
                     </button>
-                    <div class="flex justify-center items-center mt-3 space-x-2 text-slate-500">
-                        <i data-lucide="lock" class="w-3 h-3"></i>
+                    <div class="flex justify-center items-center mt-4 space-x-2 text-slate-500">
+                        <i data-lucide="lock" class="w-3.5 h-3.5"></i>
                         <p class="text-[10px] uppercase tracking-wider font-bold">100% Secure Payments via Cards, UPI & Netbanking</p>
                     </div>
-                </form>
-
-                <div id="checkout-step-2" class="hidden flex-col justify-center items-center h-full text-center transition-all duration-300">
-                    <div class="w-24 h-24 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
-                        <i data-lucide="check-circle" class="w-12 h-12"></i>
-                    </div>
-                    <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-2">Registration Successful!</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">
-                        Thank you, <span id="success-name" class="text-white font-bold"></span>! We have received your payment and registration for the selected events.
-                    </p>
-                    <div class="bg-black/40 p-5 rounded-2xl border border-white/5 w-full max-w-sm mb-10">
-                        <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-1">Razorpay Payment ID</div>
-                        <div id="success-utr" class="font-mono text-emerald-400 font-black text-xl tracking-widest break-all"></div>
-                    </div>
-                    <p class="text-xs text-slate-500 mb-8">A confirmation email acting as your official receipt has been sent to your email address. See you at the fest!</p>
-                    <button type="button" onclick="window.closeSuccessModal()" class="bg-slate-800 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-colors w-full">
-                        Done & Close
-                    </button>
                 </div>
+            </form>
+
+            <!-- Success Screen inside Modal -->
+            <div id="checkout-step-2" class="hidden flex-col justify-center items-center h-full text-center transition-all duration-300 py-16 px-6 w-full">
+                <div class="w-24 h-24 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+                    <i data-lucide="check-circle" class="w-12 h-12"></i>
+                </div>
+                <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-2">Registration Successful!</h2>
+                <p class="text-slate-400 mb-8 leading-relaxed">
+                    Thank you, <span id="success-name" class="text-white font-bold"></span>! We have received your payment and registration for the selected events.
+                </p>
+                <div class="bg-black/40 p-5 rounded-2xl border border-white/5 w-full max-w-sm mb-10">
+                    <div class="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mb-1">Razorpay Payment ID</div>
+                    <div id="success-utr" class="font-mono text-emerald-400 font-black text-xl tracking-widest break-all"></div>
+                </div>
+                <p class="text-xs text-slate-500 mb-8">A confirmation email acting as your official receipt has been sent to your email address. See you at the fest!</p>
+                <button type="button" onclick="window.closeSuccessModal()" class="bg-slate-800 text-white px-10 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-colors w-full max-w-sm mx-auto">
+                    Done & Close
+                </button>
             </div>
         </div>
     </div>
@@ -559,12 +571,12 @@
             { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12–13 slides only.", "The PPT must be submitted on or before the night of March 25th through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met they will not be considered for submission.", "Evaluation will be based on content quality, technical knowledge, presentation skills, and responses during the Q&A session.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
             { id: 2, title: "Debugging", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Identify and fix errors in C programs.", fullDesc: "Test your problem-solving ability, debugging skills, and understanding of programming concepts by fixing broken C code.", rules: ["Participants will be given C programs containing logical, syntactical, or runtime errors that must be identified and corrected within a duration of 30 minutes.", "The objective of the event is to test problem-solving ability, debugging skills, and understanding of programming concepts.", "Internet access or external assistance will not be permitted during the competition.", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Computer Lab A", icon: "code" },
             { id: 3, title: "Vibe Coding", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Code a website based on an on-spot topic.", fullDesc: "Showcase your coding speed, logic, and creativity by building a functional solution within a strict time limit.", rules: ["A system with a stable internet connection will be provided for participants; However, participants may also bring and use their own laptops if preferred.", "The website topic will be announced on the spot at the beginning of the event.", "The total duration of the competition will be 10 minutes of prep time and 30 minutes of event time.", "Participants will be evaluated based on the logic and accuracy of the solution, creativity and innovation in approach, code efficiency and optimization, and overall functionality of the final output.", "Proper time management and the ability to clearly explain the solution, if required by the judges, will also be considered during evaluation."], date: "Mar 28, 2026", venue: "Computer Lab B", icon: "music" },
-            { id: 4, title: "Tech Memes", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create original memes based on tech & programming.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Participants must create and submit an original meme based on technology, programming, or internet culture.", "Entries must not contain offensive, political, or inappropriate content, and copied memes will lead to disqualification.", "Tech Memes must be original and submitted in JPEG/PNG/PDF format on or before March 25th within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "image" },
-            { id: 5, title: "Quiz", category: "Technical", fee: "200", minTeam: 2, maxTeam: 2, shortDesc: "Battle of brains covering Tech & General Knowledge.", fullDesc: "Put your knowledge to the test. The quiz will cover a wide range of topics from the latest tech trends to general trivia.", rules: ["The quiz will be conducted as a team event with compulsory two members per team.", "The quiz will be based on Computer Science Technology, Artificial Intelligence, Internet Culture, Current Affairs, and General Knowledge.", "The event will consist of multiple rounds, which may include buzzer and rapid-fire segments.", "The decision of the quiz master and judges will be final in all matters related to scoring and evaluation."], date: "Mar 28, 2026", venue: "Main Auditorium", icon: "brain" },
+            { id: 4, title: "Tech Memes", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create original memes based on tech & programming.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Participants must create and submit an original meme based on technology, programming, or internet culture.", "Entries must not contain offensive, political, or inappropriate content, and copied memes will lead to disqualification.", "Tech Memes must be original and submitted in JPEG/PNG/PDF format on or before March 25th within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "image" },
+            { id: 5, title: "Quiz", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, shortDesc: "Battle of brains covering Tech & General Knowledge.", fullDesc: "Put your knowledge to the test. The quiz will cover a wide range of topics from the latest tech trends to general trivia.", rules: ["The quiz will be conducted as a team event with compulsory two members per team.", "The quiz will be based on Computer Science Technology, Artificial Intelligence, Internet Culture, Current Affairs, and General Knowledge.", "The event will consist of multiple rounds, which may include buzzer and rapid-fire segments.", "The decision of the quiz master and judges will be final in all matters related to scoring and evaluation."], date: "Mar 28, 2026", venue: "Main Auditorium", icon: "brain" },
             { id: 6, title: "Dance", category: "Cultural", fee: "100", minTeam: 1, maxTeam: 4, shortDesc: "On-stage dance competition (Solo or Group).", fullDesc: "Express yourself through movement. All dance styles are welcome to set the stage on fire.", rules: ["Dance is an on-stage event open for group participation with 1–4 members per team.", "The performance should last no more than 3–4 minutes.", "Participants must submit their music track in MP3 format on or before the night of March 25th through the submission link available on the official event website.", "The file name should follow the format Name_CollegeName.", "Any dance style is permitted; however, performances containing offensive content or inappropriate language are strictly prohibited.", "Props may be used provided they do not damage the stage or cause inconvenience.", "Evaluation will be based on coordination, creativity, stage presence, choreography, expressions, and overall performance.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Open Air Theater", icon: "users" },
-            { id: 9, title: "Poster Making", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Design a poster on Sustainable Tech.", fullDesc: "Unleash your artistic skills. Design a poster that communicates a strong message effectively.", rules: ["Participants must design the poster independently and submit it through the submission link on the official event website.", "Topic: Sustainable Tech for a Better Tomorrow.", "Posters must be original and submitted in JPEG/PNG/PDF format on or before March 25th within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met they will not be considered for submission.", "The best five posters will be displayed.", "Multiple entries from the same participant are allowed.", "Plagiarism or inappropriate content will lead to disqualification.", "Evaluation will be based on creativity, originality, relevant to the theme, and visual presentation.", "Judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "palette" },
+            { id: 9, title: "Poster Making", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Design a poster on Sustainable Tech.", fullDesc: "Unleash your artistic skills. Design a poster that communicates a strong message effectively.", rules: ["Participants must design the poster independently and submit it through the submission link on the official event website.", "Topic: Sustainable Tech for a Better Tomorrow.", "Posters must be original and submitted in JPEG/PNG/PDF format on or before March 25th within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met they will not be considered for submission.", "The best five posters will be displayed.", "Multiple entries from the same participant are allowed.", "Plagiarism or inappropriate content will lead to disqualification.", "Evaluation will be based on creativity, originality, relevant to the theme, and visual presentation.", "Judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "palette" },
             { id: 10, title: "Photography", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Capture original photographs of your choice.", fullDesc: "A shutterbug contest. Capture original photographs and show off your composition and editing skills.", rules: ["Participants must capture and submit original photographs of their own choice. Basic editing such as colour correction and lighting adjustments is permitted; however, AI-generated images are not allowed.", "Photographs must be original and submitted in JPEG/PNG/PDF format on or before March 25th within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail.", "Participants may submit multiple entries for this event.", "Evaluation will be based on creativity, composition, clarity, relevance to the theme, and overall visual impact.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "camera" },
-            { id: 11, title: "Creative Writing", category: "Literary", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "On-spot story or poem writing competition.", fullDesc: "For the wordsmiths. Write a compelling story or poem based on a prompt given on the spot.", rules: ["Creative Writing will be conducted as an on-spot event within a time of 30 mins upto 150 words.", "The topic or theme will be announced at the beginning of the competition.", "Participants must complete their work within the allotted time.", "Participants are requested to bring their own writing materials.", "Ruled Sheets will be provided.", "Participants are expected to maintain clarity, creativity, and relevance to the given theme.", "Evaluation will be based on originality, creativity, language proficiency, structure, and overall expression.", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Room 101", icon: "pen-tool" },
+            { id: 11, title: "Creative Writing", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "On-spot story or poem writing competition.", fullDesc: "For the wordsmiths. Write a compelling story or poem based on a prompt given on the spot.", rules: ["Creative Writing will be conducted as an on-spot event within a time of 30 mins upto 150 words.", "The topic or theme will be announced at the beginning of the competition.", "Participants must complete their work within the allotted time.", "Participants are requested to bring their own writing materials.", "Ruled Sheets will be provided.", "Participants are expected to maintain clarity, creativity, and relevance to the given theme.", "Evaluation will be based on originality, creativity, language proficiency, structure, and overall expression.", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Room 101", icon: "pen-tool" },
             { id: 12, title: "Chess", category: "Gaming", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Online Rapid Chess tournament on Lichess.", fullDesc: "A battle of patience and strategy conducted online. Show off your grandmaster skills.", rules: ["The tournament will be conducted online through the Lichess platform with a total duration of one hour.", "During this time, multiple 5-minute matches will be conducted among the registered Participants.", "Players are requested to join the tournament on time with a stable internet connection and a registered Lichess account.", "Any form of unfair play or external assistance will lead to disqualification.", "The decision of the organizers and judges will be final."], date: "Mar 28, 2026", venue: "Online (Lichess)", icon: "pawn" }
         ];
 
@@ -587,16 +599,33 @@
                 const ev = sortedCurrentList[i];
                 const isGroup = ev.maxTeam > 1;
                 const isFirstInCart = (i === 0);
-                let finalFee = parseInt(ev.fee);
+                
+                let originalFee = parseInt(ev.fee);
+                let finalFee = originalFee;
 
-                if (!isFirstInCart && !isGroup) {
-                    finalFee = 50;
+                // SPECIAL DYNAMIC PRICING FOR DANCE (ID: 6)
+                if (ev.id === 6) {
+                    let memberCount = 1;
+                    // Count how many additional member name fields are filled
+                    for (let m = 2; m <= ev.maxTeam; m++) {
+                        const mInput = document.getElementById(`reg-member-name-${ev.id}-${m}`);
+                        if (mInput && mInput.value.trim().length > 0) {
+                            memberCount++;
+                        }
+                    }
+                    // Logic: 1 person = 100. 2+ people = 50 per person
+                    originalFee = memberCount === 1 ? 100 : memberCount * 50;
+                    finalFee = originalFee; // Dance does not get reduced as part of a combo, it is strictly per person
+                } else {
+                    if (!isFirstInCart && !isGroup) {
+                        finalFee = 50;
+                    }
                 }
 
-                baseTotal += parseInt(ev.fee);
+                baseTotal += originalFee;
                 effectiveFees[ev.id] = finalFee;
-                if (finalFee < parseInt(ev.fee)) {
-                    comboDisc += (parseInt(ev.fee) - finalFee);
+                if (finalFee < originalFee) {
+                    comboDisc += (originalFee - finalFee);
                 }
             }
 
@@ -749,7 +778,7 @@
                             </span>
                         </div>
                         <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors brand-font tracking-wide">${event.title}</h3>
-                        <p class="text-slate-400 mb-6 text-sm flex-grow leading-relaxed">${event.shortDesc}</p>
+                        <p class="text-slate-400 mb-6 text-sm flex-grow leading-relaxed text-justify">${event.shortDesc}</p>
                         
                         <div class="text-xs text-amber-500/80 mb-4 font-bold tracking-widest uppercase">${typeTag}</div>
                         
@@ -793,6 +822,7 @@
                 ? (event.minTeam === event.maxTeam ? `Exactly ${event.minTeam} Members` : `${event.minTeam} to ${event.maxTeam} Members`)
                 : `Solo Event`;
 
+            // EVENT RULES JUSTIFIED - FORMAL STYLING ADDED HERE
             modalBody.innerHTML = `
                 <div class="flex items-center mb-8">
                     <div class="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-2xl flex items-center justify-center mr-6 border border-amber-500/20">
@@ -803,7 +833,7 @@
                         <h2 class="text-3xl md:text-4xl font-black text-white brand-font tracking-wide">${event.title}</h2>
                     </div>
                 </div>
-                <p class="text-slate-300 text-base md:text-lg mb-10 leading-relaxed border-l-2 border-amber-500/50 pl-6">${event.fullDesc}</p>
+                <p class="text-slate-300 text-base md:text-lg mb-10 leading-relaxed border-l-2 border-amber-500/50 pl-6 pr-4 text-justify">${event.fullDesc}</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                     <div class="bg-black/30 border border-amber-500/10 p-6 rounded-2xl">
@@ -823,7 +853,7 @@
                 <div class="mb-12">
                     <h4 class="font-bold text-lg text-white mb-6 flex items-center brand-font tracking-wide">RULES & REGULATIONS</h4>
                     <ul class="space-y-4">
-                        ${event.rules.map((rule, idx) => `<li class="flex items-start text-slate-400 group"><span class="w-6 h-6 border border-amber-500/30 rounded flex items-center justify-center text-[10px] font-bold mr-4 shrink-0 text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">${idx + 1}</span><span class="text-sm leading-relaxed">${rule}</span></li>`).join('')}
+                        ${event.rules.map((rule, idx) => `<li class="flex items-start text-slate-400 group"><span class="w-6 h-6 border border-amber-500/30 rounded flex items-center justify-center text-[10px] font-bold mr-4 shrink-0 text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">${idx + 1}</span><span class="text-sm leading-relaxed text-justify flex-1 pr-2">${rule}</span></li>`).join('')}
                     </ul>
                 </div>
                 
@@ -1071,6 +1101,14 @@
             } catch(e) { console.error(e); }
         };
 
+        // Dynamic Pricing Handler for when they type member names
+        window.handleDynamicPricing = function() {
+            window.renderCartItemsOnly();
+            window.updateCheckoutTotal();
+            window.updateCartUI();
+            window.saveFormData();
+        };
+
         window.updateTeamFields = function() {
             const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
             const teamContainer = document.getElementById('team-members-container');
@@ -1104,7 +1142,7 @@
                         html += `
                             <div>
                                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Member ${i} Name ${isReq ? '<span class="text-red-500">*</span>' : '(Optional)'}</label>
-                                <input type="text" id="reg-member-name-${event.id}-${i}" ${isReq ? 'required' : ''} class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] mb-3" placeholder="Full Name">
+                                <input type="text" id="reg-member-name-${event.id}-${i}" ${isReq ? 'required' : ''} oninput="window.handleDynamicPricing()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)] mb-3" placeholder="Full Name">
                                 
                                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Member ${i} Phone ${isReq ? '<span class="text-red-500">*</span>' : ''}</label>
                                 <div class="relative flex items-center">
@@ -1132,7 +1170,7 @@
             }
         };
 
-        window.refreshCheckoutCart = function() {
+        window.renderCartItemsOnly = function() {
             const listContainer = document.getElementById('checkout-events-list');
             if(!listContainer) return;
             
@@ -1140,7 +1178,8 @@
 
             listContainer.innerHTML = selectedEventsList.map(e => {
                 const finalFee = pricing.effectiveFees[e.id];
-                const originalFee = parseInt(e.fee);
+                // Dance has dynamic base fee based on inputs, others are static
+                const originalFee = (e.id === 6) ? finalFee : parseInt(e.fee); 
                 
                 let priceDisplay = '';
                 if (finalFee < originalFee) {
@@ -1167,10 +1206,13 @@
                 </div>
                 `;
             }).join('');
-            
+            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+        };
+
+        window.refreshCheckoutCart = function() {
+            window.renderCartItemsOnly();
             window.updateTeamFields(); 
             window.updateCheckoutTotal();
-            if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
         };
 
         window.openCheckoutModal = function() {
@@ -1389,7 +1431,7 @@
                 "key": "rzp_live_SJV3kgUcRfxEZX",
                 "amount": totalAmount * 100,
                 "currency": "INR",
-                "name": "Tech Fête 2K26",
+                "name": "TECH FÊTE 2K26",
                 "description": "Event Registration for " + document.getElementById('reg-name').value,
                 "image": "https://i.imgur.com/your-hosted-logo.png",
                 "handler": function (response) {
@@ -1561,16 +1603,28 @@
 
             const sheetPayload = { action: "register", data: registrationsData };
 
-            if (scriptURL !== 'YOUR_GOOGLE_SHEET_WEBHOOK_URL_HERE') {
+            // 1. SEND TO GOOGLE SHEETS (Fixed CORS Preflight Block)
+            if (scriptURL && scriptURL.includes('script.google.com')) {
+                // By omitting 'Content-Type', the browser bypasses strict CORS checks
                 fetch(scriptURL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
                     body: JSON.stringify(sheetPayload)
                 }).catch(err => console.error("Sheet error:", err));
             }
 
+            // 2. SEND CONFIRMATION EMAIL (Fixed Authorization Binding)
             if (typeof emailjs !== 'undefined') {
-                emailjs.send('service_8p8w7u3', 'template_ex83rhf', templateParams)
-                    .then(function() { console.log('Email sent!'); }, function(error) { console.log('Email failed...', error); })
+                // We securely force your Public Key directly into the request
+                emailjs.send('service_8p8w7u3', 'template_ex83rhf', templateParams, 'axvXXO83vzZ-jHNQn')
+                    .then(function() { 
+                        console.log('Email sent successfully!'); 
+                    }, function(error) { 
+                        console.error('EmailJS failed...', error); 
+                        // Alert the user if the email fails (so you know if you hit a monthly limit)
+                        alert("Note: Payment was successful, but the confirmation email failed to send. Please screenshot your success screen.");
+                    })
                     .finally(function() {
                         window.showSuccessScreen(paymentId);
                         submitBtn.innerHTML = originalBtnContent;
@@ -1700,7 +1754,26 @@
             window.updateCartUI(); 
             
             const checkoutForm = document.getElementById('checkout-step-1');
-            if(checkoutForm) { checkoutForm.addEventListener('input', window.saveFormData); }
+            if(checkoutForm) { 
+                checkoutForm.addEventListener('input', window.saveFormData); 
+                
+                // ENTER KEY LISTENER - Safely trigger checkout or promo apply
+                checkoutForm.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault(); 
+                        
+                        if (e.target.id === 'promo-code-input') {
+                            window.applyPromoCode();
+                        } else {
+                            if (checkoutForm.checkValidity()) {
+                                document.getElementById('razorpay-btn').click();
+                            } else {
+                                checkoutForm.reportValidity(); 
+                            }
+                        }
+                    }
+                });
+            }
             
             // Check if Wizard was requested via URL
             if (new URLSearchParams(window.location.search).get('wizard') === 'true') {

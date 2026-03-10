@@ -30,31 +30,43 @@
         </div>
 
         <div id="scanner-section" class="hidden">
-            <button id="scan-btn" onclick="window.startScanner()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl uppercase tracking-widest mb-4 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+            <button id="scan-btn" onclick="window.startScanner()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-4 rounded-xl uppercase tracking-widest mb-4 flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all active:scale-95">
                 <i data-lucide="camera" class="mr-2 w-5 h-5"></i> Start Scanner
             </button>
 
-            <!-- MANUAL ENTRY FALLBACK -->
-            <div id="manual-entry-ui" class="bg-slate-900/80 p-4 rounded-3xl border border-amber-500/20 mb-6">
-                <p class="text-xs text-center text-slate-400 uppercase font-bold tracking-widest mb-3">Or Enter Manually</p>
-                <div class="flex gap-2">
-                    <input type="text" id="manual-id" placeholder="TF2K26-NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 font-mono text-sm uppercase">
-                    <button onclick="window.manualLookup()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 rounded-xl font-bold transition-colors">
-                        <i data-lucide="search" class="w-5 h-5"></i>
+            <!-- REFINED MANUAL ENTRY FALLBACK -->
+            <div id="manual-entry-ui" class="bg-black/40 backdrop-blur-xl p-5 rounded-3xl border border-slate-800 shadow-inner mb-6 relative overflow-hidden group hover:border-amber-500/30 transition-all duration-300">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-bl-full -z-10 group-hover:scale-110 transition-transform duration-500"></div>
+                <div class="flex items-center justify-center mb-3">
+                     <span class="h-px w-8 bg-slate-700 mr-3"></span>
+                     <p class="text-[10px] text-slate-400 uppercase font-black tracking-[0.2em]">Manual Entry</p>
+                     <span class="h-px w-8 bg-slate-700 ml-3"></span>
+                </div>
+                <div class="flex gap-2 relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                         <i data-lucide="keyboard" class="w-4 h-4 text-slate-500"></i>
+                    </div>
+                    <input type="text" id="manual-id" placeholder="TF2K26-NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-amber-500 font-mono text-sm uppercase tracking-wider shadow-[inset_0_2px_10px_rgba(0,0,0,0.5)]">
+                    <button onclick="window.manualLookup()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-5 rounded-xl font-bold transition-all shadow-[0_0_10px_rgba(245,158,11,0.2)] flex items-center justify-center shrink-0 active:scale-95">
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- SCANNER UI: NO DROPDOWN NEEDED, IT FORCES REAR CAMERA -->
-            <div id="scanner-ui" class="hidden bg-slate-900/80 p-4 rounded-3xl border border-amber-500/20 mb-6">
-                <div id="reader" class="mb-4"></div>
-                <button onclick="window.stopScanner()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl uppercase tracking-widest text-sm">
-                    Cancel Scan
-                </button>
+            <!-- SCANNER UI -->
+            <div id="scanner-ui" class="hidden bg-slate-900/80 p-4 rounded-3xl border border-amber-500/20 mb-6 shadow-2xl">
+                <div class="flex justify-between items-center mb-3 px-2">
+                    <span class="text-xs font-bold text-amber-500 uppercase tracking-widest flex items-center"><i data-lucide="scan" class="w-4 h-4 mr-2 animate-pulse"></i> Scanning...</span>
+                    <button onclick="window.stopScanner()" class="text-slate-400 hover:text-red-400 transition-colors bg-slate-800 p-1.5 rounded-lg">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div id="reader" class="mb-2 rounded-2xl overflow-hidden shadow-inner"></div>
             </div>
 
             <!-- PARTICIPANT PROFILE DISPLAY -->
-            <div id="result-card" class="hidden bg-slate-900/90 backdrop-blur-xl border border-amber-500/30 rounded-3xl p-6 shadow-2xl">
+            <div id="result-card" class="hidden bg-slate-900/90 backdrop-blur-xl border border-amber-500/30 rounded-3xl p-6 shadow-[0_0_40px_rgba(0,0,0,0.8)] relative overflow-hidden">
+                 <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-bl-full -z-10 pointer-events-none"></div>
                 <div id="result-content"></div>
             </div>
         </div>
@@ -64,7 +76,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        // CRITICAL FIX: ALL imports must be at the top level of the module!
         import { getFirestore, doc, getDoc, setDoc, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         lucide.createIcons();
@@ -157,12 +168,28 @@
             document.getElementById('manual-id').value = ''; // clear input
         };
 
+        // Handle enter key on manual input
+        document.getElementById("manual-id").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                window.manualLookup();
+            }
+        });
+
+        // Handle enter key on login input
+        document.getElementById("pin-input").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                window.verifyPin();
+            }
+        });
+
         window.lookupParticipant = async function(scannedId) {
             const resultCard = document.getElementById('result-card');
             const resultContent = document.getElementById('result-content');
             
             resultCard.classList.remove('hidden');
-            resultContent.innerHTML = `<div class="text-center py-8"><i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin mx-auto mb-2"></i><p class="text-slate-400 text-sm">Fetching cloud records...</p></div>`;
+            resultContent.innerHTML = `<div class="text-center py-8"><i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin mx-auto mb-2"></i><p class="text-slate-400 text-sm mt-2 font-bold tracking-wide">Fetching cloud records...</p></div>`;
             lucide.createIcons();
 
             try {
@@ -210,7 +237,7 @@
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">Invalid Pass</h3>
                         <p class="text-slate-400 text-sm">This QR code or ID is not registered in the system.</p>
-                        <button onclick="document.getElementById('result-card').classList.add('hidden')" class="mt-6 w-full bg-slate-800 text-white font-bold py-3 rounded-xl text-sm">Dismiss</button>
+                        <button onclick="document.getElementById('result-card').classList.add('hidden')" class="mt-6 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl text-sm transition-colors uppercase tracking-widest">Dismiss</button>
                     </div>
                 `;
                 lucide.createIcons();
@@ -228,7 +255,7 @@
             let gateEntryHtml = ``;
             if (hasEnteredCampus) {
                 gateEntryHtml = `
-                    <div class="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-2xl flex items-center mb-4">
+                    <div class="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-2xl flex items-center mb-4 shadow-sm">
                         <i data-lucide="check-circle-2" class="text-emerald-500 w-6 h-6 mr-3 shrink-0"></i>
                         <div>
                             <h4 class="text-emerald-400 font-bold text-sm">Main Gate Entry</h4>
@@ -238,12 +265,12 @@
                 `;
             } else {
                 gateEntryHtml = `
-                    <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl flex justify-between items-center mb-4 group hover:border-amber-500/30 transition-colors">
+                    <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl flex justify-between items-center mb-4 group hover:border-amber-500/30 transition-colors shadow-sm">
                         <div class="flex items-center">
                             <i data-lucide="shield-alert" class="text-amber-500 w-5 h-5 mr-3 shrink-0"></i>
                             <h4 class="text-white font-bold text-sm">Main Gate Entry</h4>
                         </div>
-                        <button onclick="window.processCheckIn('Main Gate Entry', null, this)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-colors shrink-0">
+                        <button onclick="window.processCheckIn('Main Gate Entry', null, this)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-colors shrink-0 shadow-[0_0_10px_rgba(245,158,11,0.2)] active:scale-95">
                             Check In
                         </button>
                     </div>
@@ -257,7 +284,7 @@
                 
                 if (isCheckedIn) {
                     eventsHtml += `
-                        <div class="bg-emerald-900/10 border border-emerald-500/20 p-4 rounded-2xl flex items-center mb-3">
+                        <div class="bg-emerald-900/10 border border-emerald-500/20 p-4 rounded-2xl flex items-center mb-3 shadow-sm">
                             <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center mr-3 shrink-0">
                                 <i data-lucide="check" class="text-emerald-500 w-4 h-4"></i>
                             </div>
@@ -270,7 +297,7 @@
                 } else {
                     const safeEventString = encodeURIComponent(JSON.stringify(ev));
                     eventsHtml += `
-                        <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl flex justify-between items-center mb-3 hover:border-blue-500/30 transition-colors">
+                        <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-2xl flex justify-between items-center mb-3 hover:border-blue-500/30 transition-colors shadow-sm">
                             <div class="flex items-start">
                                 <i data-lucide="circle" class="text-slate-500 w-5 h-5 mr-3 mt-0.5 shrink-0"></i>
                                 <div>
@@ -278,7 +305,7 @@
                                     <p class="text-slate-500 text-[10px] uppercase tracking-wider font-bold mt-0.5">${ev.type === 'Team' ? `Team: ${ev.teamName} (${ev.role})` : 'Solo Event'}</p>
                                 </div>
                             </div>
-                            <button onclick="window.processCheckIn('${ev.eventName}', decodeURIComponent('${safeEventString}'), this)" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-colors shrink-0">
+                            <button onclick="window.processCheckIn('${ev.eventName}', decodeURIComponent('${safeEventString}'), this)" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-wider transition-colors shrink-0 shadow-[0_0_10px_rgba(37,99,235,0.2)] active:scale-95">
                                 Check In
                             </button>
                         </div>
@@ -286,28 +313,28 @@
                 }
             });
 
-            if(eventsHtml === '') eventsHtml = `<p class="text-slate-500 text-xs text-center my-4">No events registered.</p>`;
+            if(eventsHtml === '') eventsHtml = `<p class="text-slate-500 text-xs text-center my-4 p-4 border border-slate-800 rounded-xl bg-black/20 font-medium">No events registered for this participant.</p>`;
 
             resultContent.innerHTML = `
-                <div class="text-center mb-6">
-                    <div class="inline-block p-1 rounded-full bg-amber-500/20 mb-3">
-                        <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg">
+                <div class="text-center mb-6 relative z-10">
+                    <div class="inline-block p-1 rounded-full bg-amber-500/20 mb-3 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full flex items-center justify-center text-slate-950 font-black text-2xl">
                             ${data.name.charAt(0).toUpperCase()}
                         </div>
                     </div>
                     <h2 class="text-2xl font-black text-white tracking-wide">${data.name}</h2>
                     <p class="text-amber-400 text-sm font-bold mt-1">${data.college}</p>
-                    <p class="text-slate-500 text-xs font-mono mt-1 tracking-widest border border-slate-700 inline-block px-3 py-1 rounded-lg mt-3 bg-black/50"># ${data.regId}</p>
+                    <p class="text-slate-400 text-xs font-mono mt-2 tracking-widest border border-slate-700/50 inline-block px-4 py-1.5 rounded-lg bg-[#020617] shadow-inner font-bold"><span class="text-amber-500/50">#</span> ${data.regId}</p>
                 </div>
 
-                <div class="mb-4">
-                    <h3 class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-3 flex items-center"><i data-lucide="clipboard-check" class="w-3 h-3 mr-2"></i> Attendance Checklist</h3>
+                <div class="mb-6 relative z-10">
+                    <h3 class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em] mb-3 flex items-center border-b border-slate-800 pb-2"><i data-lucide="clipboard-check" class="w-3 h-3 mr-2"></i> Attendance Checklist</h3>
                     ${gateEntryHtml}
                     ${eventsHtml}
                 </div>
 
-                <button onclick="document.getElementById('result-card').classList.add('hidden');" class="mt-4 w-full bg-slate-800 text-slate-300 font-bold py-4 rounded-xl text-xs tracking-widest uppercase hover:bg-slate-700 transition-colors flex items-center justify-center">
-                     Close Profile
+                <button onclick="document.getElementById('result-card').classList.add('hidden');" class="relative z-10 w-full bg-slate-800 text-slate-300 font-bold py-4 rounded-xl text-xs tracking-widest uppercase hover:bg-slate-700 transition-colors flex items-center justify-center active:scale-95">
+                     <i data-lucide="x" class="w-4 h-4 mr-2"></i> Close Profile
                 </button>
             `;
             lucide.createIcons();
@@ -360,9 +387,9 @@
 
                     await fetch(SHEET_WEBHOOK_URL, {
                         method: 'POST', mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 'Content-Type': 'text/plain' },
                         body: JSON.stringify(sheetPayload)
-                    });
+                    }).catch(err => console.error("Sheet Error:", err));
                 }
 
                 // Success update local UI

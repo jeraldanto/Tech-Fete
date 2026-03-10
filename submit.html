@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Files | Tech Fêté 2k26</title>
+    <title>Submit Files | TECH FÊTE 2K26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: white; }
         h1, h2, h3, .brand-font { font-family: 'Antonio', sans-serif; }
+        
+        /* Drag and Drop visual feedback */
+        .drag-active { border-color: #f59e0b !important; background-color: rgba(245, 158, 11, 0.1) !important; transform: scale(1.02); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-10 px-4 relative">
@@ -27,87 +30,84 @@
             <img src="college_logo.jpg" alt="PJPII Logo" class="w-full h-full object-contain rounded-xl" onerror="this.style.display='none'">
         </div>
         <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider">SUBMIT PORTAL</h1>
-        <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fête 2k26 Official File Upload</p>
+        <p class="text-slate-400 tracking-widest uppercase text-[10px] mt-2 font-bold">Tech Fête 2k26 Professional Upload</p>
     </div>
 
     <div class="w-full max-w-lg bg-slate-900/80 backdrop-blur-xl border border-amber-500/20 rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.8)] p-6 relative overflow-hidden z-10">
         
-        <form id="upload-form" onsubmit="window.processUpload(event)" class="flex flex-col space-y-6">
+        <form id="upload-form" onsubmit="window.processFirebaseUpload(event)" class="flex flex-col space-y-6">
             
             <div>
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Registration ID <span class="text-red-500">*</span></label>
-                <input type="text" id="reg-id" required value="TF2K26-" placeholder="TF2K26-NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm">
-                <p class="text-[10px] text-slate-500 mt-1">Check your email or physical pass for your full ID.</p>
+                <div class="relative flex items-center">
+                    <span class="absolute left-4 text-amber-500 font-bold tracking-widest font-mono">TF2K26-</span>
+                    <input type="text" id="reg-id" required autocomplete="off" oninput="window.handleIdInput(this)" placeholder="NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-[88px] pr-10 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm shadow-inner transition-colors">
+                    <div id="id-loading" class="absolute right-4 hidden"><i data-lucide="loader-2" class="w-4 h-4 text-amber-500 animate-spin"></i></div>
+                    <div id="id-success" class="absolute right-4 hidden"><i data-lucide="check" class="w-5 h-5 text-emerald-500"></i></div>
+                </div>
+                <p id="id-message" class="text-[10px] text-slate-500 mt-1">Enter ID to load your registered events.</p>
             </div>
 
-            <div>
+            <div id="event-container" class="opacity-50 pointer-events-none transition-opacity">
                 <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Select Event <span class="text-red-500">*</span></label>
                 <select id="event-name" required onchange="window.updateFileConstraints()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 appearance-none">
-                    <option value="" disabled selected>-- Choose Event --</option>
-                    <option value="Dance">Dance (Audio Track)</option>
-                    <option value="PPT Presentation">PPT Presentation</option>
-                    <option value="Techmeme">Techmeme</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Poster Making">Poster Making</option>
+                    <option value="" disabled selected>-- Awaiting valid ID --</option>
+                    <!-- Options populated dynamically -->
                 </select>
             </div>
 
-            <!-- Upload Area -->
             <div id="upload-area" class="opacity-50 pointer-events-none transition-opacity">
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Upload File <span class="text-red-500">*</span></label>
-                
-                <div class="relative border-2 border-dashed border-slate-700 hover:border-amber-500 rounded-xl p-8 text-center transition-colors bg-[#020617] group cursor-pointer" onclick="document.getElementById('file-input').click()">
-                    <i data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-slate-500 group-hover:text-amber-500 mb-3 transition-colors"></i>
-                    <p id="file-instruction" class="text-sm font-bold text-white mb-1">Select your event first.</p>
-                    <p id="file-sub-instruction" class="text-xs text-slate-500">Max size: 15MB</p>
+                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex justify-between">
+                    <span>Upload File <span class="text-red-500">*</span></span>
+                    <span id="file-sub-instruction" class="text-[10px] text-amber-500 font-bold lowercase tracking-normal"></span>
+                </label>
+                <div id="drop-zone" class="relative border-2 border-dashed border-slate-700 hover:border-amber-500 rounded-xl p-8 text-center transition-all duration-300 bg-[#020617] group cursor-pointer" onclick="document.getElementById('file-input').click()">
+                    <i id="upload-icon" data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-slate-500 group-hover:text-amber-400 mb-3 transition-colors pointer-events-none"></i>
+                    <p id="file-instruction" class="text-sm font-bold text-white mb-1 pointer-events-none">Drag & drop or click to browse</p>
                     
-                    <!-- Hidden Input (Multiple allowed to trigger ZIP warning natively) -->
-                    <input type="file" id="file-input" class="hidden" onchange="window.handleFileSelection(event)" multiple>
+                    <!-- Hidden Input -->
+                    <input type="file" id="file-input" class="hidden" onchange="window.handleFileSelection(event)">
                 </div>
                 
-                <!-- File Preview -->
-                <div id="file-preview" class="hidden mt-4 bg-slate-800 p-4 rounded-xl flex items-center justify-between border border-slate-700">
+                <div id="file-preview" class="hidden mt-4 bg-slate-800 p-4 rounded-xl flex items-center justify-between border border-slate-700 shadow-inner">
                     <div class="flex items-center overflow-hidden">
-                        <i data-lucide="file" class="w-5 h-5 text-amber-500 mr-3 shrink-0"></i>
-                        <span id="file-name-display" class="text-sm font-bold truncate text-white"></span>
+                        <i data-lucide="file-check" class="w-5 h-5 text-emerald-400 mr-3 shrink-0"></i>
+                        <span id="file-name-display" class="text-xs font-bold truncate text-white tracking-wider"></span>
                     </div>
-                    <button type="button" onclick="window.clearFile()" class="text-red-400 hover:text-red-500 ml-4 shrink-0"><i data-lucide="x" class="w-5 h-5"></i></button>
+                    <button type="button" onclick="window.clearFile()" class="text-red-400 hover:text-red-500 ml-4 shrink-0 bg-black/20 p-1.5 rounded-lg transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
                 </div>
             </div>
 
-            <button type="submit" id="submit-btn" disabled class="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
-                Verify & Upload <i data-lucide="cloud-lightning" class="ml-2 w-5 h-5"></i>
+            <button type="submit" id="submit-btn" disabled class="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 disabled:opacity-50 flex items-center justify-center">
+                Start Upload <i data-lucide="cloud-lightning" class="ml-2 w-5 h-5"></i>
             </button>
 
-            <!-- Loading UI -->
             <div id="loading-ui" class="hidden flex-col items-center justify-center py-4 text-center">
-                <i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin mb-2 mx-auto"></i>
-                <p id="loading-text" class="text-sm font-bold text-amber-400 animate-pulse">Verifying Registration...</p>
-                <p class="text-[10px] text-slate-500">Do not close this window.</p>
+                <i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin mb-3 mx-auto"></i>
+                <p id="loading-text" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Processing...</p>
+                <div class="w-full bg-slate-800 rounded-full h-1.5 mt-4 overflow-hidden hidden" id="progress-bar-container">
+                    <div class="bg-amber-500 h-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+                </div>
             </div>
         </form>
 
-        <!-- Success Screen -->
         <div id="success-screen" class="hidden flex-col items-center justify-center py-8 text-center">
             <div class="w-20 h-20 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
                 <i data-lucide="check-circle" class="w-10 h-10"></i>
             </div>
-            <h2 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">File Secured</h2>
-            <p class="text-slate-400 mb-6 text-sm">Your file has been successfully uploaded to the Drive and linked to your Registration ID.</p>
-            <button onclick="location.reload()" class="w-full bg-slate-800 text-white px-6 py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-slate-700 transition-all">
-                Submit Another
-            </button>
+            <h2 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">Success!</h2>
+            <p class="text-slate-400 mb-8 text-sm px-4">Your file has been uploaded.</p>
+            <button onclick="location.reload()" class="w-full bg-slate-800 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-all">Upload Another File</button>
         </div>
-
     </div>
 
-    <!-- FIREBASE INTEGRATION FOR VALIDATION -->
+    <!-- SDK INCLUDES -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, query, where, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
-        // EXACT SAME FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
             authDomain: "tech-fete-2026.firebaseapp.com",
@@ -121,231 +121,322 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        // Sign in silently so we can query the database
         signInAnonymously(auth).catch(console.error);
 
-        // Expose db to window so standard JS can access it during upload
-        window.firebaseDB = db;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseQuery = query;
-        window.firebaseWhere = where;
-        window.firebaseCollection = collection;
+        window.fbStorage = { ref, uploadBytesResumable, getDownloadURL, storage };
+        window.fbDB = { db, collection, query, where, getDocs, doc, setDoc };
     </script>
 
     <script>
         lucide.createIcons();
-
-        // ⚠️ PASTE YOUR MASTER GOOGLE APPS SCRIPT WEBHOOK URL HERE
-        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzRD7ZkikOOxLBL3lmsGQMLcAzKUs-eonHNUj8yBYjmeQUqHT3RnKZnGxyID7RDftWt/exec';
-        
         let selectedFile = null;
-        let base64Data = null;
+        let currentUserDocId = null;
+        let searchTimeout = null;
 
-        // UI Updates based on Event Selection
+        // 1. Dynamic ID Verification & Event Loading
+        window.handleIdInput = function(input) {
+            // Keep input clean from TF2K26- as it's hardcoded visually
+            let val = input.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+            if (val.startsWith("TF2K26-")) val = val.substring(7);
+            input.value = val;
+            
+            const fullId = "TF2K26-" + val;
+
+            clearTimeout(searchTimeout);
+            
+            const eventContainer = document.getElementById('event-container');
+            const eventSelect = document.getElementById('event-name');
+            const msg = document.getElementById('id-message');
+            const loadIcon = document.getElementById('id-loading');
+            const checkIcon = document.getElementById('id-success');
+            
+            window.clearFile();
+            document.getElementById('upload-area').classList.add('opacity-50', 'pointer-events-none');
+
+            if (val.length < 8) {
+                eventContainer.classList.add('opacity-50', 'pointer-events-none');
+                eventSelect.innerHTML = '<option value="" disabled selected>-- Enter full ID --</option>';
+                msg.innerText = "Enter ID to load your registered events.";
+                msg.className = "text-[10px] text-slate-500 mt-1";
+                loadIcon.classList.add('hidden');
+                checkIcon.classList.add('hidden');
+                return;
+            }
+
+            // Show loading state
+            loadIcon.classList.remove('hidden');
+            checkIcon.classList.add('hidden');
+            msg.innerText = "Verifying ID in cloud...";
+            msg.className = "text-[10px] text-amber-500 mt-1 font-bold animate-pulse";
+
+            // Debounce search
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const q = window.fbDB.query(window.fbDB.collection(window.fbDB.db, 'universal_attendees'), window.fbDB.where('regId', '==', fullId));
+                    const snap = await window.fbDB.getDocs(q);
+                    
+                    loadIcon.classList.add('hidden');
+
+                    if (snap.empty) { 
+                        msg.innerText = "ID not found. Please verify your Registration ID.";
+                        msg.className = "text-[10px] text-red-400 mt-1 font-bold";
+                        eventContainer.classList.add('opacity-50', 'pointer-events-none');
+                        eventSelect.innerHTML = '<option value="" disabled selected>-- ID Not Found --</option>';
+                        return; 
+                    }
+
+                    const userDoc = snap.docs[0];
+                    currentUserDocId = userDoc.id;
+                    const userData = userDoc.data();
+                    const registeredEvents = userData.events || [];
+
+                    // Filter to strictly ONLY events that require file submissions
+                    const submittableEventNames = ["PPT Presentation", "Tech Memes", "Techmeme", "Poster Making", "Dance", "Photography"];
+                    const allowedEvents = registeredEvents
+                        .map(e => e.eventName)
+                        .filter(eventName => submittableEventNames.includes(eventName));
+
+                    if (allowedEvents.length === 0) {
+                        msg.innerText = "Valid ID, but no file uploads required for your registered events.";
+                        msg.className = "text-[10px] text-amber-400 mt-1 font-bold";
+                        eventContainer.classList.add('opacity-50', 'pointer-events-none');
+                        eventSelect.innerHTML = '<option value="" disabled selected>-- No uploads needed --</option>';
+                        return;
+                    }
+
+                    checkIcon.classList.remove('hidden');
+                    msg.innerText = "ID Verified! Welcome, " + userData.name.split(" ")[0];
+                    msg.className = "text-[10px] text-emerald-400 mt-1 font-bold tracking-widest uppercase";
+
+                    // Populate Dropdown
+                    eventContainer.classList.remove('opacity-50', 'pointer-events-none');
+                    let optionsHtml = '<option value="" disabled selected>-- Select Your Event --</option>';
+                    allowedEvents.forEach(ev => {
+                        optionsHtml += `<option value="${ev}">${ev}</option>`;
+                    });
+                    eventSelect.innerHTML = optionsHtml;
+
+                } catch (e) {
+                    console.error(e);
+                    loadIcon.classList.add('hidden');
+                    msg.innerText = "Network error. Check connection.";
+                    msg.className = "text-[10px] text-red-400 mt-1 font-bold";
+                }
+            }, 600); // 600ms debounce
+        };
+
+        // 2. Strict File Rules based on Event
         window.updateFileConstraints = function() {
             const ev = document.getElementById('event-name').value;
             const uploadArea = document.getElementById('upload-area');
             const fileInput = document.getElementById('file-input');
-            const inst = document.getElementById('file-instruction');
             const subInst = document.getElementById('file-sub-instruction');
             
             window.clearFile();
-
-            if (!ev) {
-                uploadArea.classList.add('opacity-50', 'pointer-events-none');
-                return;
-            }
-
+            if (!ev) return;
+            
             uploadArea.classList.remove('opacity-50', 'pointer-events-none');
-
-            if (ev === "Dance") {
-                fileInput.accept = ".mp3, .wav";
-                inst.innerHTML = "Upload Dance Track (.mp3, .wav)";
-                subInst.innerHTML = "<span class='text-amber-400'>Strictly under 4 Minutes</span> | No Size Limit";
-            } 
-            else if (ev === "PPT Presentation") {
-                fileInput.accept = ".ppt, .pptx, .pdf";
-                inst.innerHTML = "Upload Presentation (.ppt, .pdf)";
-                subInst.innerHTML = "Upload exactly 1 file | Max 15MB";
-            } 
+            
+            if (ev === "Dance") { 
+                fileInput.accept = ".mp3, .wav"; 
+                subInst.innerHTML = "Accepts: <b>.MP3, .WAV</b> (Max 4 Mins)"; 
+            }
+            else if (ev === "PPT Presentation") { 
+                fileInput.accept = ".ppt, .pptx, .pdf"; 
+                subInst.innerHTML = "Accepts: <b>.PPT, .PPTX, .PDF</b>"; 
+            }
+            else if (ev === "Tech Memes" || ev === "Techmeme" || ev === "Poster Making" || ev === "Photography") { 
+                fileInput.accept = ".jpg, .jpeg, .png, .zip"; 
+                subInst.innerHTML = "Accepts: <b>.JPG, .PNG</b> or <b>.ZIP</b> (for multiples)"; 
+            }
             else {
-                fileInput.accept = ".jpg, .jpeg, .png, .zip";
-                inst.innerHTML = "Upload Image (.jpg, .png) or .ZIP";
-                subInst.innerHTML = "<span class='text-amber-400'>If submitting multiple files, you MUST zip them.</span> | Max 15MB";
+                // Fallback for unexpected events
+                fileInput.accept = "*";
+                subInst.innerHTML = "Max Size: 30MB";
             }
         };
 
-        // File Selection & Strict Validation
-        window.handleFileSelection = function(event) {
-            const files = event.target.files;
-            if (files.length === 0) return;
+        // 3. Drag & Drop Mechanics
+        const dropZone = document.getElementById('drop-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
 
-            const ev = document.getElementById('event-name').value;
+        function preventDefaults (e) { e.preventDefault(); e.stopPropagation(); }
 
-            // RULE 1: MULTIPLE FILES -> MUST BE ZIP
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'), false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            
             if (files.length > 1) {
-                alert("⚠️ Multiple Files Detected!\n\nTo submit 2 or more files for " + ev + ", you MUST compress them into a single .ZIP file and upload the zip.");
-                window.clearFile();
+                alert("Please drop only 1 file. If you have multiple files, compress them into a .ZIP first.");
                 return;
             }
+            
+            if (files.length === 1) {
+                // Manually trigger the validation workflow
+                validateAndProcessFile(files[0]);
+            }
+        });
 
-            const file = files[0];
+        // Manual File Selection wrapper
+        window.handleFileSelection = function(event) {
+            if (event.target.files.length === 0) return;
+            validateAndProcessFile(event.target.files[0]);
+        };
+
+        // 4. Advanced Validation Logic
+        function validateAndProcessFile(file) {
+            const ev = document.getElementById('event-name').value;
             const ext = file.name.toLowerCase().split('.').pop();
+            
+            // Hard limit 30MB for ALL files to prevent browser crashing
+            if (file.size > 30 * 1024 * 1024) { 
+                alert(`⚠️ File is too large!\n\nYour file is ${(file.size/1024/1024).toFixed(1)}MB. Maximum limit is 30MB.`); 
+                window.clearFile();
+                return; 
+            }
 
-            // RULE 2: SPECIFIC EVENT VALIDATIONS
+            // DANCE RULES: MP3/WAV, Max 4 Mins
             if (ev === "Dance") {
                 if (ext !== 'mp3' && ext !== 'wav') {
-                    alert("⚠️ Invalid file type!\n\nPlease upload ONLY .mp3 or .wav files for Dance.");
-                    window.clearFile();
-                    return;
+                    alert("⚠️ Invalid Format for Dance!\n\nPlease upload a single .mp3 or .wav audio file.");
+                    window.clearFile(); return;
                 }
-                // Check Audio Duration
+                
+                // Read audio duration
                 const audio = new Audio();
                 audio.src = URL.createObjectURL(file);
                 audio.onloadedmetadata = function() {
-                    if (audio.duration > 241) { // 4 mins = 240 seconds
-                        alert("⚠️ Audio exceeds time limit!\n\nYour track is " + (audio.duration / 60).toFixed(2) + " minutes long. The limit is exactly 4 minutes.");
+                    if (audio.duration > 241) { // Allow 1 second buffer (4 mins = 240s)
+                        alert(`⚠️ Audio Time Limit Exceeded!\n\nYour track is ${(audio.duration/60).toFixed(2)} minutes long. The strict limit is 4 minutes.`);
                         window.clearFile();
                     } else {
                         window.acceptFile(file);
                     }
                 };
-                return; // Wait for audio metadata to load
-            } 
+                audio.onerror = function() {
+                    alert("Error reading audio file. Please try another format.");
+                    window.clearFile();
+                };
+                return; // Wait for async metadata
+            }
+
+            // PPT RULES: Only PDF/PPT
             else if (ev === "PPT Presentation") {
                 if (ext !== 'ppt' && ext !== 'pptx' && ext !== 'pdf') {
-                    alert("⚠️ Invalid file type!\n\nPlease upload ONLY .pdf, .ppt, or .pptx files.");
-                    window.clearFile();
-                    return;
+                    alert("⚠️ Invalid Format for PPT!\n\nPlease upload exactly 1 .pdf, .ppt, or .pptx file.");
+                    window.clearFile(); return;
                 }
-            } 
-            else {
-                // Creative Events (Photography, Techmeme, Poster Making)
+            }
+
+            // CREATIVE RULES (Meme, Poster, Photo): Single IMG or ZIP
+            else if (ev === "Tech Memes" || ev === "Techmeme" || ev === "Poster Making" || ev === "Photography") {
                 if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png' && ext !== 'zip') {
-                    alert("⚠️ Invalid file type!\n\nPlease upload ONLY .png, .jpeg files, or a .zip file (if submitting multiple).");
-                    window.clearFile();
-                    return;
+                    alert(`⚠️ Invalid Format for ${ev}!\n\nUpload a single image (.jpg, .png) OR if you have multiple images, compress them into a single .ZIP file and upload that.`);
+                    window.clearFile(); return;
                 }
             }
 
-            // RULE 3: SIZE LIMIT (15MB) for Non-Dance Events
-            if (ev !== "Dance" && file.size > 15 * 1024 * 1024) {
-                alert("⚠️ File too large!\n\nYour file is " + (file.size / 1024 / 1024).toFixed(1) + "MB. The maximum limit is 15MB.");
-                window.clearFile();
-                return;
-            }
-
+            // If passed all rules, accept it
             window.acceptFile(file);
-        };
+        }
 
         window.acceptFile = function(file) {
             selectedFile = file;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                base64Data = e.target.result.split(",")[1];
-                document.getElementById('file-name-display').innerText = file.name;
-                document.getElementById('file-preview').classList.remove('hidden');
-                document.getElementById('submit-btn').disabled = false;
-            };
-            reader.readAsDataURL(file);
+            document.getElementById('file-name-display').innerText = file.name;
+            document.getElementById('file-preview').classList.remove('hidden');
+            document.getElementById('submit-btn').disabled = false;
+            document.getElementById('drop-zone').classList.add('border-emerald-500/50', 'bg-emerald-900/10');
+            document.getElementById('upload-icon').classList.replace('text-slate-500', 'text-emerald-500');
+            lucide.createIcons();
         };
 
         window.clearFile = function() {
             selectedFile = null;
-            base64Data = null;
             document.getElementById('file-input').value = "";
             document.getElementById('file-preview').classList.add('hidden');
             document.getElementById('submit-btn').disabled = true;
+            document.getElementById('drop-zone').classList.remove('border-emerald-500/50', 'bg-emerald-900/10');
+            document.getElementById('upload-icon').classList.replace('text-emerald-500', 'text-slate-500');
         };
 
-        window.processUpload = async function(event) {
-            event.preventDefault();
-
-            const regIdInput = document.getElementById('reg-id').value.trim().toUpperCase();
+        window.processFirebaseUpload = async function(e) {
+            e.preventDefault();
+            const fullRegId = "TF2K26-" + document.getElementById('reg-id').value.trim().toUpperCase();
             const eventName = document.getElementById('event-name').value;
-
-            if (!regIdInput.startsWith("TF2K26-") || regIdInput === "TF2K26-") {
-                alert("Please enter a valid Registration ID (e.g., TF2K26-ANTO-0001).");
-                return;
-            }
-
-            if (!selectedFile || !base64Data) {
-                alert("Please select a file to upload.");
-                return;
-            }
-
             const btn = document.getElementById('submit-btn');
-            const formInputs = document.querySelectorAll('input, select');
-            formInputs.forEach(inp => inp.disabled = true);
+            const loadUI = document.getElementById('loading-ui');
+            const loadText = document.getElementById('loading-text');
+
+            if (!selectedFile || !currentUserDocId) return;
+
             btn.classList.add('hidden');
+            loadUI.classList.remove('hidden');
+            loadUI.classList.add('flex');
             
-            const loadingUI = document.getElementById('loading-ui');
-            const loadingText = document.getElementById('loading-text');
-            loadingUI.classList.remove('hidden');
-            loadingUI.classList.add('flex');
+            // Because ID is already verified locally, jump straight to upload
+            loadText.innerText = "Initializing Secure Connection...";
+            document.getElementById('progress-bar-container').classList.remove('hidden');
             
-            loadingText.innerText = "Verifying Registration in Cloud...";
-
             try {
-                const attendeesRef = window.firebaseCollection(window.firebaseDB, 'universal_attendees');
-                const q = window.firebaseQuery(attendeesRef, window.firebaseWhere('regId', '==', regIdInput));
-                const querySnapshot = await window.firebaseGetDocs(q);
+                const ext = selectedFile.name.split('.').pop();
+                // FORMAT: RegNo_EventName.ext
+                const cleanEventName = eventName.replace(/\s+/g, '_');
+                const newName = `${fullRegId}_${cleanEventName}.${ext}`;
+                const storagePath = `event_submissions/${cleanEventName}/${newName}`;
+                
+                const storageRef = window.fbStorage.ref(window.fbStorage.storage, storagePath);
+                const uploadTask = window.fbStorage.uploadBytesResumable(storageRef, selectedFile);
 
-                if (querySnapshot.empty) {
-                    alert("❌ You are not registered!\n\nWe couldn't find the ID: " + regIdInput + ".");
-                    throw new Error("Validation Failed");
-                }
+                uploadTask.on('state_changed', 
+                    (s) => {
+                        const prog = (s.bytesTransferred / s.totalBytes) * 100;
+                        document.getElementById('progress-bar').style.width = prog + '%';
+                        loadText.innerText = `Uploading... ${Math.round(prog)}%`;
+                    },
+                    (err) => { 
+                        console.error(err);
+                        alert("Storage Error! Check your internet connection."); 
+                        btn.classList.remove('hidden'); 
+                        loadUI.classList.add('hidden');
+                    },
+                    async () => {
+                        try {
+                            const downloadURL = await window.fbStorage.getDownloadURL(uploadTask.snapshot.ref);
+                            await window.fbDB.setDoc(window.fbDB.doc(window.fbDB.db, 'universal_attendees', currentUserDocId), {
+                                submissions: {
+                                    [eventName]: {
+                                        fileName: newName,
+                                        url: downloadURL,
+                                        submittedAt: new Date().toISOString()
+                                    }
+                                }
+                            }, { merge: true });
+                        } catch (e) {
+                            console.log("DB update bypassed.");
+                        }
 
-                const userData = querySnapshot.docs[0].data();
-                const registeredEvents = userData.events || [];
-                const isRegisteredForEvent = registeredEvents.some(e => e.eventName === eventName);
-
-                if (!isRegisteredForEvent) {
-                    alert("❌ Event Mismatch!\n\nYour ID is valid, but you are not registered for '" + eventName + "'.");
-                    throw new Error("Validation Failed");
-                }
-            } catch (error) {
-                console.error(error);
-                formInputs.forEach(inp => inp.disabled = false);
+                        // Success Message Adjusted Here
+                        document.getElementById('upload-form').classList.add('hidden');
+                        document.getElementById('success-screen').classList.remove('hidden');
+                        document.getElementById('success-screen').classList.add('flex');
+                    }
+                );
+            } catch (err) {
                 btn.classList.remove('hidden');
-                loadingUI.classList.add('hidden');
-                loadingUI.classList.remove('flex');
-                return; 
-            }
-
-            loadingText.innerText = "Encrypting & Uploading File to Drive...";
-
-            const payload = {
-                action: "upload", // Tells the Master Google Script to handle this as an upload
-                regId: regIdInput,
-                eventName: eventName,
-                fileName: selectedFile.name,
-                mimeType: selectedFile.type,
-                data: base64Data
-            };
-
-            try {
-                // Ensure you have updated WEBHOOK_URL at the top!
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                setTimeout(() => {
-                    document.getElementById('upload-form').classList.add('hidden');
-                    document.getElementById('success-screen').classList.remove('hidden');
-                    document.getElementById('success-screen').classList.add('flex');
-                }, 1500);
-
-            } catch (error) {
-                alert("Upload failed. Please check your connection and try again.");
-                formInputs.forEach(inp => inp.disabled = false);
-                btn.classList.remove('hidden');
-                loadingUI.classList.add('hidden');
-                loadingUI.classList.remove('flex');
+                loadUI.classList.add('hidden');
             }
         };
     </script>
