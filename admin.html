@@ -6,10 +6,24 @@
     <title>Admin Dashboard | Tech Fêté 2k26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Libraries for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- QRCode Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: white; }
         h1, h2, h3, .brand-font { font-family: 'Antonio', sans-serif; }
+        
+        /* Hidden container for background processing */
+        #render-container {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            visibility: hidden;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-10 px-4 relative">
@@ -47,15 +61,17 @@
             <div class="flex flex-col md:flex-row items-center justify-between border-b border-slate-800 pb-6 mb-8 gap-4">
                 <div class="text-center md:text-left">
                     <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-1">Command Center</h2>
-                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Event Verification Terminal</p>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Event Verification & Operations Terminal</p>
                 </div>
                 <div class="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-lg border border-emerald-500/20 text-sm font-bold flex items-center shadow-[inset_0_0_10px_rgba(16,185,129,0.1)]">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> DB Connected
                 </div>
             </div>
 
-            <!-- Centered Scanner Action -->
-            <div class="max-w-md mx-auto">
+            <!-- Grid for Dashboard Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Action 1: Scanner -->
                 <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all text-center flex flex-col justify-between group">
                     <div>
                         <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
@@ -70,15 +86,65 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- Action 2: Generate Tickets PDF -->
+                <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-blue-500/30 transition-all text-center flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="printer" class="w-8 h-8 text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Print Event Tickets</h3>
+                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Generate a printable PDF using your exact template design. Native PDF rendering ensures zero quality loss. Duplicates are automatically removed.</p>
+                    </div>
+                    <div>
+                        <button id="generate-pdf-btn" onclick="window.generateTicketPDF()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center justify-center w-full active:scale-95">
+                            Generate PDF <i data-lucide="download" class="w-5 h-5 ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Generation Status UI -->
+            <div id="pdf-status" class="hidden mt-8 bg-slate-800 p-6 rounded-xl border border-slate-700 text-center relative">
+                <button id="close-pdf-status" onclick="window.resetPDFUI()" class="hidden absolute top-4 right-4 text-slate-400 hover:text-white transition-colors" title="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <i id="pdf-spinner" data-lucide="loader-2" class="w-8 h-8 text-blue-400 animate-spin mx-auto mb-3"></i>
+                <i id="pdf-success-icon" data-lucide="check-circle" class="w-8 h-8 text-emerald-400 mx-auto mb-3 hidden"></i>
+                <h4 class="font-bold text-white mb-2" id="pdf-status-title">Fetching Database Records...</h4>
+                <p class="text-sm text-slate-400" id="pdf-status-desc">Please do not close this window.</p>
+                
+                <div id="pdf-progress-container" class="w-full bg-slate-900 rounded-full h-2.5 mt-4 overflow-hidden">
+                    <div id="pdf-progress-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <div id="pdf-action-buttons" class="hidden mt-6 flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="window.previewPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-3 rounded-xl font-black uppercase tracking-widest transition-all text-xs flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                        <i data-lucide="eye" class="w-4 h-4 mr-2"></i> Preview
+                    </button>
+                    <button onclick="window.downloadPDF()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest transition-all text-xs flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i> Download
+                    </button>
+                </div>
             </div>
 
         </div>
+    </div>
+
+    <!-- HIDDEN RENDER ASSETS -->
+    <div id="render-container">
+        <!-- This is the base image file that will be stamped into the PDF. 
+             CRITICAL: Make sure this image is CROPPED so there is NO white space around it! -->
+        <img id="base-ticket-img" src="ticket_template.jpg" crossorigin="anonymous" alt="Base Ticket Template">
+        
+        <!-- Hidden container where QR codes are temporarily drawn -->
+        <div id="temp-qr-container"></div>
     </div>
 
     <!-- FIREBASE INTEGRATION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         lucide.createIcons();
 
@@ -95,7 +161,11 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
+        
         signInAnonymously(auth).catch(console.error);
+        
+        window.fbDB = { db, collection, getDocs };
 
         window.verifyAdmin = function() {
             const pin = document.getElementById('admin-pin').value;
@@ -114,6 +184,226 @@
                 window.verifyAdmin();
             }
         });
+    </script>
+
+    <!-- PURE NATIVE PDF GENERATION LOGIC -->
+    <script>
+        let generatedJsPdfInstance = null;
+        let generatedPDFFileName = null;
+
+        // Helper function to extract base64 from the standard <img> tag
+        function getBase64Image(imgElement) {
+            const canvas = document.createElement("canvas");
+            canvas.width = imgElement.naturalWidth || imgElement.width;
+            canvas.height = imgElement.naturalHeight || imgElement.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(imgElement, 0, 0);
+            return canvas.toDataURL("image/jpeg", 1.0);
+        }
+
+        window.previewPDF = function() {
+            if (!generatedJsPdfInstance) return;
+            const blob = generatedJsPdfInstance.output('blob');
+            const blobUrl = URL.createObjectURL(blob);
+            window.open(blobUrl, '_blank');
+        };
+
+        window.downloadPDF = function() {
+            if (!generatedJsPdfInstance || !generatedPDFFileName) return;
+            generatedJsPdfInstance.save(generatedPDFFileName);
+        };
+
+        window.resetPDFUI = function() {
+            const statusUI = document.getElementById('pdf-status');
+            const btn = document.getElementById('generate-pdf-btn');
+            
+            statusUI.classList.add('hidden');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            
+            // Reset internals
+            document.getElementById('pdf-spinner').classList.remove('hidden');
+            document.getElementById('pdf-success-icon').classList.add('hidden');
+            document.getElementById('pdf-progress-container').classList.remove('hidden');
+            document.getElementById('pdf-action-buttons').classList.add('hidden');
+            document.getElementById('close-pdf-status').classList.add('hidden');
+            
+            generatedJsPdfInstance = null;
+            generatedPDFFileName = null;
+        };
+
+        window.generateTicketPDF = async function() {
+            const btn = document.getElementById('generate-pdf-btn');
+            const statusUI = document.getElementById('pdf-status');
+            const titleEl = document.getElementById('pdf-status-title');
+            const descEl = document.getElementById('pdf-status-desc');
+            const progBar = document.getElementById('pdf-progress-bar');
+            
+            // Check if base image loaded properly
+            const baseImgElement = document.getElementById('base-ticket-img');
+            if (!baseImgElement.complete || baseImgElement.naturalHeight === 0) {
+                alert("Error: 'ticket_template.jpg' could not be found! Please make sure your design is saved in the same folder with that exact name.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            statusUI.classList.remove('hidden');
+            progBar.style.width = '5%';
+
+            try {
+                titleEl.innerText = "Fetching Database Records...";
+                
+                // 1. Fetch Unique Participants from Firestore
+                const querySnapshot = await window.fbDB.getDocs(window.fbDB.collection(window.fbDB.db, "universal_attendees"));
+                const uniqueAttendeesSet = new Set();
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().regId) uniqueAttendeesSet.add(doc.data().regId);
+                });
+                const attendees = Array.from(uniqueAttendeesSet);
+
+                if (attendees.length === 0) {
+                    alert("No registrations found in the database yet.");
+                    throw new Error("Empty DB");
+                }
+
+                titleEl.innerText = `Preparing ${attendees.length} High-Res Tickets...`;
+                progBar.style.width = '10%';
+
+                // Convert base template to data URL for jsPDF
+                const baseImgData = getBase64Image(baseImgElement);
+
+                // 2. Initialize jsPDF (A4 Portrait)
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4'); // A4 Size: 210mm wide x 297mm high
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+                
+                const imgRatio = baseImgElement.naturalHeight / baseImgElement.naturalWidth;
+                
+                // ---------------------------------------------------------
+                // CONFIGURATION: Tweak these numbers to perfect the alignment
+                // ---------------------------------------------------------
+                
+                // Set explicit ticket width and let ratio decide height
+                const ticketWidth = 180; // mm (Reduced slightly to ensure 4 fit easily)
+                const ticketHeight = ticketWidth * imgRatio; // mm
+                
+                // Force exactly 4 tickets per page
+                const ticketsPerPage = 4; 
+                
+                const xOffset = (pdfWidth - ticketWidth) / 2; // Centers the ticket horizontally
+                
+                // Calculate exactly how much space is left on the page to distribute as gaps
+                // We leave 10mm margin at top and bottom (20mm total)
+                const totalAvailableHeight = pdfHeight - 20; 
+                const totalHeightOfTickets = ticketHeight * ticketsPerPage;
+                const totalGapSpace = totalAvailableHeight - totalHeightOfTickets;
+                const yGap = totalGapSpace / (ticketsPerPage - 1); // dynamic gap between tickets
+                
+                // Coordinates for the QR Code (Relative to the top-left of the ticket)
+                const qrSize = 35; // mm (Width & Height of the QR Code)
+                
+                // *** ADJUSTED QR POSITION ***
+                // Increased X to move Right, Increased Y to move Down
+                const qrOffsetX = 12; // mm from the left edge of the ticket
+                const qrOffsetY = 19; // mm from the top edge of the ticket
+                
+                // Coordinates for the Registration ID Text
+                const textOffsetX = 90; // mm from the left edge (Centers it in the ticket)
+                // Slightly adjusted text Y since the ticket height changed
+                const textOffsetY = ticketHeight - 6; // mm from the top edge (Puts it near the bottom)
+                // ---------------------------------------------------------
+
+                let currentYPosition = 10; // Start 10mm from the top of the page
+                let ticketCountOnPage = 0;
+                const qrContainer = document.getElementById('temp-qr-container');
+
+                // 3. Loop through and Stamp each ticket
+                for (let i = 0; i < attendees.length; i++) {
+                    const currentRegId = attendees[i];
+                    
+                    // Update UI
+                    descEl.innerText = `Stamping Vector PDF: ${currentRegId} (${i + 1}/${attendees.length})`;
+                    progBar.style.width = `${10 + ((i / attendees.length) * 85)}%`;
+
+                    // Generate temporary QR Canvas
+                    qrContainer.innerHTML = '';
+                    new QRCode(qrContainer, {
+                        text: currentRegId,
+                        width: 256, // Render high-res internally
+                        height: 256,
+                        colorDark : "#000000",
+                        colorLight : "#ffffff",
+                        correctLevel : QRCode.CorrectLevel.H
+                    });
+
+                    // Wait a tiny bit for the QR canvas to draw
+                    await new Promise(r => setTimeout(r, 20)); 
+                    const qrCanvas = qrContainer.querySelector('canvas');
+                    const qrDataURL = qrCanvas.toDataURL('image/png');
+
+                    // Handle Pagination
+                    if (ticketCountOnPage >= ticketsPerPage && ticketCountOnPage > 0) {
+                        pdf.addPage();
+                        currentYPosition = 10;
+                        ticketCountOnPage = 0;
+                    }
+
+                    // A) Stamp the Base Template Image
+                    pdf.addImage(baseImgData, 'JPEG', xOffset, currentYPosition, ticketWidth, ticketHeight);
+                    
+                    // B) Stamp the Pure QR Code Image over the empty box
+                    // We draw a white box behind it just in case the template box is slightly off
+                    pdf.setFillColor(255, 255, 255);
+                    pdf.rect(xOffset + qrOffsetX - 1, currentYPosition + qrOffsetY - 1, qrSize + 2, qrSize + 2, 'F');
+                    pdf.addImage(qrDataURL, 'PNG', xOffset + qrOffsetX, currentYPosition + qrOffsetY, qrSize, qrSize);
+                    
+                    // C) Stamp the Vector Text over the underline
+                    // Using #c89528 Gold Color equivalent: RGB(200, 149, 40)
+                    pdf.setTextColor(200, 149, 40); 
+                    pdf.setFont("helvetica", "bold");
+                    pdf.setFontSize(18); // Font size for the ID
+                    
+                    // align: 'center' ensures the text spreads evenly from the textOffsetX point
+                    pdf.text(currentRegId, xOffset + textOffsetX, currentYPosition + textOffsetY, { align: "center" });
+                    
+                    // Draw a dashed cut line below the ticket if it's not the last one on the page
+                    if (ticketCountOnPage < ticketsPerPage - 1 && i < attendees.length - 1) {
+                        pdf.setDrawColor(200, 200, 200);
+                        pdf.setLineDashPattern([2, 2], 0);
+                        const lineY = currentYPosition + ticketHeight + (yGap / 2);
+                        pdf.line(10, lineY, pdfWidth - 10, lineY);
+                    }
+
+                    currentYPosition += ticketHeight + yGap; 
+                    ticketCountOnPage++;
+                }
+
+                // 4. Update UI for Preview / Download
+                generatedJsPdfInstance = pdf;
+                generatedPDFFileName = `Tech_Fete_Printable_Tickets.pdf`;
+
+                titleEl.innerText = "Tickets Generated Successfully!";
+                progBar.style.width = '100%';
+                descEl.innerText = "You can now preview the tickets or download them directly.";
+
+                document.getElementById('pdf-spinner').classList.add('hidden');
+                document.getElementById('pdf-success-icon').classList.remove('hidden');
+                document.getElementById('pdf-progress-container').classList.add('hidden');
+                document.getElementById('pdf-action-buttons').classList.remove('hidden');
+                document.getElementById('close-pdf-status').classList.remove('hidden');
+                
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error(error);
+                if (error.message !== "Empty DB") {
+                    alert("An error occurred while generating the PDF. Please check the console.");
+                }
+                window.resetPDFUI();
+            }
+        };
     </script>
 </body>
 </html>
