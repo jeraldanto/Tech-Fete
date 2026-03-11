@@ -94,11 +94,18 @@
                             <i data-lucide="printer" class="w-8 h-8 text-blue-400"></i>
                         </div>
                         <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Print Event Tickets</h3>
-                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Generate a printable PDF using your exact template design. Native PDF rendering ensures zero quality loss. Duplicates are automatically removed.</p>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Select your blank ticket design image from your computer to generate a printable PDF for all registered participants.</p>
                     </div>
-                    <div>
-                        <button id="generate-pdf-btn" onclick="window.generateTicketPDF()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center justify-center w-full active:scale-95">
-                            Generate PDF <i data-lucide="download" class="w-5 h-5 ml-2"></i>
+                    <div class="space-y-3">
+                        <!-- Step 1: Upload Template -->
+                        <label id="upload-label" for="template-upload" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-xl font-bold uppercase tracking-widest transition-all text-xs flex items-center justify-center w-full cursor-pointer border border-slate-600">
+                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span id="upload-label-text">1. Select Template JPG</span>
+                        </label>
+                        <input type="file" id="template-upload" accept="image/jpeg, image/png" class="hidden" onchange="window.loadTemplateImage(event)">
+
+                        <!-- Step 2: Generate PDF -->
+                        <button id="generate-pdf-btn" disabled onclick="window.generateTicketPDF()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center justify-center w-full active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed">
+                            2. Generate PDF <i data-lucide="download" class="w-5 h-5 ml-2"></i>
                         </button>
                     </div>
                 </div>
@@ -132,9 +139,8 @@
 
     <!-- HIDDEN RENDER ASSETS -->
     <div id="render-container">
-        <!-- This is the base image file that will be stamped into the PDF. 
-             CRITICAL: Make sure this image is CROPPED so there is NO white space around it! -->
-        <img id="base-ticket-img" src="ticket_template.jpg" crossorigin="anonymous" alt="Base Ticket Template">
+        <!-- This image source is now populated dynamically when the admin uploads a file -->
+        <img id="base-ticket-img" src="" alt="Base Ticket Template">
         
         <!-- Hidden container where QR codes are temporarily drawn -->
         <div id="temp-qr-container"></div>
@@ -191,6 +197,30 @@
         let generatedJsPdfInstance = null;
         let generatedPDFFileName = null;
 
+        // Dynamic File Uploader Handler
+        window.loadTemplateImage = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.getElementById('base-ticket-img');
+                img.onload = function() {
+                    // Visually update the button to show success
+                    const label = document.getElementById('upload-label');
+                    document.getElementById('upload-label-text').innerText = "Template Loaded ✓";
+                    label.classList.replace('bg-slate-800', 'bg-emerald-600/20');
+                    label.classList.replace('text-white', 'text-emerald-400');
+                    label.classList.replace('border-slate-600', 'border-emerald-500/30');
+                    
+                    // Enable the Generate button
+                    document.getElementById('generate-pdf-btn').disabled = false;
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        };
+
         // Helper function to extract base64 from the standard <img> tag
         function getBase64Image(imgElement) {
             const canvas = document.createElement("canvas");
@@ -239,10 +269,9 @@
             const descEl = document.getElementById('pdf-status-desc');
             const progBar = document.getElementById('pdf-progress-bar');
             
-            // Check if base image loaded properly
             const baseImgElement = document.getElementById('base-ticket-img');
-            if (!baseImgElement.complete || baseImgElement.naturalHeight === 0) {
-                alert("Error: 'ticket_template.jpg' could not be found! Please make sure your design is saved in the same folder with that exact name.");
+            if (!baseImgElement.src || baseImgElement.naturalHeight === 0) {
+                alert("Please select your ticket template image first!");
                 return;
             }
 
@@ -276,46 +305,35 @@
                 // 2. Initialize jsPDF (A4 Portrait)
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF('p', 'mm', 'a4'); // A4 Size: 210mm wide x 297mm high
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
                 
                 const imgRatio = baseImgElement.naturalHeight / baseImgElement.naturalWidth;
                 
                 // ---------------------------------------------------------
-                // CONFIGURATION: Tweak these numbers to perfect the alignment
+                // CONFIGURATION: 12 Tickets Per Page (2 Columns x 6 Rows)
                 // ---------------------------------------------------------
+                const ticketsPerPage = 12; // Maximizing A4 real estate
+                const cols = 2;
                 
-                // Set explicit ticket width and let ratio decide height
-                const ticketWidth = 180; // mm (Reduced slightly to ensure 4 fit easily)
-                const ticketHeight = ticketWidth * imgRatio; // mm
+                // Calculate width to fit perfectly with 10mm margins and 4mm center gap
+                // (210 - 20 (margins) - 4 (gap)) / 2 = 93mm
+                const ticketWidth = 93; 
+                const ticketHeight = ticketWidth * imgRatio; 
                 
-                // Force exactly 4 tickets per page
-                const ticketsPerPage = 4; 
+                const xMargin = 10; // Left margin
+                const yMargin = 12; // Top margin
+                const xGap = 4;     // Gap between columns
+                const yGap = 8;     // Gap between rows (PREVENTS ALL COLLISIONS)
                 
-                const xOffset = (pdfWidth - ticketWidth) / 2; // Centers the ticket horizontally
+                // PERCENTAGE-BASED PLACEMENT
+                const QR_SIZE_PCT = 0.175; // 17.5% of ticket width
+                const QR_X_PCT = 0.055;    // 5.5% from left edge
+                const QR_Y_PCT = 0.36;     // QR Code Position
                 
-                // Calculate exactly how much space is left on the page to distribute as gaps
-                // We leave 10mm margin at top and bottom (20mm total)
-                const totalAvailableHeight = pdfHeight - 20; 
-                const totalHeightOfTickets = ticketHeight * ticketsPerPage;
-                const totalGapSpace = totalAvailableHeight - totalHeightOfTickets;
-                const yGap = totalGapSpace / (ticketsPerPage - 1); // dynamic gap between tickets
-                
-                // Coordinates for the QR Code (Relative to the top-left of the ticket)
-                const qrSize = 35; // mm (Width & Height of the QR Code)
-                
-                // *** ADJUSTED QR POSITION ***
-                // Increased X to move Right, Increased Y to move Down
-                const qrOffsetX = 12; // mm from the left edge of the ticket
-                const qrOffsetY = 19; // mm from the top edge of the ticket
-                
-                // Coordinates for the Registration ID Text
-                const textOffsetX = 90; // mm from the left edge (Centers it in the ticket)
-                // Slightly adjusted text Y since the ticket height changed
-                const textOffsetY = ticketHeight - 6; // mm from the top edge (Puts it near the bottom)
+                // ADJUSTED TEXT ALIGNMENT (Centered to perfectly sit on the horizontal line)
+                const TEXT_X_PCT = 0.48;   // Centered horizontally relative to the black area
+                const TEXT_Y_PCT = 0.865;  // Moved DOWN to rest exactly on the gold line
                 // ---------------------------------------------------------
 
-                let currentYPosition = 10; // Start 10mm from the top of the page
                 let ticketCountOnPage = 0;
                 const qrContainer = document.getElementById('temp-qr-container');
 
@@ -346,37 +364,44 @@
                     // Handle Pagination
                     if (ticketCountOnPage >= ticketsPerPage && ticketCountOnPage > 0) {
                         pdf.addPage();
-                        currentYPosition = 10;
                         ticketCountOnPage = 0;
                     }
 
+                    // Calculate Grid Position (X, Y)
+                    const currentCol = ticketCountOnPage % cols;
+                    const currentRow = Math.floor(ticketCountOnPage / cols);
+                    
+                    const currentX = xMargin + currentCol * (ticketWidth + xGap);
+                    const currentY = yMargin + currentRow * (ticketHeight + yGap);
+
                     // A) Stamp the Base Template Image
-                    pdf.addImage(baseImgData, 'JPEG', xOffset, currentYPosition, ticketWidth, ticketHeight);
+                    pdf.addImage(baseImgData, 'JPEG', currentX, currentY, ticketWidth, ticketHeight);
                     
-                    // B) Stamp the Pure QR Code Image over the empty box
-                    // We draw a white box behind it just in case the template box is slightly off
+                    // Draw a faint border around the ticket for easy scissors cutting
+                    pdf.setDrawColor(200, 200, 200);
+                    pdf.setLineWidth(0.2);
+                    pdf.rect(currentX, currentY, ticketWidth, ticketHeight, 'S');
+                    
+                    // B) Stamp the Pure QR Code Image
+                    const qrSize = ticketWidth * QR_SIZE_PCT;
+                    const qrX = currentX + (ticketWidth * QR_X_PCT);
+                    const qrY = currentY + (ticketHeight * QR_Y_PCT);
+                    
+                    // Draw white box behind QR
                     pdf.setFillColor(255, 255, 255);
-                    pdf.rect(xOffset + qrOffsetX - 1, currentYPosition + qrOffsetY - 1, qrSize + 2, qrSize + 2, 'F');
-                    pdf.addImage(qrDataURL, 'PNG', xOffset + qrOffsetX, currentYPosition + qrOffsetY, qrSize, qrSize);
+                    pdf.rect(qrX - 0.5, qrY - 0.5, qrSize + 1, qrSize + 1, 'F');
+                    pdf.addImage(qrDataURL, 'PNG', qrX, qrY, qrSize, qrSize);
                     
-                    // C) Stamp the Vector Text over the underline
-                    // Using #c89528 Gold Color equivalent: RGB(200, 149, 40)
+                    // C) Stamp the Vector Text (Now perfectly resting on the line and centered)
                     pdf.setTextColor(200, 149, 40); 
                     pdf.setFont("helvetica", "bold");
-                    pdf.setFontSize(18); // Font size for the ID
+                    pdf.setFontSize(10.5); // Scaled down to fit perfectly
                     
-                    // align: 'center' ensures the text spreads evenly from the textOffsetX point
-                    pdf.text(currentRegId, xOffset + textOffsetX, currentYPosition + textOffsetY, { align: "center" });
+                    const textX = currentX + (ticketWidth * TEXT_X_PCT);
+                    const textY = currentY + (ticketHeight * TEXT_Y_PCT);
                     
-                    // Draw a dashed cut line below the ticket if it's not the last one on the page
-                    if (ticketCountOnPage < ticketsPerPage - 1 && i < attendees.length - 1) {
-                        pdf.setDrawColor(200, 200, 200);
-                        pdf.setLineDashPattern([2, 2], 0);
-                        const lineY = currentYPosition + ticketHeight + (yGap / 2);
-                        pdf.line(10, lineY, pdfWidth - 10, lineY);
-                    }
-
-                    currentYPosition += ticketHeight + yGap; 
+                    pdf.text(currentRegId, textX, textY, { align: "center" });
+                    
                     ticketCountOnPage++;
                 }
 
