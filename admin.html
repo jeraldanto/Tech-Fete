@@ -94,18 +94,11 @@
                             <i data-lucide="printer" class="w-8 h-8 text-blue-400"></i>
                         </div>
                         <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Print Event Tickets</h3>
-                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Select your blank ticket design image from your computer to generate a printable PDF for all registered participants.</p>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Generate a printable PDF using your local 'ticket_template.jpg' design. Duplicates are automatically removed.</p>
                     </div>
-                    <div class="space-y-3">
-                        <!-- Step 1: Upload Template -->
-                        <label id="upload-label" for="template-upload" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-xl font-bold uppercase tracking-widest transition-all text-xs flex items-center justify-center w-full cursor-pointer border border-slate-600">
-                            <i data-lucide="image" class="w-4 h-4 mr-2"></i> <span id="upload-label-text">1. Select Template JPG</span>
-                        </label>
-                        <input type="file" id="template-upload" accept="image/jpeg, image/png" class="hidden" onchange="window.loadTemplateImage(event)">
-
-                        <!-- Step 2: Generate PDF -->
-                        <button id="generate-pdf-btn" disabled onclick="window.generateTicketPDF()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center justify-center w-full active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed">
-                            2. Generate PDF <i data-lucide="download" class="w-5 h-5 ml-2"></i>
+                    <div>
+                        <button id="generate-pdf-btn" onclick="window.generateTicketPDF()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center justify-center w-full active:scale-95">
+                            Generate PDF <i data-lucide="download" class="w-5 h-5 ml-2"></i>
                         </button>
                     </div>
                 </div>
@@ -139,8 +132,8 @@
 
     <!-- HIDDEN RENDER ASSETS -->
     <div id="render-container">
-        <!-- This image source is now populated dynamically when the admin uploads a file -->
-        <img id="base-ticket-img" src="" alt="Base Ticket Template">
+        <!-- This image source automatically loads the image from the same folder -->
+        <img id="base-ticket-img" src="ticket_template.jpg" crossorigin="anonymous" alt="Base Ticket Template">
         
         <!-- Hidden container where QR codes are temporarily drawn -->
         <div id="temp-qr-container"></div>
@@ -197,30 +190,6 @@
         let generatedJsPdfInstance = null;
         let generatedPDFFileName = null;
 
-        // Dynamic File Uploader Handler
-        window.loadTemplateImage = function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.getElementById('base-ticket-img');
-                img.onload = function() {
-                    // Visually update the button to show success
-                    const label = document.getElementById('upload-label');
-                    document.getElementById('upload-label-text').innerText = "Template Loaded ✓";
-                    label.classList.replace('bg-slate-800', 'bg-emerald-600/20');
-                    label.classList.replace('text-white', 'text-emerald-400');
-                    label.classList.replace('border-slate-600', 'border-emerald-500/30');
-                    
-                    // Enable the Generate button
-                    document.getElementById('generate-pdf-btn').disabled = false;
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        };
-
         // Helper function to extract base64 from the standard <img> tag
         function getBase64Image(imgElement) {
             const canvas = document.createElement("canvas");
@@ -270,8 +239,8 @@
             const progBar = document.getElementById('pdf-progress-bar');
             
             const baseImgElement = document.getElementById('base-ticket-img');
-            if (!baseImgElement.src || baseImgElement.naturalHeight === 0) {
-                alert("Please select your ticket template image first!");
+            if (!baseImgElement.complete || baseImgElement.naturalHeight === 0) {
+                alert("Error: 'ticket_template.jpg' could not be found! Please make sure your design is saved in the same folder with that exact name.");
                 return;
             }
 
