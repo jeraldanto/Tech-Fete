@@ -9,8 +9,8 @@
     
     <!-- Libraries for PDF Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- QRCode Generator -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Advanced QR Code Library for Modern/Curvy QR -->
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -278,25 +278,41 @@
                 const imgRatio = baseImgElement.naturalHeight / baseImgElement.naturalWidth;
                 
                 // ---------------------------------------------------------
-                // CONFIGURATION: 12 Tickets Per Page (2 Columns x 6 Rows)
+                // DYNAMIC CONFIGURATION: 12 Tickets Per Page (Maximum Size)
                 // ---------------------------------------------------------
-                const ticketsPerPage = 12; // Maximizing A4 real estate
+                const ticketsPerPage = 12;
                 const cols = 2;
+                const rows = 6;
                 
-                // Calculate width to fit perfectly with 10mm margins and 4mm center gap
-                // (210 - 20 (margins) - 4 (gap)) / 2 = 93mm
-                const ticketWidth = 93; 
-                const ticketHeight = ticketWidth * imgRatio; 
+                // Minimal gaps to utilize maximum space without overlapping
+                const xGap = 2; 
+                const yGap = 2; 
                 
-                const xMargin = 10; // Left margin
-                const yMargin = 12; // Top margin
-                const xGap = 4;     // Gap between columns
-                const yGap = 8;     // Gap between rows (PREVENTS ALL COLLISIONS)
+                // Max available width and height for the grid (5mm padding from edges)
+                const maxGridWidth = 210 - 10;  
+                const maxGridHeight = 297 - 10; 
+                
+                // Calculate max possible width/height per ticket
+                let ticketWidth = (maxGridWidth - (cols - 1) * xGap) / cols;
+                let ticketHeight = ticketWidth * imgRatio;
+                
+                // If it exceeds page height, constrain by height instead
+                if ((ticketHeight * rows) + (yGap * (rows - 1)) > maxGridHeight) {
+                    ticketHeight = (maxGridHeight - (rows - 1) * yGap) / rows;
+                    ticketWidth = ticketHeight / imgRatio;
+                }
+                
+                // Auto-center the grid perfectly on the A4 page
+                const actualGridWidth = (ticketWidth * cols) + (xGap * (cols - 1));
+                const actualGridHeight = (ticketHeight * rows) + (yGap * (rows - 1));
+                
+                const xMargin = (210 - actualGridWidth) / 2;
+                const yMargin = (297 - actualGridHeight) / 2;
                 
                 // PERCENTAGE-BASED PLACEMENT
-                const QR_SIZE_PCT = 0.175; // 17.5% of ticket width
-                const QR_X_PCT = 0.055;    // 5.5% from left edge
-                const QR_Y_PCT = 0.36;     // QR Code Position
+                const QR_SIZE_PCT = 0.189; // Exactly 8% increase from base 17.5%
+                const QR_X_PCT = 0.048;    // Centered horizontally based on new size
+                const QR_Y_PCT = 0.353;    // Centered vertically based on new size
                 
                 // ADJUSTED TEXT ALIGNMENT (Centered to perfectly sit on the horizontal line)
                 const TEXT_X_PCT = 0.48;   // Centered horizontally relative to the black area
@@ -311,22 +327,40 @@
                     const currentRegId = attendees[i];
                     
                     // Update UI
-                    descEl.innerText = `Stamping Vector PDF: ${currentRegId} (${i + 1}/${attendees.length})`;
+                    descEl.innerText = `Stamping Curvy QR: ${currentRegId} (${i + 1}/${attendees.length})`;
                     progBar.style.width = `${10 + ((i / attendees.length) * 85)}%`;
 
-                    // Generate temporary QR Canvas
+                    // Generate Modern Curvy QR Canvas
                     qrContainer.innerHTML = '';
-                    new QRCode(qrContainer, {
-                        text: currentRegId,
-                        width: 256, // Render high-res internally
-                        height: 256,
-                        colorDark : "#000000",
-                        colorLight : "#ffffff",
-                        correctLevel : QRCode.CorrectLevel.H
+                    const qrStyling = new QRCodeStyling({
+                        width: 300,
+                        height: 300,
+                        data: currentRegId,
+                        margin: 0, // No margin, we handle it in jsPDF for curvy borders
+                        qrOptions: {
+                            errorCorrectionLevel: "H"
+                        },
+                        dotsOptions: {
+                            type: "rounded", // Smooth inner dots
+                            color: "#000000" // Classic Black
+                        },
+                        backgroundOptions: {
+                            color: "transparent" // Transparent so we can draw our own rounded white box behind it
+                        },
+                        cornersSquareOptions: {
+                            type: "extra-rounded", // Curvy corner tracking boxes
+                            color: "#000000" // Classic Black
+                        },
+                        cornersDotOptions: {
+                            type: "dot", // Round inner corner dots
+                            color: "#000000" // Classic Black
+                        }
                     });
 
-                    // Wait a tiny bit for the QR canvas to draw
-                    await new Promise(r => setTimeout(r, 20)); 
+                    qrStyling.append(qrContainer);
+
+                    // Wait a tiny bit for the curvy QR canvas to draw
+                    await new Promise(r => setTimeout(r, 40)); 
                     const qrCanvas = qrContainer.querySelector('canvas');
                     const qrDataURL = qrCanvas.toDataURL('image/png');
 
@@ -351,20 +385,26 @@
                     pdf.setLineWidth(0.2);
                     pdf.rect(currentX, currentY, ticketWidth, ticketHeight, 'S');
                     
-                    // B) Stamp the Pure QR Code Image
+                    // B) Stamp the Modern Curvy QR Code
                     const qrSize = ticketWidth * QR_SIZE_PCT;
                     const qrX = currentX + (ticketWidth * QR_X_PCT);
                     const qrY = currentY + (ticketHeight * QR_Y_PCT);
                     
-                    // Draw white box behind QR
+                    // Draw a curvy white background box behind the QR
+                    const padding = 1.5; // Controlled padding
                     pdf.setFillColor(255, 255, 255);
-                    pdf.rect(qrX - 0.5, qrY - 0.5, qrSize + 1, qrSize + 1, 'F');
+                    pdf.roundedRect(qrX - padding, qrY - padding, qrSize + (padding * 2), qrSize + (padding * 2), 2, 2, 'F');
+                    
+                    // Stamp the transparent, curvy QR code on top
                     pdf.addImage(qrDataURL, 'PNG', qrX, qrY, qrSize, qrSize);
                     
                     // C) Stamp the Vector Text (Now perfectly resting on the line and centered)
                     pdf.setTextColor(200, 149, 40); 
                     pdf.setFont("helvetica", "bold");
-                    pdf.setFontSize(10.5); // Scaled down to fit perfectly
+                    
+                    // Scale font size proportionally if ticket scales up
+                    const dynamicFontSize = 10.5 * (ticketWidth / 93);
+                    pdf.setFontSize(dynamicFontSize);
                     
                     const textX = currentX + (ticketWidth * TEXT_X_PCT);
                     const textY = currentY + (ticketHeight * TEXT_Y_PCT);
