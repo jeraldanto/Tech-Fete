@@ -173,7 +173,7 @@
 
                     <!-- Card Content -->
                     <div class="relative bg-[#ffffff] px-10 py-8 md:px-16 md:py-12 rounded-3xl flex flex-col items-center justify-center transform group-hover:-translate-y-2 transition-all duration-300 min-w-[280px] md:min-w-[400px] shadow-2xl">
-                        <img src="./Fita.png" alt="FITA Academy" class="h-16 md:h-20 object-contain transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-4xl md:text-5xl font-black text-[#1e3a8a] tracking-wider\'>FITA <span class=\'text-slate-600 font-medium\'>Academy</span></span>'">
+                        <img src="fita_logo.png" alt="FITA Academy" class="h-16 md:h-20 object-contain transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-4xl md:text-5xl font-black text-[#1e3a8a] tracking-wider\'>FITA <span class=\'text-slate-600 font-medium\'>Academy</span></span>'">
                     </div>
                 </a>
             </div>
@@ -1482,9 +1482,6 @@
             if (basePath === '/' || basePath === '/events.html') basePath = '';
             const baseVerifyUrl = window.location.origin + basePath + "/verify.html";
             
-            const indEvents = selectedEventsList.filter(e => e.maxTeam === 1);
-            const teamEvents = selectedEventsList.filter(e => e.maxTeam > 1);
-            
             let emailQrHtml = "";
             let teamData = [];
             let leaderEventsToAdd = [];
@@ -1509,46 +1506,45 @@
 
             const leaderRegId = await resolveRegId(userData.phone, userData.pureName);
 
-            if (indEvents.length > 0) {
-                indEvents.forEach(e => {
-                    leaderEventsToAdd.push({ eventName: e.title, type: "Solo", teamName: "N/A", role: "Solo" });
-                });
-            }
-
-            for (const ev of teamEvents) {
-                const teamName = document.getElementById(`reg-team-name-${ev.id}`)?.value || 'Unnamed Team';
-                
-                leaderEventsToAdd.push({ eventName: ev.title, type: "Team", teamName: teamName, role: "Leader" });
-                
-                let members = [];
-                for(let i=2; i<=ev.maxTeam; i++) {
-                    const mNameInput = document.getElementById(`reg-member-name-${ev.id}-${i}`);
-                    const mPhoneInput = document.getElementById(`reg-member-phone-${ev.id}-${i}`);
+            for (const ev of selectedEventsList) {
+                if (ev.maxTeam > 1) {
+                    const teamName = document.getElementById(`reg-team-name-${ev.id}`)?.value || 'Unnamed Team';
                     
-                    if (mNameInput && mNameInput.value.trim() && mPhoneInput && mPhoneInput.value.trim()) {
-                        const pureName = mNameInput.value.trim();
-                        const purePhone = "+91 " + mPhoneInput.value.trim();
+                    leaderEventsToAdd.push({ eventName: ev.title, type: "Team", teamName: teamName, role: "Leader" });
+                    
+                    let members = [];
+                    for(let i=2; i<=ev.maxTeam; i++) {
+                        const mNameInput = document.getElementById(`reg-member-name-${ev.id}-${i}`);
+                        const mPhoneInput = document.getElementById(`reg-member-phone-${ev.id}-${i}`);
                         
-                        const memberRegId = await resolveRegId(purePhone, pureName);
-                        members.push({ name: pureName, phone: purePhone, regId: memberRegId });
+                        if (mNameInput && mNameInput.value.trim() && mPhoneInput && mPhoneInput.value.trim()) {
+                            const pureName = mNameInput.value.trim();
+                            const purePhone = "+91 " + mPhoneInput.value.trim();
+                            
+                            const memberRegId = await resolveRegId(purePhone, pureName);
+                            members.push({ name: pureName, phone: purePhone, regId: memberRegId });
 
-                        const memberEventsToAdd = [{ eventName: ev.title, type: "Team", teamName: teamName, role: `Member ${i}` }];
-                        
-                        if (typeof window.saveUniversalTicket === 'function') {
-                            await window.saveUniversalTicket(purePhone, pureName, userData.college, memberEventsToAdd, memberRegId);
+                            const memberEventsToAdd = [{ eventName: ev.title, type: "Team", teamName: teamName, role: `Member ${i}` }];
+                            
+                            if (typeof window.saveUniversalTicket === 'function') {
+                                await window.saveUniversalTicket(purePhone, pureName, userData.college, memberEventsToAdd, memberRegId);
+                            }
+
+                            const memberVerifyLink = `${baseVerifyUrl}?uid=${memberRegId}`;
+                            const memberQrUrl = `https://quickchart.io/qr?text=${memberRegId}&size=200`;
+
+                            emailQrHtml += `<div style="border:2px dashed #10b981; padding:15px; margin-bottom:20px; text-align:center; background-color:#ecfdf5;"><h3 style="color:#047857; margin-top:0;">Team Pass: ${ev.title} (Member)</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Pass Holder: <b>${pureName} (${memberRegId})</b></p><a href="${memberVerifyLink}"><img src="${memberQrUrl}" width="200" height="200" alt="Universal QR Code" style="display:inline-block;" /></a><br><br><a href="${memberVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view live digital pass</a></div>`;
                         }
-
-                        const memberVerifyLink = `${baseVerifyUrl}?uid=${memberRegId}`;
-                        const memberQrUrl = `https://quickchart.io/qr?text=${memberRegId}&size=200`;
-
-                        emailQrHtml += `<div style="border:2px dashed #10b981; padding:15px; margin-bottom:20px; text-align:center; background-color:#ecfdf5;"><h3 style="color:#047857; margin-top:0;">Team Pass: ${ev.title} (Member)</h3><p style="font-size:14px; margin-bottom:5px;">Team: <b>${teamName}</b></p><p style="font-size:14px; margin-bottom:10px;">Pass Holder: <b>${pureName} (${memberRegId})</b></p><a href="${memberVerifyLink}"><img src="${memberQrUrl}" width="200" height="200" alt="Universal QR Code" style="display:inline-block;" /></a><br><br><a href="${memberVerifyLink}" style="color:#2563eb; text-decoration:underline;">Click here to view live digital pass</a></div>`;
                     }
-                }
 
-                teamData.push({
-                    event: ev.title, name: teamName,
-                    members: members.map(m => `${m.name} (${m.regId}) [${m.phone}]`).join(' | ') || 'None'
-                });
+                    teamData.push({
+                        event: ev.title, name: teamName,
+                        members: members.map(m => `${m.name} (${m.regId}) [${m.phone}]`).join(' | ') || 'None'
+                    });
+                } else {
+                    // Solo Events are pushed safely without strict type checking
+                    leaderEventsToAdd.push({ eventName: ev.title, type: "Solo", teamName: "N/A", role: "Solo" });
+                }
             }
 
             if (leaderEventsToAdd.length > 0) {
@@ -1586,17 +1582,30 @@
             
             const scriptURL = 'https://script.google.com/macros/s/AKfycbxJLGk5iaoioQSLhGVe8lXq4FQg3G-dOdjV4gK37P7KddEj48u9Z4S5O42uoldWbrU4-A/exec';
             
-            const registrationsData = selectedEventsList.map(ev => {
+            const pricing = window.calculateSubtotal(selectedEventsList);
+            let remainingCheckoutAmount = totalAmount;
+
+            const registrationsData = selectedEventsList.map((ev, index) => {
                 let tName = "N/A";
                 let tMembers = "N/A";
                 if (ev.maxTeam > 1) {
                     const td = teamData.find(t => t.event === ev.title);
                     if (td) { tName = td.name; tMembers = td.members; }
                 }
+
+                // SMART PRICING DISTRIBUTION FIX
+                let eventPaidAmount = 0;
+                if (index === selectedEventsList.length - 1) {
+                    eventPaidAmount = remainingCheckoutAmount; // Last event gets the remaining balance
+                } else {
+                    eventPaidAmount = Math.min(pricing.effectiveFees[ev.id], remainingCheckoutAmount);
+                    remainingCheckoutAmount -= eventPaidAmount;
+                }
+
                 return {
                     eventName: ev.title, name: userData.pureName, regId: leaderRegId, 
                     email: userData.email, phone: "'" + userData.phone, college: userData.college,
-                    teamName: tName, teamMembers: tMembers, amount: totalAmount,
+                    teamName: tName, teamMembers: tMembers, amount: eventPaidAmount,
                     paymentId: paymentId, promoCode: appliedPromoCode || "None"
                 };
             });
