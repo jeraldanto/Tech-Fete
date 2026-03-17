@@ -566,9 +566,12 @@
     <script>
         if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
 
+        // Initialize global event counts tracker
+        window.eventCounts = {};
+
         // UPDATED EVENT RULES AND CONSTRAINTS BASED ON NEW REQUIREMENTS
         const eventsData = [
-            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12–13 slides only.", "The PPT must be submitted on or before the night of March 25th through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met they will not be considered for submission.", "Evaluation will be based on content quality, technical knowledge, presentation skills, and responses during the Q&A session.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
+            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, maxLimit: 12, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12–13 slides only.", "The PPT must be submitted on or before the night of March 25th through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met they will not be considered for submission.", "Evaluation will be based on content quality, technical knowledge, presentation skills, and responses during the Q&A session.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
             { id: 2, title: "Debugging", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Identify and fix errors in C programs.", fullDesc: "Test your problem-solving ability, debugging skills, and understanding of programming concepts by fixing broken C code.", rules: ["Participants will be given C programs containing logical, syntactical, or runtime errors that must be identified and corrected within a duration of 30 minutes.", "The objective of the event is to test problem-solving ability, debugging skills, and understanding of programming concepts.", "Internet access or external assistance will not be permitted during the competition.", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Computer Lab A", icon: "code" },
             { id: 3, title: "Vibe Coding", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Code a website based on an on-spot topic.", fullDesc: "Showcase your coding speed, logic, and creativity by building a functional solution within a strict time limit.", rules: ["A system with a stable internet connection will be provided for participants; However, participants may also bring and use their own laptops if preferred.", "The website topic will be announced on the spot at the beginning of the event.", "The total duration of the competition will be 10 minutes of prep time and 30 minutes of event time.", "Participants will be evaluated based on the logic and accuracy of the solution, creativity and innovation in approach, code efficiency and optimization, and overall functionality of the final output.", "Proper time management and the ability to clearly explain the solution, if required by the judges, will also be considered during evaluation."], date: "Mar 28, 2026", venue: "Computer Lab B", icon: "music" },
             { id: 4, title: "Tech Memes", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create original memes based on tech & programming.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Participants must create and submit an original meme based on technology, programming, or internet culture.", "Entries must not contain offensive, political, or inappropriate content, and copied memes will lead to disqualification.", "Tech Memes must be original and submitted in JPEG/PNG/PDF format on or before March 25th within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "image" },
@@ -764,6 +767,17 @@
                 
                 const typeTag = event.maxTeam > 1 ? `<i data-lucide="users" class="w-3 h-3 mr-1 inline"></i> Team Event` : `<i data-lucide="user" class="w-3 h-3 mr-1 inline"></i> Solo Event`;
 
+                let limitHtml = "";
+                if (event.maxLimit) {
+                    const count = window.eventCounts[event.id] || 0;
+                    const isSoldOut = count >= event.maxLimit;
+                    if (isSoldOut) {
+                        limitHtml = `<div class="mt-3 text-[10px] font-black text-red-400 tracking-widest uppercase bg-red-500/10 py-1.5 px-3 rounded-lg border border-red-500/20 inline-flex items-center"><i data-lucide="ban" class="w-3 h-3 mr-1.5"></i> Registration Closed (${count}/${event.maxLimit})</div>`;
+                    } else {
+                        limitHtml = `<div class="mt-3 text-[10px] font-bold text-emerald-400 tracking-widest uppercase bg-emerald-500/10 py-1.5 px-3 rounded-lg border border-emerald-500/20 inline-flex items-center"><i data-lucide="users" class="w-3 h-3 mr-1.5"></i> ${count}/${event.maxLimit} Teams Registered</div>`;
+                    }
+                }
+
                 card.innerHTML = `
                     <div class="absolute inset-0 bg-gradient-to-b from-amber-500/0 via-amber-500/0 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                     <div class="p-8 relative z-10 h-full flex flex-col">
@@ -780,13 +794,14 @@
                         <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-amber-400 transition-colors brand-font tracking-wide">${event.title}</h3>
                         <p class="text-slate-400 mb-6 text-sm flex-grow leading-relaxed text-justify">${event.shortDesc}</p>
                         
-                        <div class="text-xs text-amber-500/80 mb-4 font-bold tracking-widest uppercase">${typeTag}</div>
+                        <div class="text-xs text-amber-500/80 mb-1 font-bold tracking-widest uppercase">${typeTag}</div>
+                        ${limitHtml}
                         
-                        <div class="flex flex-wrap items-center text-xs text-slate-500 gap-y-2 gap-x-4 mb-8 font-medium">
+                        <div class="flex flex-wrap items-center text-xs text-slate-500 gap-y-2 gap-x-4 mt-6 mb-8 font-medium">
                             <div class="flex items-center group-hover:text-amber-500/70 transition-colors"><i data-lucide="calendar" class="w-3 h-3 mr-1.5"></i> ${event.date}</div>
                             <div class="flex items-center group-hover:text-amber-500/70 transition-colors"><i data-lucide="indian-rupee" class="w-3 h-3 mr-1.5"></i> ${event.fee}</div>
                         </div>
-                        <button onclick="window.openModal(${event.id})" class="w-full py-3 bg-[#020617] border border-amber-500/20 rounded-xl font-bold text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500 transition-all uppercase text-xs tracking-widest">
+                        <button onclick="window.openModal(${event.id})" class="w-full py-3 bg-[#020617] border border-amber-500/20 rounded-xl font-bold text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 group-hover:border-amber-500 transition-all uppercase text-xs tracking-widest mt-auto">
                             View Details
                         </button>
                     </div>
@@ -812,15 +827,29 @@
             if(!modal || !modalBody) return;
             
             const isSelected = selectedEventsList.some(e => e.id === id);
+            let isSoldOut = event.maxLimit && (window.eventCounts[event.id] || 0) >= event.maxLimit;
             
             let btnText = isSelected ? "Remove from Selection" : "Add to Selection";
             let btnColor = isSelected ? "bg-red-500 hover:bg-red-400 shadow-red-500/10 text-white" : "bg-amber-500 hover:bg-amber-400 shadow-amber-500/10 text-slate-950";
             let onClickAction = `window.toggleEventSelection(${event.id})`;
             let cursorStyle = "cursor-pointer active:scale-95";
 
+            if (isSoldOut && !isSelected) {
+                btnText = "Registration Closed (Fully Booked)";
+                btnColor = "bg-slate-800 text-slate-500 border border-slate-700";
+                onClickAction = "void(0)";
+                cursorStyle = "cursor-not-allowed opacity-60";
+            }
+
             let teamSizeText = event.maxTeam > 1 
                 ? (event.minTeam === event.maxTeam ? `Exactly ${event.minTeam} Members` : `${event.minTeam} to ${event.maxTeam} Members`)
                 : `Solo Event`;
+                
+            let spotsInfo = "";
+            if (event.maxLimit) {
+                const currentCount = window.eventCounts[event.id] || 0;
+                spotsInfo = `<li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Spots Filled</span> <span class="${isSoldOut ? 'text-red-400' : 'text-emerald-400'} font-bold">${currentCount}/${event.maxLimit}</span></li>`;
+            }
 
             // EVENT RULES JUSTIFIED - FORMAL STYLING ADDED HERE
             modalBody.innerHTML = `
@@ -841,6 +870,7 @@
                         <ul class="space-y-3 text-sm text-slate-300">
                             <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Date</span> <span class="font-bold">${event.date}</span></li>
                             <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Team Size</span> <span class="text-amber-400 font-bold">${teamSizeText}</span></li>
+                            ${spotsInfo}
                             <li class="flex justify-between"><span class="text-slate-500">Reg. Fee</span> <span class="font-bold text-emerald-400">₹${event.fee}</span></li>
                         </ul>
                     </div>
@@ -891,6 +921,11 @@
             if (index > -1) {
                 selectedEventsList.splice(index, 1);
             } else {
+                if (event.maxLimit && (window.eventCounts[event.id] || 0) >= event.maxLimit) {
+                    alert(`⚠️ Registration Closed!\n\nSorry, ${event.title} has reached its maximum limit of ${event.maxLimit} teams.`);
+                    return;
+                }
+
                 const hasQuiz = selectedEventsList.some(e => e.id === 5);
                 const hasChess = selectedEventsList.some(e => e.id === 12);
                 if ((event.id === 5 && hasChess) || (event.id === 12 && hasQuiz)) {
@@ -901,7 +936,7 @@
                 const hasPPT = selectedEventsList.some(e => e.id === 1);
                 const hasDebugging = selectedEventsList.some(e => e.id === 2);
                 if ((event.id === 1 && hasDebugging) || (event.id === 2 && hasPPT)) {
-                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both PPT Presentation and Debugging in the same checkout.`);
+                    alert(`⚠️ Invalid Selection!\n\nYou cannot register for both PPT Presentation and Debugging because both events happen at the exact same time. Please choose only one.`);
                     return;
                 }
 
@@ -1288,6 +1323,11 @@
                 const event = eventsData.find(e => e.id === id);
                 if (!event) continue;
 
+                if (event.maxLimit && (window.eventCounts[event.id] || 0) >= event.maxLimit) {
+                     warnings.push(`Skipped "${event.title}": Registrations are closed (Fully Booked).`);
+                     continue;
+                }
+
                 const allEvents = [...validAdds, event];
                 
                 const hasQuiz = allEvents.some(e => e.id === 5);
@@ -1300,7 +1340,7 @@
                 const hasPPT = allEvents.some(e => e.id === 1);
                 const hasDebugging = allEvents.some(e => e.id === 2);
                 if (hasPPT && hasDebugging) {
-                     warnings.push(`Skipped "${event.title}": Mutually exclusive with another event in bundle.`);
+                     warnings.push(`Skipped "${event.title}": Occurs at the exact same time as another selected event.`);
                      continue;
                 }
 
@@ -1332,6 +1372,42 @@
             } else if (warnings.length > 0) {
                 window.closeWizardModal();
             }
+        };
+
+        window.openCheckoutModal = async function() {
+            const checkoutModal = document.getElementById('checkout-modal');
+            if(!checkoutModal) return;
+            
+            // Re-fetch live counts to ensure cart items aren't sold out while they were browsing
+            if (typeof window.fetchEventCounts === 'function') {
+                await window.fetchEventCounts();
+            }
+
+            // Validate cart against live limits
+            let soldOutItems = [];
+            for (let i = selectedEventsList.length - 1; i >= 0; i--) {
+                let ev = selectedEventsList[i];
+                if (ev.maxLimit && (window.eventCounts[ev.id] || 0) >= ev.maxLimit) {
+                    soldOutItems.push(ev.title);
+                    selectedEventsList.splice(i, 1); // Auto-remove from cart
+                }
+            }
+
+            if (soldOutItems.length > 0) {
+                alert(`⚠️ Notice: The following events have sold out while you were browsing and have been automatically removed from your cart:\n\n- ${soldOutItems.join('\n- ')}`);
+                window.saveCartState();
+                window.updateCartUI();
+                if (selectedEventsList.length === 0) return; // Stop opening modal if cart is empty
+            }
+
+            window.refreshCheckoutCart();
+            window.restoreFormData();
+            
+            checkoutModal.classList.remove('hidden', 'opacity-0'); checkoutModal.classList.add('flex', 'opacity-100');
+            setTimeout(() => {
+                const cc = document.getElementById('checkout-content');
+                if(cc) { cc.classList.remove('scale-95'); cc.classList.add('scale-100'); }
+            }, 10);
         };
 
         window.openEmail = function(e) {
@@ -1386,7 +1462,7 @@
 
             const hasPPT = selectedEventsList.some(e => e.id === 1);
             const hasDebugging = selectedEventsList.some(e => e.id === 2);
-            if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging in the same checkout.`);
+            if (hasPPT && hasDebugging) warnings.push(`- You cannot register for both PPT Presentation and Debugging because they occur at the exact same time.`);
 
             if (selectedEventsList.length > 3) {
                 warnings.push(`- Cart limit exceeded. You can only checkout 3 events at a time.`);
@@ -1542,7 +1618,6 @@
                         members: members.map(m => `${m.name} (${m.regId}) [${m.phone}]`).join(' | ') || 'None'
                     });
                 } else {
-                    // Solo Events are pushed safely without strict type checking
                     leaderEventsToAdd.push({ eventName: ev.title, type: "Solo", teamName: "N/A", role: "Solo" });
                 }
             }
@@ -1897,6 +1972,27 @@
                     await setDoc(userRef, { email: sanitizedEmail, purchasedIds: combinedIds, lastUpdate: new Date().toISOString() }, { merge: true });
                 } catch (err) { console.error("Firestore Write Error:", err); }
             };
+
+            // NEW: Fetch live registration counts for capacity-limited events
+            window.fetchEventCounts = async function() {
+                if (!window.fbDB || !window.fbDB.db) return;
+                try {
+                    // Queries the specific array of purchased IDs to see how many unique purchases exist for PPT (ID: 1)
+                    const q = query(collection(db, 'user_registrations'), where('purchasedIds', 'array-contains', 1));
+                    const snap = await getDocs(q);
+                    window.eventCounts[1] = snap.size;
+                    
+                    // Force UI Re-render to show updated badge
+                    const activeFilterBtn = document.querySelector('.filter-btn.active');
+                    const category = activeFilterBtn ? activeFilterBtn.innerText.trim() : 'All';
+                    window.renderEvents(category);
+                } catch (err) { 
+                    console.error("Could not fetch event counts", err); 
+                }
+            };
+            
+            // Execute on load to populate the counts instantly
+            window.fetchEventCounts();
 
             window.saveUniversalTicket = async function(phone, attendeeName, college, newEventsArray, regId) {
                 try {
