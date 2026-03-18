@@ -155,7 +155,8 @@
             window.clearFile();
             document.getElementById('upload-area').classList.add('opacity-50', 'pointer-events-none');
 
-            if (val.length < 8) {
+            // Reduced minimum length to 6 to support 1-letter first names (e.g., K-0009)
+            if (val.length < 6) {
                 eventContainer.classList.add('opacity-50', 'pointer-events-none');
                 eventSelect.innerHTML = '<option value="" disabled selected>-- Enter full ID --</option>';
                 msg.innerText = "Enter ID to load your registered events.";
