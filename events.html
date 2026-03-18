@@ -205,17 +205,18 @@
             <div class="flex flex-col lg:flex-row gap-12 items-stretch">
                 
                 <!-- LEFT SIDE: OTHER SPONSORS & PARTNERS -->
-                <div class="lg:w-7/12 flex flex-col gap-6 justify-center">
+                <!-- ADDED order-2 lg:order-1 to push this down on mobile but keep it left on desktop -->
+                <div class="lg:w-7/12 flex flex-col gap-6 justify-center order-2 lg:order-1">
                     
                     <!-- Social Media Partners -->
                     <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl hover:border-pink-500/30 transition-all group relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/5 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
                         <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="instagram" class="w-4 h-4 mr-2"></i> Social Media Partners</h3>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm">Pondy Reveals</span>
-                            <span class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm">Pondy Station</span>
-                            <span class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm">Chettans Review</span>
-                            <span class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm">Hello Makkalaey</span>
+                            <a href="https://www.instagram.com/pondy_reveal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Pondy Reveals <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
+                            <a href="https://www.instagram.com/pondy_station?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Pondy Station <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
+                            <a href="https://www.instagram.com/chettans.review?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Chettans Review <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
+                            <a href="https://www.instagram.com/hello_makkaley_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Hello Makkalaey <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
                         </div>
                     </div>
 
@@ -270,7 +271,8 @@
                 </div>
 
                 <!-- RIGHT SIDE: EDUCATIONAL SPONSOR -->
-                <div class="lg:w-5/12 flex flex-col items-center justify-center py-10 lg:border-l border-slate-800 lg:pl-12">
+                <!-- ADDED order-1 lg:order-2 to pull this to the top on mobile. Added bottom border on mobile for separation -->
+                <div class="lg:w-5/12 flex flex-col items-center justify-center pb-10 lg:pb-0 lg:py-10 border-b lg:border-b-0 lg:border-l border-slate-800 lg:pl-12 order-1 lg:order-2">
                     
                     <div class="inline-flex items-center justify-center py-2 px-6 rounded-full bg-blue-500/10 text-blue-400 font-bold text-xs mb-8 border border-blue-500/30 tracking-[0.3em] uppercase shadow-[0_0_20px_rgba(59,130,246,0.15)] text-center text-wrap leading-relaxed">
                         <i data-lucide="award" class="w-4 h-4 mr-2 shrink-0"></i> Official Educational Sponsor
