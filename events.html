@@ -122,8 +122,41 @@
         </div>
     </nav>
 
+    <!-- LIVE COUNTDOWN TIMER BANNER -->
+    <div id="countdown-banner" class="fixed top-[70px] md:top-[85px] left-0 w-full z-40 bg-gradient-to-r from-red-900/90 via-black/90 to-red-900/90 backdrop-blur-md border-b border-red-500/30 py-2 md:py-3 shadow-[0_5px_20px_rgba(239,68,68,0.2)] transform transition-transform duration-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center md:justify-between text-center md:text-left gap-2 md:gap-0">
+            <div class="flex items-center text-red-400 font-bold text-xs md:text-sm tracking-widest uppercase">
+                <i data-lucide="timer" class="w-4 h-4 md:w-5 md:h-5 mr-2 animate-pulse"></i> 
+                <span id="timer-sassy-text" class="hidden md:inline">Procrastination Level: Critical. </span>
+                Registration Closes In:
+            </div>
+            
+            <div class="flex gap-2 md:gap-4">
+                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                    <span id="timer-d" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
+                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Days</span>
+                </div>
+                <div class="text-red-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
+                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                    <span id="timer-h" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
+                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Hrs</span>
+                </div>
+                <div class="text-red-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
+                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                    <span id="timer-m" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
+                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Min</span>
+                </div>
+                <div class="text-red-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
+                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                    <span id="timer-s" class="brand-font text-xl md:text-2xl font-black text-emerald-400 animate-pulse">00</span>
+                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Sec</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- EVENTS MAIN CONTENT -->
-    <main class="min-h-screen pt-32 pb-24 relative z-10 bg-transparent">
+    <main class="min-h-screen pt-44 md:pt-48 pb-24 relative z-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-6">
             
             <!-- Quick Back Link -->
@@ -200,8 +233,8 @@
                         <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl hover:border-cyan-500/30 transition-all group relative overflow-hidden">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
                             <h3 class="text-xs font-black text-cyan-400 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="video" class="w-4 h-4 mr-2"></i> Media Partner</h3>
-                            <div class="inline-block px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm font-bold text-slate-300 shadow-sm">
-                                S. Media
+                            <div class="inline-block bg-white p-2 rounded-lg shadow-sm border border-slate-700/50 group-hover:scale-105 transition-transform duration-300">
+                                <img src="smedia.png" alt="S. Media" class="h-10 w-auto object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-sm font-bold text-slate-800 px-2\'>S. Media</span>'">
                             </div>
                         </div>
                     </div>
@@ -211,11 +244,11 @@
                         <div class="bg-gradient-to-br from-amber-500/5 to-transparent border border-amber-500/20 p-6 rounded-2xl">
                             <h3 class="text-xs font-black text-amber-500 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="star" class="w-4 h-4 mr-2"></i> Co-Sponsors</h3>
                             <ul class="space-y-2 text-sm font-bold text-slate-300">
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Studio 7</li>
+                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/juYmkkigffng6Xor7" target="_blank" class="hover:text-amber-400 transition-colors flex items-center">Studio 7 <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Ogibar</li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Bollywood Fashions</li>
+                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/LqvgyGTwC5GX3ztq7" target="_blank" class="hover:text-amber-400 transition-colors flex items-center">Bollywood Fashions <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Venkateshwara Sweets</li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Jayam Residency</li>
+                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/CMZQECEE3gjshViz5" target="_blank" class="hover:text-amber-400 transition-colors flex items-center">Jeyam Residency <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
                             </ul>
                         </div>
 
@@ -228,8 +261,8 @@
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> Ashok Juice</li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> Territory Dessert</li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> Take and Bites</li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> Bollywood Fashions</li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> Studio 7</li>
+                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/LqvgyGTwC5GX3ztq7" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center">Bollywood Fashions <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
+                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/juYmkkigffng6Xor7" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center">Studio 7 <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -474,10 +507,34 @@
                         </ul>
                         <button onclick="window.applyWizardBundle([12, 3])" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl font-black uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(245,158,11,0.3)]">Auto-Fill Cart</button>
                     </div>
+
+                    <!-- FEATURE 3: BRIBE THE CO-ORDINATOR BUTTON -->
+                    <div class="md:col-span-2 bg-red-950/20 p-4 rounded-2xl border border-red-500/30 hover:border-red-500/80 transition-all cursor-pointer relative overflow-hidden group mt-4" onclick="alert('Nice try. Go study your C programs. 💻')">
+                        <div class="absolute inset-0 bg-red-500/5 group-hover:bg-red-500/10 transition-colors"></div>
+                        <div class="flex flex-col sm:flex-row justify-between items-center relative z-10 gap-4 sm:gap-0 text-center sm:text-left">
+                            <div class="flex flex-col sm:flex-row items-center">
+                                <div class="w-12 h-12 bg-red-500/20 text-red-500 rounded-xl flex items-center justify-center sm:mr-4 mb-2 sm:mb-0 shrink-0">
+                                    <i data-lucide="briefcase" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-black text-red-400 uppercase tracking-widest">Premium Pass: Bribe the Co-ordinator</h3>
+                                    <p class="text-xs text-slate-400">Guaranteed 1st place in all events. (Don't tell anyone).</p>
+                                </div>
+                            </div>
+                            <div class="text-2xl font-black text-white bg-black/50 px-4 py-2 rounded-xl border border-red-500/20">₹5,00,000</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- FEATURE 4: THE FORBIDDEN DO NOT CLICK BUTTON -->
+    <button onclick="document.body.style.transition='transform 1.5s ease-in-out'; document.body.style.transform='rotate(360deg) scale(0.2)'; setTimeout(()=>{document.body.style.transform='none'}, 1500);" class="fixed top-[150px] right-0 bg-red-600 hover:bg-red-500 text-white text-[10px] font-black px-2 py-8 rounded-l-xl uppercase tracking-widest z-[150] shadow-[-5px_0_15px_rgba(220,38,38,0.5)] transition-all flex flex-col items-center justify-center gap-1 group overflow-hidden" style="writing-mode: vertical-rl; text-orientation: mixed;">
+        <i data-lucide="alert-triangle" class="w-3 h-3 mb-2 animate-pulse text-white"></i>
+        DO NOT CLICK
+    </button>
 
     <!-- Event Detail Modal -->
     <div id="event-modal" onclick="if(event.target === this) window.closeModal()" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
@@ -1519,9 +1576,31 @@
             
             const submitBtn = document.getElementById('razorpay-btn');
             const originalBtnContent = submitBtn.innerHTML;
-            submitBtn.innerHTML = "Verifying Details... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
+            
+            // FEATURE 1: SASSY LOADING SCREENS
+            const sassyPhrases = [
+                "Verifying Details...", 
+                "Bribing the judges...", 
+                "Waking up the server hamsters...", 
+                "Downloading more RAM...", 
+                "Compiling your hopes and dreams..."
+            ];
+            let sassyIndex = 0;
+            
+            submitBtn.innerHTML = `${sassyPhrases[0]} <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>`;
             submitBtn.disabled = true;
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+
+            clearInterval(window.sassyInterval); // Clear any old intervals
+            window.sassyInterval = setInterval(() => {
+                if (submitBtn.disabled) {
+                    sassyIndex = (sassyIndex + 1) % sassyPhrases.length;
+                    submitBtn.innerHTML = `${sassyPhrases[sassyIndex]} <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>`;
+                    if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
+                } else {
+                    clearInterval(window.sassyInterval);
+                }
+            }, 1800);
 
             const userEmailInput = document.getElementById('reg-email').value.toLowerCase().trim();
 
@@ -1531,6 +1610,7 @@
                     alert("This promo code has already been redeemed.");
                     submitBtn.innerHTML = originalBtnContent;
                     submitBtn.disabled = false;
+                    clearInterval(window.sassyInterval);
                     return;
                 }
             }
@@ -1552,11 +1632,13 @@
                 alert("REGISTRATION BLOCKED:\n\n" + warnings.join("\n") + "\n\nPlease modify your cart and try again.");
                 submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
+                clearInterval(window.sassyInterval);
                 if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
                 return;
             }
 
-            submitBtn.innerHTML = "Opening Secure Checkout... <i data-lucide='loader-2' class='ml-2 w-5 h-5 animate-spin'></i>";
+            // Sassy loading continues while Razorpay opens...
+            
             if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
 
             let finalCollege = document.getElementById('reg-college').value;
@@ -1608,6 +1690,7 @@
                     "ondismiss": function() {
                         submitBtn.innerHTML = originalBtnContent;
                         submitBtn.disabled = false;
+                        clearInterval(window.sassyInterval);
                         if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
                     }
                 }
@@ -1619,6 +1702,7 @@
                     alert("Payment Failed. Reason: " + response.error.description);
                     submitBtn.innerHTML = originalBtnContent;
                     submitBtn.disabled = false;
+                    clearInterval(window.sassyInterval);
                     if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
                 });
                 rzp1.open();
@@ -1627,6 +1711,7 @@
                 alert("Razorpay failed to load. Please check your internet connection.");
                 submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
+                clearInterval(window.sassyInterval);
             }
         };
 
@@ -1793,11 +1878,13 @@
                         window.showSuccessScreen(paymentId);
                         submitBtn.innerHTML = originalBtnContent;
                         submitBtn.disabled = false;
+                        clearInterval(window.sassyInterval);
                     });
             } else {
                 window.showSuccessScreen(paymentId);
                 submitBtn.innerHTML = originalBtnContent;
                 submitBtn.disabled = false;
+                clearInterval(window.sassyInterval);
             }
         }
 
@@ -1858,10 +1945,97 @@
             document.getElementById('checkout-step-1').classList.remove('hidden');
         };
 
+        // NEW: Live Timer Countdown Logic
+        function startLiveTimer() {
+            const destDate = new Date("March 25, 2026 17:00:00").getTime();
+            
+            const elDays = document.getElementById('timer-d');
+            const elHrs = document.getElementById('timer-h');
+            const elMins = document.getElementById('timer-m');
+            const elSecs = document.getElementById('timer-s');
+            const elSassyText = document.getElementById('timer-sassy-text');
+            const banner = document.getElementById('countdown-banner');
+
+            if (!elDays || !elHrs || !elMins || !elSecs) return;
+
+            const interval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = destDate - now;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    elDays.innerText = "00";
+                    elHrs.innerText = "00";
+                    elMins.innerText = "00";
+                    elSecs.innerText = "00";
+                    elSassyText.innerText = "Registration Closed. ";
+                    // Make the banner turn gray/closed state
+                    banner.classList.replace('from-red-900/90', 'from-slate-900/90');
+                    banner.classList.replace('to-red-900/90', 'to-slate-900/90');
+                    banner.classList.replace('border-red-500/30', 'border-slate-500/30');
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                elDays.innerText = days.toString().padStart(2, '0');
+                elHrs.innerText = hours.toString().padStart(2, '0');
+                elMins.innerText = minutes.toString().padStart(2, '0');
+                elSecs.innerText = seconds.toString().padStart(2, '0');
+
+                // Dynamic sassy text based on days remaining
+                if (days > 5) {
+                    elSassyText.innerText = "Time to prepare! ";
+                } else if (days > 2) {
+                    elSassyText.innerText = "Procrastination Level: Warning. ";
+                } else if (days > 0) {
+                    elSassyText.innerText = "Procrastination Level: Critical. ";
+                } else {
+                    elSassyText.innerText = "PANIC MODE ACTIVATED! 🚨 ";
+                }
+
+            }, 1000);
+        }
+
+        // FEATURE 2: THE HACKER EASTER EGG
+        let typedKeys = "";
+        window.addEventListener('keydown', function(e) {
+            // Ignore if they are typing inside an input field
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            if (e.key.length === 1) typedKeys += e.key.toUpperCase();
+            if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10); 
+            
+            if (typedKeys.includes("VIBE") || typedKeys.includes("TECH")) {
+                typedKeys = ""; // reset
+                const hackDiv = document.createElement('div');
+                hackDiv.style.position = 'fixed';
+                hackDiv.style.inset = '0';
+                hackDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.15)';
+                hackDiv.style.backdropFilter = 'contrast(1.5) sepia(100%)';
+                hackDiv.style.zIndex = '99999';
+                hackDiv.style.pointerEvents = 'none';
+                hackDiv.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-family:monospace; font-size:4rem; font-weight:900; color:#10b981; text-shadow: 0 0 20px #10b981; text-align:center;">SYSTEM COMPROMISED<br><span style="font-size:1.5rem; color:#fff; text-shadow:none;">Just kidding! Enjoy Tech Fête 2k26!</span></div>';
+                document.body.appendChild(hackDiv);
+                
+                setTimeout(() => {
+                    hackDiv.style.transition = "opacity 1s";
+                    hackDiv.style.opacity = "0";
+                    setTimeout(() => hackDiv.remove(), 1000);
+                }, 2000);
+            }
+        });
+
         window.addEventListener('load', function() {
             
             if (typeof emailjs !== 'undefined') { emailjs.init("axvXXO83vzZ-jHNQn"); }
             if (typeof window.lucide !== 'undefined') { window.lucide.createIcons(); }
+
+            // Start the new timer
+            startLiveTimer();
 
             const canvas = document.getElementById('starfield');
             if (canvas) {
@@ -1903,13 +2077,23 @@
 
             window.addEventListener('scroll', () => {
                 const nav = document.getElementById('navbar');
+                const banner = document.getElementById('countdown-banner');
+                
                 if (nav) {
                     if (window.scrollY > 50) {
                         nav.classList.add('bg-black/90', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg');
                         nav.classList.remove('py-5'); nav.classList.add('py-3');
+                        if(banner) {
+                            banner.classList.remove('top-[70px]', 'md:top-[85px]');
+                            banner.classList.add('top-[54px]', 'md:top-[65px]');
+                        }
                     } else {
                         nav.classList.remove('bg-black/90', 'backdrop-blur-md', 'border-b', 'border-amber-500/20', 'shadow-lg', 'py-3');
                         nav.classList.add('py-5');
+                        if(banner) {
+                            banner.classList.remove('top-[54px]', 'md:top-[65px]');
+                            banner.classList.add('top-[70px]', 'md:top-[85px]');
+                        }
                     }
                 }
             });
@@ -1950,7 +2134,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const myOwnFirebaseConfig = {
             apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
@@ -1977,6 +2161,8 @@
             const app = initializeApp(finalFirebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
+
+            window.fbDB = { db };
 
             const initAuth = async () => {
                 try {
@@ -2053,7 +2239,7 @@
                 } catch (err) { console.error("Firestore Write Error:", err); }
             };
 
-            // NEW: Fetch live registration counts for capacity-limited events
+            // Fetch live registration counts for capacity-limited events
             window.fetchEventCounts = async function() {
                 if (!window.fbDB || !window.fbDB.db) return;
                 try {
