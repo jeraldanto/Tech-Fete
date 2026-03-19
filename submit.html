@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Files | TECH FÊTE 2K26</title>
+    
+    <!-- Global Lockdown Script -->
+    <script>
+        const LOCKDOWN_DATE = new Date("March 26, 2026 23:59:59").getTime();
+        if (new Date().getTime() > LOCKDOWN_DATE) {
+            document.write(`
+                <html>
+                <head><title>Website Closed | Tech Fête 2K26</title></head>
+                <body style="background:#050A18; color:white; font-family:sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; margin:0; text-align:center; padding:20px;">
+                    <h1 style="color:#f59e0b; font-size:3rem; text-transform:uppercase; margin-bottom:10px; font-weight:900;">Website Closed</h1>
+                    <p style="color:#94a3b8; font-size:1.2rem; max-width:500px; line-height:1.5;">Registrations and Submissions for Tech Fête 2K26 have officially ended. Thank you for the overwhelming response!</p>
+                    <div style="margin-top:30px;">
+                        <a href="admin.html" style="color:#475569; text-decoration:none; border:1px solid #1e293b; padding:10px 20px; border-radius:8px; transition:all 0.3s; font-weight:bold; font-size:0.9rem;">Admin Dashboard</a>
+                    </div>
+                </body>
+                </html>
+            `);
+            document.close();
+        }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -248,7 +269,11 @@
                 fileInput.accept = ".ppt, .pptx, .pdf"; 
                 subInst.innerHTML = "Accepts: <b>.PPT, .PPTX, .PDF</b>"; 
             }
-            else if (ev === "Tech Memes" || ev === "Techmeme" || ev === "Poster Making" || ev === "Photography") { 
+            else if (ev === "Tech Memes" || ev === "Techmeme") { 
+                fileInput.accept = "video/mp4, video/quicktime, .mp4, .mov, .mkv"; 
+                subInst.innerHTML = "Accepts: <b>.MP4, .MOV, .MKV</b> (Max 50MB)"; 
+            }
+            else if (ev === "Poster Making" || ev === "Photography") { 
                 fileInput.accept = ".jpg, .jpeg, .png, .zip"; 
                 subInst.innerHTML = "Accepts: <b>.JPG, .PNG</b> or <b>.ZIP</b> (for multiples)"; 
             }
@@ -302,9 +327,15 @@
             const ev = document.getElementById('event-name').value;
             const ext = file.name.toLowerCase().split('.').pop();
             
-            // Hard limit 30MB for ALL files to prevent browser crashing
-            if (file.size > 30 * 1024 * 1024) { 
-                alert(`⚠️ File is too large!\n\nYour file is ${(file.size/1024/1024).toFixed(1)}MB. Maximum limit is 30MB.`); 
+            // Dynamic max size: 50MB for video memes, 30MB default for everything else
+            let maxSizeMB = 30;
+            if (ev === "Tech Memes" || ev === "Techmeme") {
+                maxSizeMB = 50;
+            }
+            
+            // Limit check to prevent browser crashing
+            if (file.size > maxSizeMB * 1024 * 1024) { 
+                alert(`⚠️ File is too large!\n\nYour file is ${(file.size/1024/1024).toFixed(1)}MB. Maximum limit for ${ev} is ${maxSizeMB}MB.`); 
                 window.clearFile();
                 return; 
             }
@@ -342,8 +373,16 @@
                 }
             }
 
-            // CREATIVE RULES (Meme, Poster, Photo): Single IMG or ZIP
-            else if (ev === "Tech Memes" || ev === "Techmeme" || ev === "Poster Making" || ev === "Photography") {
+            // TECH MEMES RULES: Only Video Files (MP4, MOV, MKV)
+            else if (ev === "Tech Memes" || ev === "Techmeme") {
+                if (ext !== 'mp4' && ext !== 'mov' && ext !== 'mkv') {
+                    alert(`⚠️ Invalid Format for ${ev}!\n\nPlease upload a video file (.mp4, .mov, .mkv).`);
+                    window.clearFile(); return;
+                }
+            }
+
+            // CREATIVE RULES (Poster, Photo): Single IMG or ZIP
+            else if (ev === "Poster Making" || ev === "Photography") {
                 if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png' && ext !== 'zip') {
                     alert(`⚠️ Invalid Format for ${ev}!\n\nUpload a single image (.jpg, .png) OR if you have multiple images, compress them into a single .ZIP file and upload that.`);
                     window.clearFile(); return;

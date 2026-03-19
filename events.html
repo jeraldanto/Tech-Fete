@@ -93,7 +93,7 @@
                     </a>
                 </div>
 
-                <button onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-[10px] md:text-sm tracking-wide flex items-center overflow-hidden whitespace-nowrap shrink-0">
+                <button id="nav-bundles-btn" onclick="window.openWizardModal()" class="group relative bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 px-4 py-2 md:px-6 md:py-2.5 rounded-full font-bold hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.4)] text-[10px] md:text-sm tracking-wide flex items-center overflow-hidden whitespace-nowrap shrink-0">
                     <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
                     <i data-lucide="zap" class="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 fill-slate-950 animate-pulse"></i> BUNDLES
                 </button>
@@ -123,33 +123,33 @@
     </nav>
 
     <!-- LIVE COUNTDOWN TIMER BANNER -->
-    <div id="countdown-banner" class="fixed top-[70px] md:top-[85px] left-0 w-full z-40 bg-gradient-to-r from-red-900/90 via-black/90 to-red-900/90 backdrop-blur-md border-b border-red-500/30 py-2 md:py-3 shadow-[0_5px_20px_rgba(239,68,68,0.2)] transform transition-transform duration-500">
+    <div id="countdown-banner" class="fixed top-[70px] md:top-[85px] left-0 w-full z-40 bg-gradient-to-r from-blue-950/90 via-slate-900/95 to-indigo-950/90 backdrop-blur-md border-b border-blue-500/20 py-2 md:py-3 shadow-[0_5px_20px_rgba(59,130,246,0.15)] transform transition-transform duration-500">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center md:justify-between text-center md:text-left gap-2 md:gap-0">
-            <div class="flex items-center text-red-400 font-bold text-xs md:text-sm tracking-widest uppercase">
+            <div class="flex items-center text-blue-300 font-bold text-xs md:text-sm tracking-widest uppercase">
                 <i data-lucide="timer" class="w-4 h-4 md:w-5 md:h-5 mr-2 animate-pulse"></i> 
-                <span id="timer-sassy-text" class="hidden md:inline">Procrastination Level: Critical. </span>
-                Registration Closes In:
+                <span id="timer-sassy-text" class="hidden md:inline">Time to prepare! </span>
+                Registration Closes (26th March):
             </div>
             
             <div class="flex gap-2 md:gap-4">
-                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                <div class="bg-slate-950/50 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
                     <span id="timer-d" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
-                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Days</span>
+                    <span class="text-[8px] md:text-[10px] text-blue-400 font-bold ml-1 uppercase">Days</span>
                 </div>
-                <div class="text-red-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
-                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                <div class="text-blue-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
+                <div class="bg-slate-950/50 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
                     <span id="timer-h" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
-                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Hrs</span>
+                    <span class="text-[8px] md:text-[10px] text-blue-400 font-bold ml-1 uppercase">Hrs</span>
                 </div>
-                <div class="text-red-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
-                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                <div class="text-blue-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
+                <div class="bg-slate-950/50 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
                     <span id="timer-m" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
-                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Min</span>
+                    <span class="text-[8px] md:text-[10px] text-blue-400 font-bold ml-1 uppercase">Min</span>
                 </div>
-                <div class="text-red-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
-                <div class="bg-black/50 border border-red-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
-                    <span id="timer-s" class="brand-font text-xl md:text-2xl font-black text-emerald-400 animate-pulse">00</span>
-                    <span class="text-[8px] md:text-[10px] text-red-500 font-bold ml-1 uppercase">Sec</span>
+                <div class="text-blue-500/50 font-black text-xl md:text-2xl pt-0.5">:</div>
+                <div class="bg-slate-950/50 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
+                    <span id="timer-s" class="brand-font text-xl md:text-2xl font-black text-amber-400 animate-pulse">00</span>
+                    <span class="text-[8px] md:text-[10px] text-blue-400 font-bold ml-1 uppercase">Sec</span>
                 </div>
             </div>
         </div>
@@ -205,18 +205,33 @@
             <div class="flex flex-col lg:flex-row gap-12 items-stretch">
                 
                 <!-- LEFT SIDE: OTHER SPONSORS & PARTNERS -->
-                <!-- ADDED order-2 lg:order-1 to push this down on mobile but keep it left on desktop -->
                 <div class="lg:w-7/12 flex flex-col gap-6 justify-center order-2 lg:order-1">
                     
                     <!-- Social Media Partners -->
                     <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl hover:border-pink-500/30 transition-all group relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/5 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
                         <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="instagram" class="w-4 h-4 mr-2"></i> Social Media Partners</h3>
-                        <div class="flex flex-wrap gap-2">
-                            <a href="https://www.instagram.com/pondy_reveal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Pondy Reveals <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
-                            <a href="https://www.instagram.com/pondy_station?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Pondy Station <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
-                            <a href="https://www.instagram.com/chettans.review?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Chettans Review <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
-                            <a href="https://www.instagram.com/hello_makkaley_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs font-bold text-slate-300 shadow-sm hover:text-pink-400 hover:border-pink-500/50 transition-colors flex items-center">Hello Makkalaey <i data-lucide="external-link" class="w-3 h-3 ml-1.5 opacity-60"></i></a>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <a href="https://www.instagram.com/pondy_reveal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="flex items-center bg-slate-900/80 border border-slate-700 p-2 rounded-xl hover:border-pink-500/50 hover:bg-slate-800 transition-all group/smedia shadow-sm">
+                                <img src="pyreveals.png" alt="Pondy Reveals" class="w-10 h-10 rounded-lg object-cover mr-3">
+                                <span class="text-[11px] font-bold text-slate-300 group-hover/smedia:text-pink-400 transition-colors flex-1">Pondy Reveals</span>
+                                <i data-lucide="external-link" class="w-3 h-3 text-pink-500 opacity-0 group-hover/smedia:opacity-100 transition-opacity mr-1"></i>
+                            </a>
+                            <a href="https://www.instagram.com/pondy_station?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="flex items-center bg-slate-900/80 border border-slate-700 p-2 rounded-xl hover:border-pink-500/50 hover:bg-slate-800 transition-all group/smedia shadow-sm">
+                                <img src="pystation.png" alt="Pondy Station" class="w-10 h-10 rounded-lg object-cover mr-3">
+                                <span class="text-[11px] font-bold text-slate-300 group-hover/smedia:text-pink-400 transition-colors flex-1">Pondy Station</span>
+                                <i data-lucide="external-link" class="w-3 h-3 text-pink-500 opacity-0 group-hover/smedia:opacity-100 transition-opacity mr-1"></i>
+                            </a>
+                            <a href="https://www.instagram.com/chettans.review?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="flex items-center bg-slate-900/80 border border-slate-700 p-2 rounded-xl hover:border-pink-500/50 hover:bg-slate-800 transition-all group/smedia shadow-sm">
+                                <img src="chettan.png" alt="Chettans Review" class="w-10 h-10 rounded-lg object-cover mr-3">
+                                <span class="text-[11px] font-bold text-slate-300 group-hover/smedia:text-pink-400 transition-colors flex-1">Chettans Review</span>
+                                <i data-lucide="external-link" class="w-3 h-3 text-pink-500 opacity-0 group-hover/smedia:opacity-100 transition-opacity mr-1"></i>
+                            </a>
+                            <a href="https://www.instagram.com/hello_makkaley_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="flex items-center bg-slate-900/80 border border-slate-700 p-2 rounded-xl hover:border-pink-500/50 hover:bg-slate-800 transition-all group/smedia shadow-sm">
+                                <img src="hellomak.png" alt="Hello Makkalaey" class="w-10 h-10 rounded-lg object-cover mr-3">
+                                <span class="text-[11px] font-bold text-slate-300 group-hover/smedia:text-pink-400 transition-colors flex-1">Hello Makkalaey</span>
+                                <i data-lucide="external-link" class="w-3 h-3 text-pink-500 opacity-0 group-hover/smedia:opacity-100 transition-opacity mr-1"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -234,9 +249,10 @@
                         <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl hover:border-cyan-500/30 transition-all group relative overflow-hidden">
                             <div class="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
                             <h3 class="text-xs font-black text-cyan-400 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="video" class="w-4 h-4 mr-2"></i> Media Partner</h3>
-                            <div class="inline-block bg-white p-2 rounded-xl shadow-sm border border-slate-700/50 group-hover:scale-105 transition-transform duration-300">
+                            <a href="https://www.instagram.com/smediadigitalpondy?igsh=MW51MGdtZnk1dTNjYQ==" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-white p-2 rounded-xl shadow-sm border border-slate-700/50 group-hover:scale-105 hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300">
                                 <img src="smedia.png" alt="S. Media" class="h-12 md:h-14 w-auto object-contain">
-                            </div>
+                                <i data-lucide="external-link" class="w-4 h-4 ml-2 text-cyan-600 opacity-60 group-hover:opacity-100 transition-opacity"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -246,7 +262,6 @@
                             <h3 class="text-xs font-black text-amber-500 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="star" class="w-4 h-4 mr-2"></i> Co-Sponsors</h3>
                             <ul class="space-y-2 text-sm font-bold text-slate-300">
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/juYmkkigffng6Xor7" target="_blank" class="hover:text-amber-400 transition-colors flex items-center">Studio 7 <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
-                                <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Ogibar</li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/LqvgyGTwC5GX3ztq7" target="_blank" class="hover:text-amber-400 transition-colors flex items-center">Bollywood Fashions <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> Venkateshwara Sweets</li>
                                 <li class="flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 opacity-50"></span> <a href="https://maps.app.goo.gl/CMZQECEE3gjshViz5" target="_blank" class="hover:text-amber-400 transition-colors flex items-center">Jeyam Residency <i data-lucide="map-pin" class="w-3 h-3 ml-1.5 opacity-60"></i></a></li>
@@ -271,7 +286,6 @@
                 </div>
 
                 <!-- RIGHT SIDE: EDUCATIONAL SPONSOR -->
-                <!-- ADDED order-1 lg:order-2 to pull this to the top on mobile. Added bottom border on mobile for separation -->
                 <div class="lg:w-5/12 flex flex-col items-center justify-center pb-10 lg:pb-0 lg:py-10 border-b lg:border-b-0 lg:border-l border-slate-800 lg:pl-12 order-1 lg:order-2">
                     
                     <div class="inline-flex items-center justify-center py-2 px-6 rounded-full bg-blue-500/10 text-blue-400 font-bold text-xs mb-8 border border-blue-500/30 tracking-[0.3em] uppercase shadow-[0_0_20px_rgba(59,130,246,0.15)] text-center text-wrap leading-relaxed">
@@ -703,6 +717,20 @@
 
     <!-- JavaScript For Events -->
     <script>
+        // REGISTRATION LOCKDOWN LOGIC
+        const LOCKDOWN_DATE = new Date("March 26, 2026 23:59:59").getTime();
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Secret URL parameter to bypass lockdown for on-spot registrations
+        if (urlParams.get('admin') === '1024') {
+            sessionStorage.setItem('onSpotAdmin', 'true');
+            window.history.replaceState({}, document.title, window.location.pathname);
+            alert("Admin Mode Unlocked: On-Spot Registrations Enabled.");
+        }
+        
+        const isOnSpotAdmin = sessionStorage.getItem('onSpotAdmin') === 'true';
+        const isOnlineRegistrationClosed = new Date().getTime() > LOCKDOWN_DATE && !isOnSpotAdmin;
+
         if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
 
         // Initialize global event counts tracker
@@ -710,14 +738,14 @@
 
         // UPDATED EVENT RULES AND CONSTRAINTS BASED ON NEW REQUIREMENTS
         const eventsData = [
-            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, maxLimit: 12, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12 - 15 slides. (max)", "The PPT must be submitted on or before March 25ᵗʰ 5 p.m through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met, it will not be considered for presentation.", "Evaluation will be based on Content Quality, Technical Knowledge, Presentation Skills, and Responses during the Q&A session.", "The participants will be given 3 to 5 mins of time to present their slides.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
+            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, maxLimit: 12, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12 - 15 slides. (max)", "The PPT must be submitted on or before March 26ᵗʰ 5 p.m through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met, it will not be considered for presentation.", "Evaluation will be based on Content Quality, Technical Knowledge, Presentation Skills, and Responses during the Q&A session.", "The participants will be given 3 to 5 mins of time to present their slides.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
             { id: 2, title: "Debugging", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Identify and fix errors in C programs.", fullDesc: "Test your problem-solving ability, debugging skills, and understanding of programming concepts by fixing broken C code.", rules: ["Participants will be given coding snippets containing logical, syntactical, or runtime errors that must be identified and corrected within a duration of 30 minutes.", "Electronic devices such as smart watch, phones are not permitted in this event.", "The objective of the event is to test problem-solving ability, debugging skills, and understanding of programming concepts.", "Internet access or external assistance will not be permitted during the competition,", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Computer Lab A", icon: "code" },
             { id: 3, title: "Vibe Coding", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Code a website based on an on-spot topic.", fullDesc: "Showcase your coding speed, logic, and creativity by building a functional solution within a strict time limit.", rules: ["A system with a stable internet connection will be provided for participants; However, participants may also bring and use their own laptops if preferred.", "The website topic will be announced on the spot at the beginning of the event.", "The total duration of the competition will be 10 minutes of prep time and 30 minutes of event time.", "Participants will be evaluated based on the logic and accuracy of the solution, creativity and innovation in approach, code efficiency and optimization, and overall functionality of the final output.", "Proper time management and the ability to clearly explain the solution, will be considered during evaluation."], date: "Mar 28, 2026", venue: "Computer Lab B", icon: "music" },
-            { id: 4, title: "Tech Memes", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create original memes based on tech & programming.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Participants must create an original meme based on Technology, Programming, or Internet Culture.", "Tech Memes must be submitted in JPEG/PNG/PDF format on or before 25th March 5 p.m within a Compressed file through the official event website.", "Entries must not contain offensive, political, or inappropriate content, and copied memes will lead to disqualification.", "Multiple entries (Max 3) from the same participant are allowed.", "Participants are informed to send the file name with their registered ID received via mail."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "image" },
+            { id: 4, title: "Tech Memes", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create original memes based on tech & programming.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Participants must create an original meme based on Technology, Programming, or Internet Culture.", "Tech Memes must be submitted in MP4 / Video format on or before 26th March 5 p.m through the official event website.", "Entries must not contain offensive, political, or inappropriate content, and copied memes will lead to disqualification.", "Multiple entries (Max 3) from the same participant are allowed.", "Participants are informed to send the file name with their registered ID received via mail."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "video" },
             { id: 5, title: "Quiz", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, shortDesc: "Battle of brains covering Tech & General Knowledge.", fullDesc: "Put your knowledge to the test. The quiz will cover a wide range of topics from the latest tech trends to general trivia.", rules: ["The quiz will be conducted as a team event with compulsory two members per team.", "The topics are Computer Science Technology, Artificial Intelligence, Internet Culture, Current Affairs, and General Knowledge.", "The event will consist of multiple rounds, which may include buzzer and rapid-fire segments.", "The decision of the quiz master and judges will be final in all matters related to scoring and evaluation."], date: "Mar 28, 2026", venue: "Main Auditorium", icon: "brain" },
-            { id: 6, title: "Dance", category: "Cultural", fee: "100", minTeam: 1, maxTeam: 4, shortDesc: "On-stage dance competition (Solo or Group).", fullDesc: "Express yourself through movement. All dance styles are welcome to set the stage on fire.", rules: ["Dance is an on-stage event open for group participation with 1–4 members per team.", "The performance should last no more than 3–4 minutes.", "Categories Western, Classical and Folk.", "Participants must submit their music track in MP3 format on or before the night of 25thMarch 5 p.m through the official event website.", "The file name should follow the format Name_CollegeName.", "Any dance style is permitted; however, performances containing Offensive Content or Inappropriate Language are Strictly Prohibited.", "Props may be used provided they do not damage the stage or cause inconvenience.", "Evaluation will be based on costume, co-ordination, creativity, stage presence, choreography, expressions, and overall performance.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Open Air Theater", icon: "users" },
-            { id: 9, title: "Poster Making", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Design a poster on Sustainable Tech.", fullDesc: "Unleash your artistic skills. Design a poster that communicates a strong message effectively.", rules: ["Participants must design the poster independently and submit it through the submission link on the official event website.", "Topic: Sustainable Tech for a Better Tomorrow.", "Posters must be original and submitted in JPEG/PNG/PDF format on or before 25ᵗʰMarch 5 p.m within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met, they will not be considered for submission.", "The best five posters will be displayed.", "Multiple entries (Max 3) from the same participant are allowed.", "Plagiarism or inappropriate content will lead to disqualification.", "Evaluation will be based on creativity, originality, relevant to the theme, and visual presentation.", "Judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "palette" },
-            { id: 10, title: "Photography", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Capture original photographs of your choice.", fullDesc: "A shutterbug contest. Capture original photographs and show off your composition and editing skills.", rules: ["Participants must capture and submit original photographs of their own choice. Basic editing such as colour correction and lighting adjustments is permitted; however, AI-generated images are not allowed.", "Theme: Emotions through screen.", "Photographs must be original and should be submitted in JPEG/PNG/PDF format on or before 25th March 5 p.m within a Compressed file.", "Mention your name , attributes of the photo (time ,date) as watermark in the photo.", "Participants are informed to send the file name with their registered ID through the official event website.", "Multiple entries (Max 3) from the same participant are allowed.", "Evaluation will be based on creativity, composition, clarity, relevance to the theme, and overall visual impact.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "camera" },
+            { id: 6, title: "Dance", category: "Cultural", fee: "100", minTeam: 1, maxTeam: 4, shortDesc: "On-stage dance competition (Solo or Group).", fullDesc: "Express yourself through movement. All dance styles are welcome to set the stage on fire.", rules: ["Dance is an on-stage event open for group participation with 1–4 members per team.", "The performance should last no more than 3–4 minutes.", "Categories Western, Classical and Folk.", "Participants must submit their music track in MP3 format on or before the night of 26th March 5 p.m through the official event website.", "The file name should follow the format Name_CollegeName.", "Any dance style is permitted; however, performances containing Offensive Content or Inappropriate Language are Strictly Prohibited.", "Props may be used provided they do not damage the stage or cause inconvenience.", "Evaluation will be based on costume, co-ordination, creativity, stage presence, choreography, expressions, and overall performance.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Open Air Theater", icon: "users" },
+            { id: 9, title: "Poster Making", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Design a poster on Sustainable Tech.", fullDesc: "Unleash your artistic skills. Design a poster that communicates a strong message effectively.", rules: ["Participants must design the poster independently and submit it through the submission link on the official event website.", "Topic: Sustainable Tech for a Better Tomorrow.", "Posters must be original and submitted in JPEG/PNG/PDF format on or before 26ᵗʰ March 5 p.m within a Compressed file.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met, they will not be considered for submission.", "The best five posters will be displayed.", "Multiple entries (Max 3) from the same participant are allowed.", "Plagiarism or inappropriate content will lead to disqualification.", "Evaluation will be based on creativity, originality, relevant to the theme, and visual presentation.", "Judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "palette" },
+            { id: 10, title: "Photography", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Capture original photographs of your choice.", fullDesc: "A shutterbug contest. Capture original photographs and show off your composition and editing skills.", rules: ["Participants must capture and submit original photographs of their own choice. Basic editing such as colour correction and lighting adjustments is permitted; however, AI-generated images are not allowed.", "Theme: Emotions through screen.", "Photographs must be original and should be submitted in JPEG/PNG/PDF format on or before 26th March 5 p.m within a Compressed file.", "Mention your name , attributes of the photo (time ,date) as watermark in the photo.", "Participants are informed to send the file name with their registered ID through the official event website.", "Multiple entries (Max 3) from the same participant are allowed.", "Evaluation will be based on creativity, composition, clarity, relevance to the theme, and overall visual impact.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "camera" },
             { id: 11, title: "Creative Writing", category: "Creative", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "On-spot story or poem writing competition.", fullDesc: "For the wordsmiths. Write a compelling story or poem based on a prompt given on the spot.", rules: ["Creative Writing will be conducted as on-spot event within a time frame of 30 mins up to 150 words. The total word count shouldn’t exceed 150 words.", "Participants are requested to bring their own writing materials.", "Ruled Sheets will be provided.", "Participants are expected to maintain clarity, creativity, and relevance to the given theme.", "Evaluation will be based on originality, creativity, language proficiency, structure, and overall expression.", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Room 101", icon: "pen-tool" },
             { id: 12, title: "Chess", category: "Gaming", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Online Rapid Chess tournament on Lichess.", fullDesc: "A battle of patience and strategy conducted online. Show off your grandmaster skills.", rules: ["The tournament will be conducted online through the Lichess app with a total duration of 60 mins.", "During this time, multiple 5-minute matches will be conducted among the registered Participants.", "Players are requested to join the tournament on time with a stable internet connection and a registered Lichess account.", "Any form of unfair play or external assistance will lead to disqualification.", "The decision of the organizers and judges will be final."], date: "Mar 28, 2026", venue: "Online (Lichess)", icon: "pawn" }
         ];
@@ -978,6 +1006,11 @@
                 btnColor = "bg-slate-800 text-slate-500 border border-slate-700";
                 onClickAction = "void(0)";
                 cursorStyle = "cursor-not-allowed opacity-60";
+            } else if (isOnlineRegistrationClosed && !isSelected) {
+                btnText = "Online Registration Closed (Available On-Spot)";
+                btnColor = "bg-slate-800 text-slate-500 border border-slate-700";
+                onClickAction = "void(0)";
+                cursorStyle = "cursor-not-allowed opacity-60";
             }
 
             let teamSizeText = event.maxTeam > 1 
@@ -1054,6 +1087,11 @@
         };
 
         window.toggleEventSelection = function(id) {
+            if (isOnlineRegistrationClosed) {
+                alert("Online registrations are closed!\n\nPlease visit the registration desk at the venue for on-spot registrations.");
+                return;
+            }
+
             const event = eventsData.find(e => e.id === id);
             const index = selectedEventsList.findIndex(e => e.id === id);
 
@@ -1434,6 +1472,11 @@
         };
 
         window.openWizardModal = function() {
+            if (isOnlineRegistrationClosed) {
+                alert("Online registrations are closed!\n\nPlease visit the registration desk at the venue for on-spot registrations.");
+                return;
+            }
+            
             const modal = document.getElementById('wizard-modal');
             const wc = document.getElementById('wizard-content');
             if(!modal || !wc) return;
@@ -1455,6 +1498,11 @@
         };
 
         window.applyWizardBundle = function(eventIdsArray) {
+            if (isOnlineRegistrationClosed) {
+                alert("Online registrations are closed!\n\nPlease visit the registration desk at the venue for on-spot registrations.");
+                return;
+            }
+
             let validAdds = [];
             let warnings = [];
 
@@ -1949,7 +1997,7 @@
 
         // NEW: Live Timer Countdown Logic
         function startLiveTimer() {
-            const destDate = new Date("March 25, 2026 17:00:00").getTime();
+            const destDate = new Date("March 26, 2026 23:59:59").getTime();
             
             const elDays = document.getElementById('timer-d');
             const elHrs = document.getElementById('timer-h');
@@ -1970,11 +2018,22 @@
                     elHrs.innerText = "00";
                     elMins.innerText = "00";
                     elSecs.innerText = "00";
-                    elSassyText.innerText = "Registration Closed. ";
-                    // Make the banner turn gray/closed state
-                    banner.classList.replace('from-red-900/90', 'from-slate-900/90');
-                    banner.classList.replace('to-red-900/90', 'to-slate-900/90');
-                    banner.classList.replace('border-red-500/30', 'border-slate-500/30');
+                    
+                    if (!isOnSpotAdmin) {
+                        elSassyText.innerText = "Online Registration Closed. ";
+                        banner.classList.replace('from-blue-950/90', 'from-slate-900/90');
+                        banner.classList.replace('to-indigo-950/90', 'to-slate-900/90');
+                        banner.classList.replace('border-blue-500/20', 'border-slate-500/30');
+                    } else {
+                        // Admin specific timer appearance
+                        elSassyText.innerText = "Admin On-Spot Mode Enabled. ";
+                        banner.classList.replace('from-blue-950/90', 'from-emerald-950/90');
+                        banner.classList.replace('to-indigo-950/90', 'to-emerald-900/90');
+                        banner.classList.replace('border-blue-500/20', 'border-emerald-500/30');
+                        const icon = document.querySelector('#countdown-banner i[data-lucide="timer"]');
+                        if (icon) icon.classList.replace('text-blue-300', 'text-emerald-400');
+                        elSassyText.parentElement.classList.replace('text-blue-300', 'text-emerald-400');
+                    }
                     return;
                 }
 
@@ -1988,15 +2047,15 @@
                 elMins.innerText = minutes.toString().padStart(2, '0');
                 elSecs.innerText = seconds.toString().padStart(2, '0');
 
-                // Dynamic sassy text based on days remaining
+                // Dynamic pleasant text based on days remaining
                 if (days > 5) {
                     elSassyText.innerText = "Time to prepare! ";
                 } else if (days > 2) {
-                    elSassyText.innerText = "Procrastination Level: Warning. ";
+                    elSassyText.innerText = "Event approaching! ";
                 } else if (days > 0) {
-                    elSassyText.innerText = "Procrastination Level: Critical. ";
+                    elSassyText.innerText = "Almost time! ";
                 } else {
-                    elSassyText.innerText = "PANIC MODE ACTIVATED! 🚨 ";
+                    elSassyText.innerText = "Last day to register! ";
                 }
 
             }, 1000);
@@ -2035,6 +2094,12 @@
             
             if (typeof emailjs !== 'undefined') { emailjs.init("axvXXO83vzZ-jHNQn"); }
             if (typeof window.lucide !== 'undefined') { window.lucide.createIcons(); }
+
+            // Hide bundles button if lockdown is active and not admin
+            if (isOnlineRegistrationClosed) {
+                const bundleBtn = document.getElementById('nav-bundles-btn');
+                if(bundleBtn) bundleBtn.style.display = 'none';
+            }
 
             // Start the new timer
             startLiveTimer();
