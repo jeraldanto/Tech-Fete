@@ -508,7 +508,9 @@
                     <!-- Social Media Partners -->
                     <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl hover:border-pink-500/30 transition-all group relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/5 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="instagram" class="w-4 h-4 mr-2"></i> Social Media Partners</h3>
+                        <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest mb-4 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg> Social Media Partners
+                        </h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <a href="https://www.instagram.com/pondy_reveal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="flex items-center bg-slate-900/80 border border-slate-700 p-2 rounded-xl hover:border-pink-500/50 hover:bg-slate-800 transition-all group/smedia shadow-sm">
                                 <img src="pyreveals.png" alt="Pondy Reveals" class="w-10 h-10 rounded-lg object-cover mr-3">
@@ -584,7 +586,6 @@
                 </div>
 
                 <!-- RIGHT SIDE: EDUCATIONAL SPONSOR -->
-                <!-- ADDED order-1 lg:order-2 to pull this to the top on mobile. Added bottom border on mobile for separation -->
                 <div class="lg:w-5/12 flex flex-col items-center justify-center pb-10 lg:pb-0 lg:py-10 border-b lg:border-b-0 lg:border-l border-slate-800 lg:pl-12 order-1 lg:order-2">
                     
                     <div class="inline-flex items-center justify-center py-2 px-6 rounded-full bg-blue-500/10 text-blue-400 font-bold text-xs mb-8 border border-blue-500/30 tracking-[0.3em] uppercase shadow-[0_0_20px_rgba(59,130,246,0.15)] text-center text-wrap leading-relaxed">
@@ -637,10 +638,10 @@
                     </p>
                     <div class="flex space-x-3">
                         <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" title="Visit our Instagram" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                         </a>
                         <a href="#" onclick="window.openEmail(event)" title="Email Us" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                         </a>
                     </div>
                 </div>
@@ -745,7 +746,7 @@
         const isOnSpotAdmin = sessionStorage.getItem('onSpotAdmin') === 'true';
         const isOnlineRegistrationClosed = new Date().getTime() > LOCKDOWN_DATE && !isOnSpotAdmin;
 
-        lucide.createIcons();
+        if (typeof window.lucide !== 'undefined') window.lucide.createIcons();
 
         // Utilities
         window.openEmail = function(e) {
@@ -801,7 +802,7 @@
                     elSecs.innerText = "00";
                     
                     if (!isOnSpotAdmin) {
-                        elSassyText.innerText = "Online Registration Closed. ";
+                        elSassyText.innerText = "Online Registrations Closed. On-Spot Available! ";
                         banner.classList.replace('from-blue-950/90', 'from-slate-900/90');
                         banner.classList.replace('to-indigo-950/90', 'to-slate-900/90');
                         banner.classList.replace('border-blue-500/20', 'border-slate-500/30');
@@ -841,35 +842,6 @@
 
             }, 1000);
         }
-
-        // FEATURE 2: THE HACKER EASTER EGG
-        let typedKeys = "";
-        window.addEventListener('keydown', function(e) {
-            // Ignore if they are typing inside an input field
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
-            if (e.key.length === 1) typedKeys += e.key.toUpperCase();
-            if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10); 
-            
-            if (typedKeys.includes("VIBE") || typedKeys.includes("TECH")) {
-                typedKeys = ""; // reset
-                const hackDiv = document.createElement('div');
-                hackDiv.style.position = 'fixed';
-                hackDiv.style.inset = '0';
-                hackDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.15)';
-                hackDiv.style.backdropFilter = 'contrast(1.5) sepia(100%)';
-                hackDiv.style.zIndex = '99999';
-                hackDiv.style.pointerEvents = 'none';
-                hackDiv.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-family:monospace; font-size:4rem; font-weight:900; color:#10b981; text-shadow: 0 0 20px #10b981; text-align:center;">SYSTEM COMPROMISED<br><span style="font-size:1.5rem; color:#fff; text-shadow:none;">Just kidding! Enjoy Tech Fête 2k26!</span></div>';
-                document.body.appendChild(hackDiv);
-                
-                setTimeout(() => {
-                    hackDiv.style.transition = "opacity 1s";
-                    hackDiv.style.opacity = "0";
-                    setTimeout(() => hackDiv.remove(), 1000);
-                }, 2000);
-            }
-        });
 
         // Starfield Canvas Logic & Initialization
         window.addEventListener('load', function() {

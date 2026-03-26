@@ -3,37 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Files | TECH FÊTE 2K26</title>
-    
-    <!-- Global Lockdown Script -->
-    <script>
-        const LOCKDOWN_DATE = new Date("March 26, 2026 23:59:59").getTime();
-        if (new Date().getTime() > LOCKDOWN_DATE) {
-            document.write(`
-                <html>
-                <head><title>Website Closed | Tech Fête 2K26</title></head>
-                <body style="background:#050A18; color:white; font-family:sans-serif; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; margin:0; text-align:center; padding:20px;">
-                    <h1 style="color:#f59e0b; font-size:3rem; text-transform:uppercase; margin-bottom:10px; font-weight:900;">Website Closed</h1>
-                    <p style="color:#94a3b8; font-size:1.2rem; max-width:500px; line-height:1.5;">Registrations and Submissions for Tech Fête 2K26 have officially ended. Thank you for the overwhelming response!</p>
-                    <div style="margin-top:30px;">
-                        <a href="admin.html" style="color:#475569; text-decoration:none; border:1px solid #1e293b; padding:10px 20px; border-radius:8px; transition:all 0.3s; font-weight:bold; font-size:0.9rem;">Admin Dashboard</a>
-                    </div>
-                </body>
-                </html>
-            `);
-            document.close();
-        }
-    </script>
-
+    <title>Admin Dashboard | Tech Fête 2k26</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Libraries for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Advanced QR Code Library for Modern/Curvy QR -->
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: white; }
         h1, h2, h3, .brand-font { font-family: 'Antonio', sans-serif; }
         
-        /* Drag and Drop visual feedback */
-        .drag-active { border-color: #f59e0b !important; background-color: rgba(245, 158, 11, 0.1) !important; transform: scale(1.02); }
+        /* Hidden container for background processing */
+        #render-container {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            visibility: hidden;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center py-10 px-4 relative">
@@ -43,92 +33,121 @@
         <div class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-amber-900/10 blur-[150px] rounded-full"></div>
     </div>
 
-    <div class="text-center mb-10 z-10 w-full max-w-lg relative mt-4">
+    <div class="text-center mb-10 z-10 w-full max-w-4xl relative">
         <a href="index.html" class="inline-flex items-center text-amber-500 hover:text-amber-400 text-xs font-bold uppercase tracking-widest mb-6 transition-colors bg-amber-500/10 px-4 py-2 rounded-full border border-amber-500/20">
             <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
         </a>
-        <div class="w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl p-1.5 flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.2)] mb-4 mx-auto">
-            <img src="college_logo.jpg" alt="PJPII Logo" class="w-full h-full object-contain rounded-xl" onerror="this.style.display='none'">
-        </div>
-        <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider">SUBMIT PORTAL</h1>
-        <p class="text-slate-400 tracking-widest uppercase text-[10px] mt-2 font-bold">Tech Fête 2k26 Professional Upload</p>
+        <h1 class="brand-font text-4xl md:text-5xl font-black text-amber-500 tracking-wider drop-shadow-lg">ADMIN DASHBOARD</h1>
+        <p class="text-slate-400 tracking-widest uppercase text-xs mt-2 font-bold">Tech Fête 2k26 Secure Portal</p>
     </div>
 
-    <div class="w-full max-w-lg bg-slate-900/80 backdrop-blur-xl border border-amber-500/20 rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.8)] p-6 relative overflow-hidden z-10">
+    <div class="w-full max-w-4xl bg-slate-900/80 backdrop-blur-xl border border-amber-500/20 rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.8)] p-8 relative overflow-hidden z-10">
         
-        <form id="upload-form" onsubmit="window.processFirebaseUpload(event)" class="flex flex-col space-y-6">
-            
-            <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Registration ID <span class="text-red-500">*</span></label>
-                <div class="relative flex items-center">
-                    <span class="absolute left-4 text-amber-500 font-bold tracking-widest font-mono">TF2K26-</span>
-                    <input type="text" id="reg-id" required autocomplete="off" oninput="window.handleIdInput(this)" placeholder="NAME-0000" class="w-full bg-[#020617] border border-slate-700 rounded-xl py-3 pl-[88px] pr-10 text-white focus:outline-none focus:border-amber-500 uppercase tracking-widest font-mono text-sm shadow-inner transition-colors">
-                    <div id="id-loading" class="absolute right-4 hidden"><i data-lucide="loader-2" class="w-4 h-4 text-amber-500 animate-spin"></i></div>
-                    <div id="id-success" class="absolute right-4 hidden"><i data-lucide="check" class="w-5 h-5 text-emerald-500"></i></div>
-                </div>
-                <p id="id-message" class="text-[10px] text-slate-500 mt-1">Enter ID to load your registered events.</p>
+        <!-- SECURE LOGIN SCREEN -->
+        <div id="auth-section" class="text-center max-w-md mx-auto py-8">
+            <div class="w-20 h-20 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+                <i data-lucide="shield-check" class="w-10 h-10"></i>
             </div>
-
-            <div id="event-container" class="opacity-50 pointer-events-none transition-opacity">
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Select Event <span class="text-red-500">*</span></label>
-                <select id="event-name" required onchange="window.updateFileConstraints()" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 appearance-none">
-                    <option value="" disabled selected>-- Awaiting valid ID --</option>
-                    <!-- Options populated dynamically -->
-                </select>
-            </div>
-
-            <div id="upload-area" class="opacity-50 pointer-events-none transition-opacity">
-                <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex justify-between">
-                    <span>Upload File <span class="text-red-500">*</span></span>
-                    <span id="file-sub-instruction" class="text-[10px] text-amber-500 font-bold lowercase tracking-normal"></span>
-                </label>
-                <div id="drop-zone" class="relative border-2 border-dashed border-slate-700 hover:border-amber-500 rounded-xl p-8 text-center transition-all duration-300 bg-[#020617] group cursor-pointer" onclick="document.getElementById('file-input').click()">
-                    <i id="upload-icon" data-lucide="upload-cloud" class="w-10 h-10 mx-auto text-slate-500 group-hover:text-amber-400 mb-3 transition-colors pointer-events-none"></i>
-                    <p id="file-instruction" class="text-sm font-bold text-white mb-1 pointer-events-none">Drag & drop or click to browse</p>
-                    
-                    <!-- Hidden Input -->
-                    <input type="file" id="file-input" class="hidden" onchange="window.handleFileSelection(event)">
-                </div>
-                
-                <div id="file-preview" class="hidden mt-4 bg-slate-800 p-4 rounded-xl flex items-center justify-between border border-slate-700 shadow-inner">
-                    <div class="flex items-center overflow-hidden">
-                        <i data-lucide="file-check" class="w-5 h-5 text-emerald-400 mr-3 shrink-0"></i>
-                        <span id="file-name-display" class="text-xs font-bold truncate text-white tracking-wider"></span>
-                    </div>
-                    <button type="button" onclick="window.clearFile()" class="text-red-400 hover:text-red-500 ml-4 shrink-0 bg-black/20 p-1.5 rounded-lg transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
-                </div>
-            </div>
-
-            <button type="submit" id="submit-btn" disabled class="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:brightness-110 disabled:opacity-50 flex items-center justify-center">
-                Start Upload <i data-lucide="cloud-lightning" class="ml-2 w-5 h-5"></i>
+            <h2 class="text-3xl brand-font font-bold mb-4 tracking-wide text-white">Admin Authentication</h2>
+            <p class="text-slate-400 mb-8 text-sm leading-relaxed">Please enter the master admin PIN to access the fest's live data portal and scanner tools.</p>
+            <input type="password" id="admin-pin" placeholder="ENTER PIN" class="w-full bg-[#020617] border border-slate-700 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-amber-500 transition-colors text-center text-2xl tracking-[0.5em] mb-6 font-mono font-bold shadow-inner">
+            <button onclick="window.verifyAdmin()" class="w-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 px-6 py-4 rounded-xl font-black uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] block">
+                Unlock Dashboard
             </button>
+        </div>
 
-            <div id="loading-ui" class="hidden flex-col items-center justify-center py-4 text-center">
-                <i data-lucide="loader-2" class="w-8 h-8 text-amber-500 animate-spin mb-3 mx-auto"></i>
-                <p id="loading-text" class="text-xs font-bold text-amber-400 uppercase tracking-widest">Processing...</p>
-                <div class="w-full bg-slate-800 rounded-full h-1.5 mt-4 overflow-hidden hidden" id="progress-bar-container">
-                    <div class="bg-amber-500 h-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+        <!-- UNLOCKED DASHBOARD SCREEN -->
+        <div id="dashboard-section" class="hidden">
+            <div class="flex flex-col md:flex-row items-center justify-between border-b border-slate-800 pb-6 mb-8 gap-4">
+                <div class="text-center md:text-left">
+                    <h2 class="text-3xl font-black text-white brand-font tracking-wide mb-1">Command Center</h2>
+                    <p class="text-xs text-slate-400 uppercase tracking-widest font-bold">Event Verification & Operations Terminal</p>
+                </div>
+                <div class="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-lg border border-emerald-500/20 text-sm font-bold flex items-center shadow-[inset_0_0_10px_rgba(16,185,129,0.1)]">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> DB Connected
                 </div>
             </div>
-        </form>
 
-        <div id="success-screen" class="hidden flex-col items-center justify-center py-8 text-center">
-            <div class="w-20 h-20 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 border border-emerald-500/20 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
-                <i data-lucide="check-circle" class="w-10 h-10"></i>
+            <!-- Grid for Dashboard Actions -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Action 1: Scanner -->
+                <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all text-center flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="scan-line" class="w-8 h-8 text-amber-400"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Launch Scanner</h3>
+                        <p class="text-sm text-slate-400 mb-8 leading-relaxed">Open the secure verification portal. Use this tool at the main gate or event rooms to scan participant IDs and log live attendance.</p>
+                    </div>
+                    <div>
+                        <a href="verify.html" target="_blank" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] flex items-center justify-center w-full active:scale-95">
+                            Launch App <i data-lucide="external-link" class="w-5 h-5 ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Action 2: Generate Tickets PDF -->
+                <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-blue-500/30 transition-all text-center flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            <i data-lucide="printer" class="w-8 h-8 text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Print Event Tickets</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Generate a printable PDF using your local 'ticket_template.jpg' design. Duplicates are automatically removed.</p>
+                    </div>
+                    <div>
+                        <button id="generate-pdf-btn" onclick="window.generateTicketPDF()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(37,99,235,0.2)] hover:shadow-[0_0_25px_rgba(37,99,235,0.4)] flex items-center justify-center w-full active:scale-95">
+                            Generate PDF <i data-lucide="download" class="w-5 h-5 ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
             </div>
-            <h2 class="text-2xl font-black text-white brand-font tracking-wide mb-2 uppercase">Success!</h2>
-            <p class="text-slate-400 mb-8 text-sm px-4">Your file has been uploaded.</p>
-            <button onclick="location.reload()" class="w-full bg-slate-800 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest hover:bg-slate-700 transition-all">Upload Another File</button>
+            
+            <!-- Generation Status UI -->
+            <div id="pdf-status" class="hidden mt-8 bg-slate-800 p-6 rounded-xl border border-slate-700 text-center relative">
+                <button id="close-pdf-status" onclick="window.resetPDFUI()" class="hidden absolute top-4 right-4 text-slate-400 hover:text-white transition-colors" title="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <i id="pdf-spinner" data-lucide="loader-2" class="w-8 h-8 text-blue-400 animate-spin mx-auto mb-3"></i>
+                <i id="pdf-success-icon" data-lucide="check-circle" class="w-8 h-8 text-emerald-400 mx-auto mb-3 hidden"></i>
+                <h4 class="font-bold text-white mb-2" id="pdf-status-title">Fetching Database Records...</h4>
+                <p class="text-sm text-slate-400" id="pdf-status-desc">Please do not close this window.</p>
+                
+                <div id="pdf-progress-container" class="w-full bg-slate-900 rounded-full h-2.5 mt-4 overflow-hidden">
+                    <div id="pdf-progress-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <div id="pdf-action-buttons" class="hidden mt-6 flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="window.previewPDF()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-3 rounded-xl font-black uppercase tracking-widest transition-all text-xs flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                        <i data-lucide="eye" class="w-4 h-4 mr-2"></i> Preview
+                    </button>
+                    <button onclick="window.downloadPDF()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest transition-all text-xs flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i> Download
+                    </button>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- SDK INCLUDES -->
+    <!-- HIDDEN RENDER ASSETS -->
+    <div id="render-container">
+        <!-- This image source automatically loads the image from the same folder -->
+        <img id="base-ticket-img" src="ticket_template.jpg" crossorigin="anonymous" alt="Base Ticket Template">
+        
+        <!-- Hidden container where QR codes are temporarily drawn -->
+        <div id="temp-qr-container"></div>
+    </div>
+
+    <!-- FIREBASE INTEGRATION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, query, where, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        lucide.createIcons();
+
+        // EXACT SAME FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyDFBjp-cbaxm4byMLNSFUukHyw2AfSByss",
             authDomain: "tech-fete-2026.firebaseapp.com",
@@ -142,341 +161,281 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const storage = getStorage(app);
-
+        
         signInAnonymously(auth).catch(console.error);
+        
+        window.fbDB = { db, collection, getDocs };
 
-        window.fbStorage = { ref, uploadBytesResumable, getDownloadURL, storage };
-        window.fbDB = { db, collection, query, where, getDocs, doc, setDoc };
+        window.verifyAdmin = function() {
+            const pin = document.getElementById('admin-pin').value;
+            if (pin === "1024") {
+                document.getElementById('auth-section').classList.add('hidden');
+                document.getElementById('dashboard-section').classList.remove('hidden');
+                lucide.createIcons();
+            } else {
+                alert("Incorrect Admin PIN.");
+                document.getElementById('admin-pin').value = '';
+            }
+        };
+
+        document.getElementById("admin-pin").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                window.verifyAdmin();
+            }
+        });
     </script>
 
+    <!-- PURE NATIVE PDF GENERATION LOGIC -->
     <script>
-        lucide.createIcons();
-        let selectedFile = null;
-        let currentUserDocId = null;
-        let searchTimeout = null;
+        let generatedJsPdfInstance = null;
+        let generatedPDFFileName = null;
 
-        // 1. Dynamic ID Verification & Event Loading
-        window.handleIdInput = function(input) {
-            // Keep input clean from TF2K26- as it's hardcoded visually
-            let val = input.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
-            if (val.startsWith("TF2K26-")) val = val.substring(7);
-            input.value = val;
-            
-            const fullId = "TF2K26-" + val;
-
-            clearTimeout(searchTimeout);
-            
-            const eventContainer = document.getElementById('event-container');
-            const eventSelect = document.getElementById('event-name');
-            const msg = document.getElementById('id-message');
-            const loadIcon = document.getElementById('id-loading');
-            const checkIcon = document.getElementById('id-success');
-            
-            window.clearFile();
-            document.getElementById('upload-area').classList.add('opacity-50', 'pointer-events-none');
-
-            // Reduced minimum length to 6 to support 1-letter first names (e.g., K-0009)
-            if (val.length < 6) {
-                eventContainer.classList.add('opacity-50', 'pointer-events-none');
-                eventSelect.innerHTML = '<option value="" disabled selected>-- Enter full ID --</option>';
-                msg.innerText = "Enter ID to load your registered events.";
-                msg.className = "text-[10px] text-slate-500 mt-1";
-                loadIcon.classList.add('hidden');
-                checkIcon.classList.add('hidden');
-                return;
-            }
-
-            // Show loading state
-            loadIcon.classList.remove('hidden');
-            checkIcon.classList.add('hidden');
-            msg.innerText = "Verifying ID in cloud...";
-            msg.className = "text-[10px] text-amber-500 mt-1 font-bold animate-pulse";
-
-            // Debounce search
-            searchTimeout = setTimeout(async () => {
-                try {
-                    const q = window.fbDB.query(window.fbDB.collection(window.fbDB.db, 'universal_attendees'), window.fbDB.where('regId', '==', fullId));
-                    const snap = await window.fbDB.getDocs(q);
-                    
-                    loadIcon.classList.add('hidden');
-
-                    if (snap.empty) { 
-                        msg.innerText = "ID not found. Please verify your Registration ID.";
-                        msg.className = "text-[10px] text-red-400 mt-1 font-bold";
-                        eventContainer.classList.add('opacity-50', 'pointer-events-none');
-                        eventSelect.innerHTML = '<option value="" disabled selected>-- ID Not Found --</option>';
-                        return; 
-                    }
-
-                    const userDoc = snap.docs[0];
-                    currentUserDocId = userDoc.id;
-                    const userData = userDoc.data();
-                    const registeredEvents = userData.events || [];
-
-                    // Filter to strictly ONLY events that require file submissions
-                    const submittableEventNames = ["PPT Presentation", "Tech Memes", "Techmeme", "Poster Making", "Dance", "Photography"];
-                    const allowedEvents = registeredEvents
-                        .map(e => e.eventName)
-                        .filter(eventName => submittableEventNames.includes(eventName));
-
-                    if (allowedEvents.length === 0) {
-                        msg.innerText = "Valid ID, but no file uploads required for your registered events.";
-                        msg.className = "text-[10px] text-amber-400 mt-1 font-bold";
-                        eventContainer.classList.add('opacity-50', 'pointer-events-none');
-                        eventSelect.innerHTML = '<option value="" disabled selected>-- No uploads needed --</option>';
-                        return;
-                    }
-
-                    checkIcon.classList.remove('hidden');
-                    msg.innerText = "ID Verified! Welcome, " + userData.name.split(" ")[0];
-                    msg.className = "text-[10px] text-emerald-400 mt-1 font-bold tracking-widest uppercase";
-
-                    // Populate Dropdown
-                    eventContainer.classList.remove('opacity-50', 'pointer-events-none');
-                    let optionsHtml = '<option value="" disabled selected>-- Select Your Event --</option>';
-                    allowedEvents.forEach(ev => {
-                        optionsHtml += `<option value="${ev}">${ev}</option>`;
-                    });
-                    eventSelect.innerHTML = optionsHtml;
-
-                } catch (e) {
-                    console.error(e);
-                    loadIcon.classList.add('hidden');
-                    msg.innerText = "Network error. Check connection.";
-                    msg.className = "text-[10px] text-red-400 mt-1 font-bold";
-                }
-            }, 600); // 600ms debounce
-        };
-
-        // 2. Strict File Rules based on Event
-        window.updateFileConstraints = function() {
-            const ev = document.getElementById('event-name').value;
-            const uploadArea = document.getElementById('upload-area');
-            const fileInput = document.getElementById('file-input');
-            const subInst = document.getElementById('file-sub-instruction');
-            
-            window.clearFile();
-            if (!ev) return;
-            
-            uploadArea.classList.remove('opacity-50', 'pointer-events-none');
-            
-            if (ev === "Dance") { 
-                fileInput.accept = ".mp3, .wav"; 
-                subInst.innerHTML = "Accepts: <b>.MP3, .WAV</b> (Max 4 Mins)"; 
-            }
-            else if (ev === "PPT Presentation") { 
-                fileInput.accept = ".ppt, .pptx, .pdf"; 
-                subInst.innerHTML = "Accepts: <b>.PPT, .PPTX, .PDF</b>"; 
-            }
-            else if (ev === "Tech Memes" || ev === "Techmeme") { 
-                fileInput.accept = "video/mp4, video/quicktime, .mp4, .mov, .mkv"; 
-                subInst.innerHTML = "Accepts: <b>.MP4, .MOV, .MKV</b> (Max 50MB)"; 
-            }
-            else if (ev === "Poster Making" || ev === "Photography") { 
-                fileInput.accept = ".jpg, .jpeg, .png, .zip"; 
-                subInst.innerHTML = "Accepts: <b>.JPG, .PNG</b> or <b>.ZIP</b> (for multiples)"; 
-            }
-            else {
-                // Fallback for unexpected events
-                fileInput.accept = "*";
-                subInst.innerHTML = "Max Size: 30MB";
-            }
-        };
-
-        // 3. Drag & Drop Mechanics
-        const dropZone = document.getElementById('drop-zone');
-        
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, preventDefaults, false);
-        });
-
-        function preventDefaults (e) { e.preventDefault(); e.stopPropagation(); }
-
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'), false);
-        });
-
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'), false);
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            const dt = e.dataTransfer;
-            const files = dt.files;
-            
-            if (files.length > 1) {
-                alert("Please drop only 1 file. If you have multiple files, compress them into a .ZIP first.");
-                return;
-            }
-            
-            if (files.length === 1) {
-                // Manually trigger the validation workflow
-                validateAndProcessFile(files[0]);
-            }
-        });
-
-        // Manual File Selection wrapper
-        window.handleFileSelection = function(event) {
-            if (event.target.files.length === 0) return;
-            validateAndProcessFile(event.target.files[0]);
-        };
-
-        // 4. Advanced Validation Logic
-        function validateAndProcessFile(file) {
-            const ev = document.getElementById('event-name').value;
-            const ext = file.name.toLowerCase().split('.').pop();
-            
-            // Dynamic max size: 50MB for video memes, 30MB default for everything else
-            let maxSizeMB = 30;
-            if (ev === "Tech Memes" || ev === "Techmeme") {
-                maxSizeMB = 50;
-            }
-            
-            // Limit check to prevent browser crashing
-            if (file.size > maxSizeMB * 1024 * 1024) { 
-                alert(`⚠️ File is too large!\n\nYour file is ${(file.size/1024/1024).toFixed(1)}MB. Maximum limit for ${ev} is ${maxSizeMB}MB.`); 
-                window.clearFile();
-                return; 
-            }
-
-            // DANCE RULES: MP3/WAV, Max 4 Mins
-            if (ev === "Dance") {
-                if (ext !== 'mp3' && ext !== 'wav') {
-                    alert("⚠️ Invalid Format for Dance!\n\nPlease upload a single .mp3 or .wav audio file.");
-                    window.clearFile(); return;
-                }
-                
-                // Read audio duration
-                const audio = new Audio();
-                audio.src = URL.createObjectURL(file);
-                audio.onloadedmetadata = function() {
-                    if (audio.duration > 241) { // Allow 1 second buffer (4 mins = 240s)
-                        alert(`⚠️ Audio Time Limit Exceeded!\n\nYour track is ${(audio.duration/60).toFixed(2)} minutes long. The strict limit is 4 minutes.`);
-                        window.clearFile();
-                    } else {
-                        window.acceptFile(file);
-                    }
-                };
-                audio.onerror = function() {
-                    alert("Error reading audio file. Please try another format.");
-                    window.clearFile();
-                };
-                return; // Wait for async metadata
-            }
-
-            // PPT RULES: Only PDF/PPT
-            else if (ev === "PPT Presentation") {
-                if (ext !== 'ppt' && ext !== 'pptx' && ext !== 'pdf') {
-                    alert("⚠️ Invalid Format for PPT!\n\nPlease upload exactly 1 .pdf, .ppt, or .pptx file.");
-                    window.clearFile(); return;
-                }
-            }
-
-            // TECH MEMES RULES: Only Video Files (MP4, MOV, MKV)
-            else if (ev === "Tech Memes" || ev === "Techmeme") {
-                if (ext !== 'mp4' && ext !== 'mov' && ext !== 'mkv') {
-                    alert(`⚠️ Invalid Format for ${ev}!\n\nPlease upload a video file (.mp4, .mov, .mkv).`);
-                    window.clearFile(); return;
-                }
-            }
-
-            // CREATIVE RULES (Poster, Photo): Single IMG or ZIP
-            else if (ev === "Poster Making" || ev === "Photography") {
-                if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png' && ext !== 'zip') {
-                    alert(`⚠️ Invalid Format for ${ev}!\n\nUpload a single image (.jpg, .png) OR if you have multiple images, compress them into a single .ZIP file and upload that.`);
-                    window.clearFile(); return;
-                }
-            }
-
-            // If passed all rules, accept it
-            window.acceptFile(file);
+        // Helper function to extract base64 from the standard <img> tag
+        function getBase64Image(imgElement) {
+            const canvas = document.createElement("canvas");
+            canvas.width = imgElement.naturalWidth || imgElement.width;
+            canvas.height = imgElement.naturalHeight || imgElement.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(imgElement, 0, 0);
+            return canvas.toDataURL("image/jpeg", 1.0);
         }
 
-        window.acceptFile = function(file) {
-            selectedFile = file;
-            document.getElementById('file-name-display').innerText = file.name;
-            document.getElementById('file-preview').classList.remove('hidden');
-            document.getElementById('submit-btn').disabled = false;
-            document.getElementById('drop-zone').classList.add('border-emerald-500/50', 'bg-emerald-900/10');
-            document.getElementById('upload-icon').classList.replace('text-slate-500', 'text-emerald-500');
-            lucide.createIcons();
+        window.previewPDF = function() {
+            if (!generatedJsPdfInstance) return;
+            const blob = generatedJsPdfInstance.output('blob');
+            const blobUrl = URL.createObjectURL(blob);
+            window.open(blobUrl, '_blank');
         };
 
-        window.clearFile = function() {
-            selectedFile = null;
-            document.getElementById('file-input').value = "";
-            document.getElementById('file-preview').classList.add('hidden');
-            document.getElementById('submit-btn').disabled = true;
-            document.getElementById('drop-zone').classList.remove('border-emerald-500/50', 'bg-emerald-900/10');
-            document.getElementById('upload-icon').classList.replace('text-emerald-500', 'text-slate-500');
+        window.downloadPDF = function() {
+            if (!generatedJsPdfInstance || !generatedPDFFileName) return;
+            generatedJsPdfInstance.save(generatedPDFFileName);
         };
 
-        window.processFirebaseUpload = async function(e) {
-            e.preventDefault();
-            const fullRegId = "TF2K26-" + document.getElementById('reg-id').value.trim().toUpperCase();
-            const eventName = document.getElementById('event-name').value;
-            const btn = document.getElementById('submit-btn');
-            const loadUI = document.getElementById('loading-ui');
-            const loadText = document.getElementById('loading-text');
-
-            if (!selectedFile || !currentUserDocId) return;
-
-            btn.classList.add('hidden');
-            loadUI.classList.remove('hidden');
-            loadUI.classList.add('flex');
+        window.resetPDFUI = function() {
+            const statusUI = document.getElementById('pdf-status');
+            const btn = document.getElementById('generate-pdf-btn');
             
-            // Because ID is already verified locally, jump straight to upload
-            loadText.innerText = "Initializing Secure Connection...";
-            document.getElementById('progress-bar-container').classList.remove('hidden');
+            statusUI.classList.add('hidden');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-not-allowed');
             
+            // Reset internals
+            document.getElementById('pdf-spinner').classList.remove('hidden');
+            document.getElementById('pdf-success-icon').classList.add('hidden');
+            document.getElementById('pdf-progress-container').classList.remove('hidden');
+            document.getElementById('pdf-action-buttons').classList.add('hidden');
+            document.getElementById('close-pdf-status').classList.add('hidden');
+            
+            generatedJsPdfInstance = null;
+            generatedPDFFileName = null;
+        };
+
+        window.generateTicketPDF = async function() {
+            const btn = document.getElementById('generate-pdf-btn');
+            const statusUI = document.getElementById('pdf-status');
+            const titleEl = document.getElementById('pdf-status-title');
+            const descEl = document.getElementById('pdf-status-desc');
+            const progBar = document.getElementById('pdf-progress-bar');
+            
+            const baseImgElement = document.getElementById('base-ticket-img');
+            if (!baseImgElement.complete || baseImgElement.naturalHeight === 0) {
+                alert("Error: 'ticket_template.jpg' could not be found! Please make sure your design is saved in the same folder with that exact name.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            statusUI.classList.remove('hidden');
+            progBar.style.width = '5%';
+
             try {
-                const ext = selectedFile.name.split('.').pop();
-                // FORMAT: RegNo_EventName.ext
-                const cleanEventName = eventName.replace(/\s+/g, '_');
-                const newName = `${fullRegId}_${cleanEventName}.${ext}`;
-                const storagePath = `event_submissions/${cleanEventName}/${newName}`;
+                titleEl.innerText = "Fetching Database Records...";
                 
-                const storageRef = window.fbStorage.ref(window.fbStorage.storage, storagePath);
-                const uploadTask = window.fbStorage.uploadBytesResumable(storageRef, selectedFile);
+                // 1. Fetch Unique Participants from Firestore
+                const querySnapshot = await window.fbDB.getDocs(window.fbDB.collection(window.fbDB.db, "universal_attendees"));
+                const uniqueAttendeesSet = new Set();
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().regId) uniqueAttendeesSet.add(doc.data().regId);
+                });
+                const attendees = Array.from(uniqueAttendeesSet);
 
-                uploadTask.on('state_changed', 
-                    (s) => {
-                        const prog = (s.bytesTransferred / s.totalBytes) * 100;
-                        document.getElementById('progress-bar').style.width = prog + '%';
-                        loadText.innerText = `Uploading... ${Math.round(prog)}%`;
-                    },
-                    (err) => { 
-                        console.error(err);
-                        alert("Storage Error! Check your internet connection."); 
-                        btn.classList.remove('hidden'); 
-                        loadUI.classList.add('hidden');
-                    },
-                    async () => {
-                        try {
-                            const downloadURL = await window.fbStorage.getDownloadURL(uploadTask.snapshot.ref);
-                            await window.fbDB.setDoc(window.fbDB.doc(window.fbDB.db, 'universal_attendees', currentUserDocId), {
-                                submissions: {
-                                    [eventName]: {
-                                        fileName: newName,
-                                        url: downloadURL,
-                                        submittedAt: new Date().toISOString()
-                                    }
-                                }
-                            }, { merge: true });
-                        } catch (e) {
-                            console.log("DB update bypassed.");
+                if (attendees.length === 0) {
+                    alert("No registrations found in the database yet.");
+                    throw new Error("Empty DB");
+                }
+
+                titleEl.innerText = `Preparing ${attendees.length} High-Res Tickets...`;
+                progBar.style.width = '10%';
+
+                // Convert base template to data URL for jsPDF
+                const baseImgData = getBase64Image(baseImgElement);
+
+                // 2. Initialize jsPDF (A4 Portrait)
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4'); // A4 Size: 210mm wide x 297mm high
+                
+                const imgRatio = baseImgElement.naturalHeight / baseImgElement.naturalWidth;
+                
+                // ---------------------------------------------------------
+                // DYNAMIC CONFIGURATION: 12 Tickets Per Page (Maximum Size)
+                // ---------------------------------------------------------
+                const ticketsPerPage = 12;
+                const cols = 2;
+                const rows = 6;
+                
+                // Minimal gaps to utilize maximum space without overlapping
+                const xGap = 2; 
+                const yGap = 2; 
+                
+                // Max available width and height for the grid (5mm padding from edges)
+                const maxGridWidth = 210 - 10;  
+                const maxGridHeight = 297 - 10; 
+                
+                // Calculate max possible width/height per ticket
+                let ticketWidth = (maxGridWidth - (cols - 1) * xGap) / cols;
+                let ticketHeight = ticketWidth * imgRatio;
+                
+                // If it exceeds page height, constrain by height instead
+                if ((ticketHeight * rows) + (yGap * (rows - 1)) > maxGridHeight) {
+                    ticketHeight = (maxGridHeight - (rows - 1) * yGap) / rows;
+                    ticketWidth = ticketHeight / imgRatio;
+                }
+                
+                // Auto-center the grid perfectly on the A4 page
+                const actualGridWidth = (ticketWidth * cols) + (xGap * (cols - 1));
+                const actualGridHeight = (ticketHeight * rows) + (yGap * (rows - 1));
+                
+                const xMargin = (210 - actualGridWidth) / 2;
+                const yMargin = (297 - actualGridHeight) / 2;
+                
+                // PERCENTAGE-BASED PLACEMENT
+                const QR_SIZE_PCT = 0.189; // Exactly 8% increase from base 17.5%
+                const QR_X_PCT = 0.048;    // Centered horizontally based on new size
+                const QR_Y_PCT = 0.353;    // Centered vertically based on new size
+                
+                // ADJUSTED TEXT ALIGNMENT (Centered to perfectly sit on the horizontal line)
+                const TEXT_X_PCT = 0.48;   // Centered horizontally relative to the black area
+                const TEXT_Y_PCT = 0.865;  // Moved DOWN to rest exactly on the gold line
+                // ---------------------------------------------------------
+
+                let ticketCountOnPage = 0;
+                const qrContainer = document.getElementById('temp-qr-container');
+
+                // 3. Loop through and Stamp each ticket
+                for (let i = 0; i < attendees.length; i++) {
+                    const currentRegId = attendees[i];
+                    
+                    // Update UI
+                    descEl.innerText = `Stamping Curvy QR: ${currentRegId} (${i + 1}/${attendees.length})`;
+                    progBar.style.width = `${10 + ((i / attendees.length) * 85)}%`;
+
+                    // Generate Modern Curvy QR Canvas
+                    qrContainer.innerHTML = '';
+                    const qrStyling = new QRCodeStyling({
+                        width: 300,
+                        height: 300,
+                        data: currentRegId,
+                        margin: 0, // No margin, we handle it in jsPDF for curvy borders
+                        qrOptions: {
+                            errorCorrectionLevel: "H"
+                        },
+                        dotsOptions: {
+                            type: "rounded", // Smooth inner dots
+                            color: "#000000" // Classic Black
+                        },
+                        backgroundOptions: {
+                            color: "transparent" // Transparent so we can draw our own rounded white box behind it
+                        },
+                        cornersSquareOptions: {
+                            type: "extra-rounded", // Curvy corner tracking boxes
+                            color: "#000000" // Classic Black
+                        },
+                        cornersDotOptions: {
+                            type: "dot", // Round inner corner dots
+                            color: "#000000" // Classic Black
                         }
+                    });
 
-                        // Success Message Adjusted Here
-                        document.getElementById('upload-form').classList.add('hidden');
-                        document.getElementById('success-screen').classList.remove('hidden');
-                        document.getElementById('success-screen').classList.add('flex');
+                    qrStyling.append(qrContainer);
+
+                    // Wait a tiny bit for the curvy QR canvas to draw
+                    await new Promise(r => setTimeout(r, 40)); 
+                    const qrCanvas = qrContainer.querySelector('canvas');
+                    const qrDataURL = qrCanvas.toDataURL('image/png');
+
+                    // Handle Pagination
+                    if (ticketCountOnPage >= ticketsPerPage && ticketCountOnPage > 0) {
+                        pdf.addPage();
+                        ticketCountOnPage = 0;
                     }
-                );
-            } catch (err) {
-                btn.classList.remove('hidden');
-                loadUI.classList.add('hidden');
+
+                    // Calculate Grid Position (X, Y)
+                    const currentCol = ticketCountOnPage % cols;
+                    const currentRow = Math.floor(ticketCountOnPage / cols);
+                    
+                    const currentX = xMargin + currentCol * (ticketWidth + xGap);
+                    const currentY = yMargin + currentRow * (ticketHeight + yGap);
+
+                    // A) Stamp the Base Template Image
+                    pdf.addImage(baseImgData, 'JPEG', currentX, currentY, ticketWidth, ticketHeight);
+                    
+                    // Draw a faint border around the ticket for easy scissors cutting
+                    pdf.setDrawColor(200, 200, 200);
+                    pdf.setLineWidth(0.2);
+                    pdf.rect(currentX, currentY, ticketWidth, ticketHeight, 'S');
+                    
+                    // B) Stamp the Modern Curvy QR Code
+                    const qrSize = ticketWidth * QR_SIZE_PCT;
+                    const qrX = currentX + (ticketWidth * QR_X_PCT);
+                    const qrY = currentY + (ticketHeight * QR_Y_PCT);
+                    
+                    // Draw a curvy white background box behind the QR
+                    const padding = 1.5; // Controlled padding
+                    pdf.setFillColor(255, 255, 255);
+                    pdf.roundedRect(qrX - padding, qrY - padding, qrSize + (padding * 2), qrSize + (padding * 2), 2, 2, 'F');
+                    
+                    // Stamp the transparent, curvy QR code on top
+                    pdf.addImage(qrDataURL, 'PNG', qrX, qrY, qrSize, qrSize);
+                    
+                    // C) Stamp the Vector Text (Now perfectly resting on the line and centered)
+                    pdf.setTextColor(200, 149, 40); 
+                    pdf.setFont("helvetica", "bold");
+                    
+                    // Scale font size proportionally if ticket scales up
+                    const dynamicFontSize = 10.5 * (ticketWidth / 93);
+                    pdf.setFontSize(dynamicFontSize);
+                    
+                    const textX = currentX + (ticketWidth * TEXT_X_PCT);
+                    const textY = currentY + (ticketHeight * TEXT_Y_PCT);
+                    
+                    pdf.text(currentRegId, textX, textY, { align: "center" });
+                    
+                    ticketCountOnPage++;
+                }
+
+                // 4. Update UI for Preview / Download
+                generatedJsPdfInstance = pdf;
+                generatedPDFFileName = `Tech_Fete_Printable_Tickets.pdf`;
+
+                titleEl.innerText = "Tickets Generated Successfully!";
+                progBar.style.width = '100%';
+                descEl.innerText = "You can now preview the tickets or download them directly.";
+
+                document.getElementById('pdf-spinner').classList.add('hidden');
+                document.getElementById('pdf-success-icon').classList.remove('hidden');
+                document.getElementById('pdf-progress-container').classList.add('hidden');
+                document.getElementById('pdf-action-buttons').classList.remove('hidden');
+                document.getElementById('close-pdf-status').classList.remove('hidden');
+                
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error(error);
+                if (error.message !== "Empty DB") {
+                    alert("An error occurred while generating the PDF. Please check the console.");
+                }
+                window.resetPDFUI();
             }
         };
     </script>
