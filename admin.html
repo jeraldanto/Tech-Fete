@@ -68,13 +68,37 @@
                 </div>
             </div>
 
+            <!-- LIVE STATISTICS ROW -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl flex items-center justify-between shadow-inner">
+                    <div>
+                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Total Registrations</p>
+                        <h3 class="text-4xl font-black text-amber-500 brand-font tracking-wider" id="stat-total-regs"><i data-lucide="loader-2" class="w-6 h-6 animate-spin"></i></h3>
+                        <p class="text-[10px] text-slate-500 mt-1 font-bold uppercase">Unique Participants</p>
+                    </div>
+                    <div class="w-14 h-14 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-500 border border-amber-500/20">
+                        <i data-lucide="users" class="w-7 h-7"></i>
+                    </div>
+                </div>
+                <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl flex items-center justify-between shadow-inner">
+                    <div>
+                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Total Revenue</p>
+                        <h3 class="text-xl font-black text-emerald-500 tracking-wide mt-1">See Google Sheet</h3>
+                        <p class="text-[10px] text-slate-500 mt-2 font-bold uppercase">Check the 'Master Log' Tab</p>
+                    </div>
+                    <div class="w-14 h-14 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500 border border-emerald-500/20">
+                        <i data-lucide="indian-rupee" class="w-7 h-7"></i>
+                    </div>
+                </div>
+            </div>
+
             <!-- Grid for Dashboard Actions -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 <!-- Action 1: Scanner -->
                 <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all text-center flex flex-col justify-between group">
                     <div>
-                        <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                        <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform border border-amber-500/20">
                             <i data-lucide="scan-line" class="w-8 h-8 text-amber-400"></i>
                         </div>
                         <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Launch Scanner</h3>
@@ -90,7 +114,7 @@
                 <!-- Action 2: Generate Tickets PDF -->
                 <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-blue-500/30 transition-all text-center flex flex-col justify-between group">
                     <div>
-                        <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                        <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform border border-blue-500/20">
                             <i data-lucide="printer" class="w-8 h-8 text-blue-400"></i>
                         </div>
                         <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Print Event Tickets</h3>
@@ -172,6 +196,7 @@
                 document.getElementById('auth-section').classList.add('hidden');
                 document.getElementById('dashboard-section').classList.remove('hidden');
                 lucide.createIcons();
+                window.fetchStats(); // Fetch the Live Stats upon login
             } else {
                 alert("Incorrect Admin PIN.");
                 document.getElementById('admin-pin').value = '';
@@ -183,6 +208,17 @@
                 window.verifyAdmin();
             }
         });
+
+        // Function to fetch count of unique participants from Firestore
+        window.fetchStats = async function() {
+            try {
+                const snap = await window.fbDB.getDocs(window.fbDB.collection(window.fbDB.db, "universal_attendees"));
+                document.getElementById('stat-total-regs').innerText = snap.size;
+            } catch (e) {
+                console.error("Stats Error:", e);
+                document.getElementById('stat-total-regs').innerHTML = `<span class="text-xl text-red-500">Error</span>`;
+            }
+        };
     </script>
 
     <!-- PURE NATIVE PDF GENERATION LOGIC -->
