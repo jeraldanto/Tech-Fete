@@ -83,7 +83,7 @@
             </div>
             
             <div class="flex items-center gap-2 md:gap-4">
-                <a href="submit.html" target="_blank" class="hidden md:flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-900 bg-amber-500 rounded-full hover:brightness-110 transition-all tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] mr-2">
+                <a href="submit.html" target="_blank" class="hidden md:flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-slate-900 bg-amber-500 rounded-full hover:brightness-110 transition-all tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] mr-2 z-50">
                     <i data-lucide="upload-cloud" class="w-4 h-4"></i> UPLOAD
                 </a>
 
@@ -123,7 +123,7 @@
     </nav>
 
     <!-- LIVE COUNTDOWN TIMER BANNER -->
-    <div id="countdown-banner" class="fixed top-[70px] md:top-[85px] left-0 w-full z-40 bg-gradient-to-r from-blue-950/90 via-slate-900/95 to-indigo-950/90 backdrop-blur-md border-b border-blue-500/20 py-2 md:py-3 shadow-[0_5px_20px_rgba(59,130,246,0.15)] transform transition-transform duration-500">
+    <div id="countdown-banner" class="fixed top-[70px] md:top-[85px] left-0 w-full z-40 bg-gradient-to-r from-blue-950/90 via-slate-900/95 to-indigo-950/90 backdrop-blur-md border-b border-blue-500/20 py-2 md:py-3 shadow-[0_5px_20px_rgba(59,130,246,0.15)] transform transition-transform duration-500 hidden opacity-0 transition-opacity">
         <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center md:justify-between text-center md:text-left gap-2 md:gap-0">
             <div class="flex items-center text-blue-300 font-bold text-xs md:text-sm tracking-widest uppercase">
                 <i data-lucide="timer" class="w-4 h-4 md:w-5 md:h-5 mr-2 animate-pulse"></i> 
@@ -164,13 +164,27 @@
                 <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Home
             </a>
 
+            <!-- Registration Closed Banner (Hidden by default, shown if closed) -->
+            <div id="closed-banner-info" class="hidden mb-12 bg-slate-900/80 border border-amber-500/30 rounded-2xl p-8 text-center shadow-[0_0_30px_rgba(245,158,11,0.15)] relative overflow-hidden backdrop-blur-sm">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-bl-full -z-10"></div>
+                <div class="w-16 h-16 bg-amber-500/10 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-amber-500/30">
+                    <i data-lucide="lock" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-black text-white brand-font tracking-wide mb-3">ONLINE REGISTRATIONS ARE CLOSED</h3>
+                <p class="text-amber-400 font-black text-lg md:text-xl uppercase tracking-widest mb-4 animate-pulse"><i data-lucide="map-pin" class="inline w-5 h-5 mr-1 -mt-1"></i> ON-SPOT REGISTRATIONS ARE AVAILABLE!</p>
+                <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto mb-6 leading-relaxed">Online event registrations have officially ended. You can still browse the events and read the rules below. If you need to submit files (like PPTs, Memes, or Photos) for your registered events, please use the Upload Portal.</p>
+                <a href="submit.html" target="_blank" class="inline-flex items-center justify-center bg-amber-500 text-slate-950 font-black px-8 py-4 rounded-xl uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:scale-105 active:scale-95">
+                    Go to Upload Portal <i data-lucide="upload-cloud" class="w-5 h-5 ml-3"></i>
+                </a>
+            </div>
+
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 space-y-6 md:space-y-0 border-b border-amber-500/10 pb-8" id="events">
                 <div>
                     <h2 class="text-4xl md:text-5xl font-bold mb-4 flex items-center text-white brand-font tracking-wide">
                         <span class="w-2 h-12 bg-amber-500 mr-6 rounded-full"></span>
                         EVENT CATEGORIES
                     </h2>
-                    <p class="text-slate-400 ml-8 text-lg">Filter through our diverse range of competitions and add them to your cart.</p>
+                    <p class="text-slate-400 ml-8 text-lg">Filter through our diverse range of competitions and check out the rules.</p>
                 </div>
                 
                 <div class="flex flex-wrap gap-2" id="category-filters">
@@ -210,7 +224,9 @@
                     <!-- Social Media Partners -->
                     <div class="bg-black/40 border border-slate-800 p-6 rounded-2xl hover:border-pink-500/30 transition-all group relative overflow-hidden">
                         <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/5 rounded-bl-full -z-10 group-hover:scale-125 transition-transform duration-500"></div>
-                        <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest mb-4 flex items-center"><i data-lucide="instagram" class="w-4 h-4 mr-2"></i> Social Media Partners</h3>
+                        <h3 class="text-xs font-black text-pink-500 uppercase tracking-widest mb-4 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg> Social Media Partners
+                        </h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <a href="https://www.instagram.com/pondy_reveal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="flex items-center bg-slate-900/80 border border-slate-700 p-2 rounded-xl hover:border-pink-500/50 hover:bg-slate-800 transition-all group/smedia shadow-sm">
                                 <img src="pyreveals.png" alt="Pondy Reveals" class="w-10 h-10 rounded-lg object-cover mr-3">
@@ -319,7 +335,7 @@
                 
                 <!-- Column 1: Branding -->
                 <div class="col-span-1 md:col-span-1">
-                    <a href="index.html" class="flex items-center mb-6 cursor-pointer">
+                    <div class="flex items-center mb-6">
                          <div class="w-10 h-10 mr-3 relative">
                             <svg viewBox="0 0 100 100" fill="none" class="w-full h-full">
                                 <path d="M 10 15 H 48 V 75 L 50 100 L 32 80 V 35 H 10 V 15 Z" fill="#f59e0b" />
@@ -330,18 +346,18 @@
                             <span class="block text-2xl brand-font font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 tracking-wider py-1">TECH FÊTE</span>
                             <span class="text-xs text-amber-500/80 tracking-[0.3em] font-bold">2K26</span>
                         </div>
-                    </a>
+                    </div>
                     <p class="text-slate-500 mb-6 text-sm leading-relaxed font-medium">
                         Pope John Paul II College of Education<br>
                         Puducherry - 605 010<br>
                         Dept of Computer Applications
                     </p>
                     <div class="flex space-x-3">
-                        <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        <a href="https://www.instagram.com/techfete._.2k26?igsh=YXoxcnBmYTRxOGxq" target="_blank" rel="noopener noreferrer" title="Visit our Instagram" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                         </a>
-                        <a href="#" onclick="window.openEmail(event)" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        <a href="#" onclick="window.openEmail(event)" title="Email Us" class="relative z-50 cursor-pointer w-10 h-10 border border-amber-500/20 rounded-full flex items-center justify-center hover:bg-amber-500 hover:text-slate-950 transition-all text-amber-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                         </a>
                     </div>
                 </div>
@@ -367,11 +383,11 @@
                                 <div class="flex items-center">
                                     <i data-lucide="phone" class="w-4 h-4 mr-3 text-amber-600"></i>
                                     <div class="flex flex-col">
-                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Ms. Pravina</span>
-                                        <span class="font-bold tracking-wide text-white text-xs">+91 91504 06749</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold mb-0.5">Ms. Pravina </span>
+                                        <span class="font-bold tracking-wide text-white text-xs">+91 84389 94720</span>
                                     </div>
                                 </div>
-                                <button onclick="window.copyToClipboard('+91 91504 06749', this)" class="p-1.5 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded transition-all relative z-50" title="Copy Number">
+                                <button onclick="window.copyToClipboard('+91 84389 94720', this)" class="p-1.5 text-slate-500 hover:text-amber-400 bg-black/20 hover:bg-black/40 rounded transition-all relative z-50" title="Copy Number">
                                     <i data-lucide="copy" class="w-3 h-3 copy-icon"></i>
                                     <i data-lucide="check" class="w-3 h-3 check-icon hidden text-emerald-500"></i>
                                 </button>
@@ -450,7 +466,7 @@
                                 <i data-lucide="terminal" class="w-6 h-6"></i>
                             </div>
                             <div class="text-right">
-                                <div class="text-xl font-black text-white">₹350</div>
+                                <div class="text-xl font-black text-white">₹400</div>
                                 <div class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">3 Events</div>
                             </div>
                         </div>
@@ -523,34 +539,10 @@
                         </ul>
                         <button onclick="window.applyWizardBundle([12, 3])" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl font-black uppercase tracking-widest text-xs transition-colors shadow-[0_0_15px_rgba(245,158,11,0.3)]">Auto-Fill Cart</button>
                     </div>
-
-                    <!-- FEATURE 3: BRIBE THE CO-ORDINATOR BUTTON -->
-                    <div class="md:col-span-2 bg-red-950/20 p-4 rounded-2xl border border-red-500/30 hover:border-red-500/80 transition-all cursor-pointer relative overflow-hidden group mt-4" onclick="alert('Nice try. Go study your C programs. 💻')">
-                        <div class="absolute inset-0 bg-red-500/5 group-hover:bg-red-500/10 transition-colors"></div>
-                        <div class="flex flex-col sm:flex-row justify-between items-center relative z-10 gap-4 sm:gap-0 text-center sm:text-left">
-                            <div class="flex flex-col sm:flex-row items-center">
-                                <div class="w-12 h-12 bg-red-500/20 text-red-500 rounded-xl flex items-center justify-center sm:mr-4 mb-2 sm:mb-0 shrink-0">
-                                    <i data-lucide="briefcase" class="w-6 h-6"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-lg font-black text-red-400 uppercase tracking-widest">Premium Pass: Bribe the Co-ordinator</h3>
-                                    <p class="text-xs text-slate-400">Guaranteed 1st place in all events. (Don't tell anyone).</p>
-                                </div>
-                            </div>
-                            <div class="text-2xl font-black text-white bg-black/50 px-4 py-2 rounded-xl border border-red-500/20">₹5,00,000</div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- FEATURE 4: THE FORBIDDEN DO NOT CLICK BUTTON -->
-    <button onclick="document.body.style.transition='transform 1.5s ease-in-out'; document.body.style.transform='rotate(360deg) scale(0.2)'; setTimeout(()=>{document.body.style.transform='none'}, 1500);" class="fixed top-[150px] right-0 bg-red-600 hover:bg-red-500 text-white text-[10px] font-black px-2 py-8 rounded-l-xl uppercase tracking-widest z-[150] shadow-[-5px_0_15px_rgba(220,38,38,0.5)] transition-all flex flex-col items-center justify-center gap-1 group overflow-hidden" style="writing-mode: vertical-rl; text-orientation: mixed;">
-        <i data-lucide="alert-triangle" class="w-3 h-3 mb-2 animate-pulse text-white"></i>
-        DO NOT CLICK
-    </button>
 
     <!-- Event Detail Modal -->
     <div id="event-modal" onclick="if(event.target === this) window.closeModal()" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-6 bg-black/90 backdrop-blur-md opacity-0 transition-opacity duration-300">
@@ -738,7 +730,7 @@
 
         // UPDATED EVENT RULES AND CONSTRAINTS BASED ON NEW REQUIREMENTS
         const eventsData = [
-            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, maxLimit: 12, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12 - 15 slides. (max)", "The PPT must be submitted on or before March 26ᵗʰ 5 p.m through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met, it will not be considered for presentation.", "Evaluation will be based on Content Quality, Technical Knowledge, Presentation Skills, and Responses during the Q&A session.", "The participants will be given 3 to 5 mins of time to present their slides.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
+            { id: 1, title: "PPT Presentation", category: "Technical", fee: "150", minTeam: 2, maxTeam: 2, shortDesc: "Present your innovative ideas on trending tech topics.", fullDesc: "A platform to showcase your research, technical knowledge, and presentation skills on modern technologies.", rules: ["PPT Presentation is a group event with exactly two members per team.", "The presentation must be prepared on one of the following topics: IoT, Blockchain, Quantum Computing, or Cybersecurity, and should contain 12 - 15 slides. (max)", "The PPT must be submitted on or before March 26ᵗʰ 5 p.m through the submission link on the official website.", "Participants are informed to send the file name with their registered ID received via mail.", "If the above format is not met, it will not be considered for presentation.", "Evaluation will be based on Content Quality, Technical Knowledge, Presentation Skills, and Responses during the Q&A session.", "The participants will be given 3 to 5 mins of time to present their slides.", "The judges’ decision will be final."], date: "Mar 28, 2026", venue: "Seminar Hall 1", icon: "monitor" },
             { id: 2, title: "Debugging", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Identify and fix errors in C programs.", fullDesc: "Test your problem-solving ability, debugging skills, and understanding of programming concepts by fixing broken C code.", rules: ["Participants will be given coding snippets containing logical, syntactical, or runtime errors that must be identified and corrected within a duration of 30 minutes.", "Electronic devices such as smart watch, phones are not permitted in this event.", "The objective of the event is to test problem-solving ability, debugging skills, and understanding of programming concepts.", "Internet access or external assistance will not be permitted during the competition,", "The decision of the judges will be final."], date: "Mar 28, 2026", venue: "Computer Lab A", icon: "code" },
             { id: 3, title: "Vibe Coding", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Code a website based on an on-spot topic.", fullDesc: "Showcase your coding speed, logic, and creativity by building a functional solution within a strict time limit.", rules: ["A system with a stable internet connection will be provided for participants; However, participants may also bring and use their own laptops if preferred.", "The website topic will be announced on the spot at the beginning of the event.", "The total duration of the competition will be 10 minutes of prep time and 30 minutes of event time.", "Participants will be evaluated based on the logic and accuracy of the solution, creativity and innovation in approach, code efficiency and optimization, and overall functionality of the final output.", "Proper time management and the ability to clearly explain the solution, will be considered during evaluation."], date: "Mar 28, 2026", venue: "Computer Lab B", icon: "music" },
             { id: 4, title: "Tech Memes", category: "Technical", fee: "100", minTeam: 1, maxTeam: 1, shortDesc: "Create original memes based on tech & programming.", fullDesc: "Combine humor with technology. Create original memes based on programming, college life, or tech trends.", rules: ["Participants must create an original meme based on Technology, Programming, or Internet Culture.", "Tech Memes must be submitted in MP4 / Video format on or before 26th March 5 p.m through the official event website.", "Entries must not contain offensive, political, or inappropriate content, and copied memes will lead to disqualification.", "Multiple entries (Max 3) from the same participant are allowed.", "Participants are informed to send the file name with their registered ID received via mail."], date: "Mar 28, 2026", venue: "Submit Portal", icon: "video" },
@@ -1007,7 +999,7 @@
                 onClickAction = "void(0)";
                 cursorStyle = "cursor-not-allowed opacity-60";
             } else if (isOnlineRegistrationClosed && !isSelected) {
-                btnText = "Online Registration Closed (Available On-Spot)";
+                btnText = "Registrations Closed";
                 btnColor = "bg-slate-800 text-slate-500 border border-slate-700";
                 onClickAction = "void(0)";
                 cursorStyle = "cursor-not-allowed opacity-60";
@@ -1021,6 +1013,31 @@
             if (event.maxLimit) {
                 const currentCount = window.eventCounts[event.id] || 0;
                 spotsInfo = `<li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Spots Filled</span> <span class="${isSoldOut ? 'text-red-400' : 'text-emerald-400'} font-bold">${currentCount}/${event.maxLimit}</span></li>`;
+            }
+
+            // DYNAMIC PRICING DISPLAY LOGIC FOR MODAL
+            let feeDisplayHtml = `<span class="font-bold text-emerald-400">₹${event.fee}</span>`;
+            
+            if (event.maxTeam === 1) { // Individual event
+                const indEventsInCart = selectedEventsList.filter(e => e.maxTeam === 1);
+                const isAlreadyInCart = indEventsInCart.some(e => e.id === event.id);
+                
+                if (isAlreadyInCart) {
+                    const effectiveFee = window.calculateSubtotal(selectedEventsList).effectiveFees[event.id];
+                    if (effectiveFee < parseInt(event.fee)) {
+                        feeDisplayHtml = `<div class="flex flex-col items-end"><span class="text-slate-500 line-through text-[10px] mr-1">₹${event.fee}</span><span class="font-bold text-emerald-400">₹${effectiveFee} <span class="text-[9px] text-amber-500 ml-1">(Combo Discount)</span></span></div>`;
+                    } else {
+                        feeDisplayHtml = `<span class="font-bold text-emerald-400">₹${event.fee}</span>`;
+                    }
+                } else {
+                    if (indEventsInCart.length >= 1) {
+                        feeDisplayHtml = `<div class="flex flex-col items-end"><span class="text-slate-500 line-through text-[10px] mr-1">₹${event.fee}</span><span class="font-bold text-emerald-400">₹50 <span class="text-[9px] text-amber-500 ml-1">(Combo Applied)</span></span></div>`;
+                    } else {
+                        feeDisplayHtml = `<div class="flex flex-col items-end leading-tight"><span class="font-bold text-emerald-400">₹${event.fee}</span><span class="text-[9px] text-slate-400 mt-1 max-w-[130px] text-right font-medium">Drops to ₹50 if you select a 2nd solo event!</span></div>`;
+                    }
+                }
+            } else if (event.id === 6) { // Dance
+                feeDisplayHtml = `<div class="flex flex-col items-end leading-tight"><span class="font-bold text-emerald-400">₹100 <span class="text-[10px] text-slate-400 font-normal">(Solo)</span></span><span class="font-bold text-emerald-400 mt-1">₹50 <span class="text-[10px] text-slate-400 font-normal">/ Head (Group)</span></span></div>`;
             }
 
             // EVENT RULES JUSTIFIED - FORMAL STYLING ADDED HERE
@@ -1041,9 +1058,9 @@
                         <h4 class="font-bold text-amber-400 flex items-center mb-4 uppercase text-xs tracking-widest"><i data-lucide="info" class="w-4 h-4 mr-2"></i> Logistics</h4>
                         <ul class="space-y-3 text-sm text-slate-300">
                             <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Date</span> <span class="font-bold">${event.date}</span></li>
-                            <li class="flex justify-between border-b border-white/5 pb-2"><span class="text-slate-500">Team Size</span> <span class="text-amber-400 font-bold">${teamSizeText}</span></li>
+                            <li class="flex justify-between items-center border-b border-white/5 pb-2"><span class="text-slate-500">Team Size</span> <span class="text-amber-400 font-bold">${teamSizeText}</span></li>
                             ${spotsInfo}
-                            <li class="flex justify-between"><span class="text-slate-500">Reg. Fee</span> <span class="font-bold text-emerald-400">₹${event.fee}</span></li>
+                            <li class="flex justify-between items-center pt-1"><span class="text-slate-500">Reg. Fee</span> ${feeDisplayHtml}</li>
                         </ul>
                     </div>
                     <div class="bg-gradient-to-br from-amber-600/10 to-transparent border border-amber-500/20 p-6 rounded-2xl flex flex-col justify-center items-center text-center">
@@ -1088,7 +1105,7 @@
 
         window.toggleEventSelection = function(id) {
             if (isOnlineRegistrationClosed) {
-                alert("Online registrations are closed!\n\nPlease visit the registration desk at the venue for on-spot registrations.");
+                alert("Online registrations are closed! If you are an admin or at the registration desk, please use the Admin Unlock link.");
                 return;
             }
 
@@ -1916,13 +1933,13 @@
             // 2. SEND CONFIRMATION EMAIL (Fixed Authorization Binding)
             if (typeof emailjs !== 'undefined') {
                 // We securely force your Public Key directly into the request
-                emailjs.send('service_8p8w7u3', 'template_ex83rhf', templateParams, 'axvXXO83vzZ-jHNQn')
+                emailjs.send('service_yuv4bf8', 'template_0b7y7bp', templateParams, 'fscZImXYMLYOJPYrq')
                     .then(function() { 
                         console.log('Email sent successfully!'); 
                     }, function(error) { 
                         console.error('EmailJS failed...', error); 
-                        // Alert the user if the email fails (so you know if you hit a monthly limit)
-                        alert("Note: Payment was successful, but the confirmation email failed to send. Please screenshot your success screen.");
+                        const errMsg = error.text || error.message || JSON.stringify(error);
+                        alert("⚠️ EMAIL SEND FAILED ⚠️\n\nYour payment and registration were successfully saved to the database, but your new EmailJS account blocked the confirmation email.\n\nError from EmailJS: " + errMsg + "\n\nTo fix: Please log in to EmailJS, go to 'Email Services', and make sure your Gmail account is 'Connected' and authorized.");
                     })
                     .finally(function() {
                         window.showSuccessScreen(paymentId);
@@ -2008,6 +2025,10 @@
 
             if (!elDays || !elHrs || !elMins || !elSecs) return;
 
+            // Show the banner once initialized
+            banner.classList.remove('hidden', 'opacity-0');
+            banner.classList.add('opacity-100');
+
             const interval = setInterval(function() {
                 const now = new Date().getTime();
                 const distance = destDate - now;
@@ -2061,44 +2082,23 @@
             }, 1000);
         }
 
-        // FEATURE 2: THE HACKER EASTER EGG
-        let typedKeys = "";
-        window.addEventListener('keydown', function(e) {
-            // Ignore if they are typing inside an input field
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
-            if (e.key.length === 1) typedKeys += e.key.toUpperCase();
-            if (typedKeys.length > 10) typedKeys = typedKeys.slice(-10); 
-            
-            if (typedKeys.includes("VIBE") || typedKeys.includes("TECH")) {
-                typedKeys = ""; // reset
-                const hackDiv = document.createElement('div');
-                hackDiv.style.position = 'fixed';
-                hackDiv.style.inset = '0';
-                hackDiv.style.backgroundColor = 'rgba(0, 255, 0, 0.15)';
-                hackDiv.style.backdropFilter = 'contrast(1.5) sepia(100%)';
-                hackDiv.style.zIndex = '99999';
-                hackDiv.style.pointerEvents = 'none';
-                hackDiv.innerHTML = '<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-family:monospace; font-size:4rem; font-weight:900; color:#10b981; text-shadow: 0 0 20px #10b981; text-align:center;">SYSTEM COMPROMISED<br><span style="font-size:1.5rem; color:#fff; text-shadow:none;">Just kidding! Enjoy Tech Fête 2k26!</span></div>';
-                document.body.appendChild(hackDiv);
-                
-                setTimeout(() => {
-                    hackDiv.style.transition = "opacity 1s";
-                    hackDiv.style.opacity = "0";
-                    setTimeout(() => hackDiv.remove(), 1000);
-                }, 2000);
-            }
-        });
-
         window.addEventListener('load', function() {
             
-            if (typeof emailjs !== 'undefined') { emailjs.init("axvXXO83vzZ-jHNQn"); }
+            if (typeof emailjs !== 'undefined') { emailjs.init("fscZImXYMLYOJPYrq"); }
             if (typeof window.lucide !== 'undefined') { window.lucide.createIcons(); }
 
             // Hide bundles button if lockdown is active and not admin
             if (isOnlineRegistrationClosed) {
                 const bundleBtn = document.getElementById('nav-bundles-btn');
                 if(bundleBtn) bundleBtn.style.display = 'none';
+                
+                const closedBanner = document.getElementById('closed-banner-info');
+                if(closedBanner) closedBanner.classList.remove('hidden');
+                
+                // Clear any leftover cart items if they loaded the page after lockdown
+                selectedEventsList = [];
+                window.saveCartState();
+                window.updateCartUI();
             }
 
             // Start the new timer
@@ -2310,12 +2310,7 @@
             window.fetchEventCounts = async function() {
                 if (!window.fbDB || !window.fbDB.db) return;
                 try {
-                    // Queries the specific array of purchased IDs to see how many unique purchases exist for PPT (ID: 1)
-                    const q = query(collection(db, 'user_registrations'), where('purchasedIds', 'array-contains', 1));
-                    const snap = await getDocs(q);
-                    window.eventCounts[1] = snap.size;
-                    
-                    // Force UI Re-render to show updated badge
+                    // No events currently have a maxLimit, so we skip fetching to save database reads!
                     const activeFilterBtn = document.querySelector('.filter-btn.active');
                     const category = activeFilterBtn ? activeFilterBtn.innerText.trim() : 'All';
                     window.renderEvents(category);
