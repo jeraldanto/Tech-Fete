@@ -12,6 +12,10 @@
     <!-- Advanced QR Code Library for Modern/Curvy QR -->
     <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
 
+    <!-- Libraries for ZIP Extraction & Creation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; background-color: #050A18; color: white; }
@@ -93,7 +97,7 @@
             </div>
 
             <!-- Grid for Dashboard Actions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
                 <!-- Action 1: Scanner -->
                 <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all text-center flex flex-col justify-between group">
@@ -127,6 +131,22 @@
                     </div>
                 </div>
 
+                <!-- Action 3: Download Submissions -->
+                <div class="bg-gradient-to-b from-black/60 to-black/40 p-8 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all text-center flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform border border-emerald-500/20">
+                            <i data-lucide="folder-down" class="w-8 h-8 text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white brand-font tracking-wide mb-3">Export Submissions</h3>
+                        <p class="text-sm text-slate-400 mb-6 leading-relaxed">Download all participant uploaded files (PPTs, Memes, Photos) organized into event folders. Auto-extracts ZIPs.</p>
+                    </div>
+                    <div>
+                        <button id="download-subs-btn" onclick="window.downloadAllSubmissions()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-4 rounded-xl font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] flex items-center justify-center w-full active:scale-95">
+                            Download Archive <i data-lucide="download-cloud" class="w-5 h-5 ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
             </div>
             
             <!-- Generation Status UI -->
@@ -148,6 +168,19 @@
                     <button onclick="window.downloadPDF()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-xl font-black uppercase tracking-widest transition-all text-xs flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)]">
                         <i data-lucide="download" class="w-4 h-4 mr-2"></i> Download
                     </button>
+                </div>
+            </div>
+
+            <!-- ZIP Status UI -->
+            <div id="zip-status" class="hidden mt-8 bg-slate-800 p-6 rounded-xl border border-slate-700 text-center relative">
+                <button id="close-zip-status" onclick="window.resetZipUI()" class="hidden absolute top-4 right-4 text-slate-400 hover:text-white transition-colors" title="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <i id="zip-spinner" data-lucide="loader-2" class="w-8 h-8 text-emerald-400 animate-spin mx-auto mb-3"></i>
+                <i id="zip-success-icon" data-lucide="check-circle" class="w-8 h-8 text-emerald-400 mx-auto mb-3 hidden"></i>
+                <h4 class="font-bold text-white mb-2" id="zip-status-title">Fetching Database Records...</h4>
+                <p class="text-sm text-slate-400" id="zip-status-desc">Please do not close this window.</p>
+                
+                <div id="zip-progress-container" class="w-full bg-slate-900 rounded-full h-2.5 mt-4 overflow-hidden">
+                    <div id="zip-progress-bar" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
                 </div>
             </div>
 
@@ -473,6 +506,130 @@
                 }
                 window.resetPDFUI();
             }
+        };
+
+        window.downloadAllSubmissions = async function() {
+            const btn = document.getElementById('download-subs-btn');
+            const statusUI = document.getElementById('zip-status');
+            const titleEl = document.getElementById('zip-status-title');
+            const descEl = document.getElementById('zip-status-desc');
+            const progBar = document.getElementById('zip-progress-bar');
+            const closeBtn = document.getElementById('close-zip-status');
+            
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-wait');
+            statusUI.classList.remove('hidden');
+            closeBtn.classList.add('hidden');
+            document.getElementById('zip-spinner').classList.remove('hidden');
+            document.getElementById('zip-success-icon').classList.add('hidden');
+            
+            progBar.style.width = '5%';
+            titleEl.innerText = "Fetching Submissions Database...";
+            descEl.innerText = "Please wait, scanning for all participant uploads...";
+
+            try {
+                const querySnapshot = await window.fbDB.getDocs(window.fbDB.collection(window.fbDB.db, "universal_attendees"));
+                const submissionsToFetch = [];
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.submissions && data.regId) {
+                        for (const eventName in data.submissions) {
+                            submissionsToFetch.push({
+                                regId: data.regId,
+                                eventName: eventName,
+                                subData: data.submissions[eventName]
+                            });
+                        }
+                    }
+                });
+
+                if (submissionsToFetch.length === 0) {
+                    alert("No files have been submitted by participants yet!");
+                    window.resetZipUI();
+                    return;
+                }
+
+                titleEl.innerText = `Downloading ${submissionsToFetch.length} Files...`;
+                descEl.innerText = "This might take a while depending on file sizes. Please do not close the tab.";
+                
+                const masterZip = new JSZip();
+                let completedCount = 0;
+
+                const promises = submissionsToFetch.map(async (item) => {
+                    try {
+                        const ext = item.subData.fileName.split('.').pop().toLowerCase();
+                        const response = await fetch(item.subData.url);
+                        if (!response.ok) throw new Error("Network response was not ok");
+                        
+                        const blob = await response.blob();
+                        
+                        // Sanitize event name for folder creation
+                        const cleanEventName = item.eventName.replace(/[^a-zA-Z0-9 -]/g, "").trim();
+                        const eventFolder = masterZip.folder(cleanEventName);
+
+                        if (ext === 'zip') {
+                            const participantFolder = eventFolder.folder(item.regId);
+                            const innerZip = await JSZip.loadAsync(blob);
+                            const extractPromises = [];
+                            
+                            innerZip.forEach((relativePath, zipEntry) => {
+                                if (!zipEntry.dir) {
+                                    extractPromises.push(
+                                        zipEntry.async("blob").then(innerBlob => {
+                                            participantFolder.file(relativePath, innerBlob);
+                                        })
+                                    );
+                                }
+                            });
+                            await Promise.all(extractPromises);
+                        } else {
+                            eventFolder.file(`${item.regId}.${ext}`, blob);
+                        }
+                    } catch (err) {
+                        console.error(`Failed to fetch/process ${item.regId} for ${item.eventName}`, err);
+                        // Safely create an error text file if a download fails due to network/CORS
+                        masterZip.folder("_ERRORS").file(`${item.regId}_${item.eventName}_error.txt`, `Failed to download or process file from URL: ${item.subData.url}\n\nThis usually happens if Firebase Storage CORS is not configured.\n\nError: ${err.message}`);
+                    } finally {
+                        completedCount++;
+                        progBar.style.width = `${5 + ((completedCount / submissionsToFetch.length) * 85)}%`;
+                        descEl.innerText = `Processed ${completedCount} of ${submissionsToFetch.length} files...`;
+                    }
+                });
+
+                await Promise.all(promises);
+
+                titleEl.innerText = "Generating Final ZIP Archive...";
+                descEl.innerText = "Compressing files, almost done...";
+                
+                const content = await masterZip.generateAsync({ type: "blob" }, function updateCallback(metadata) {
+                    const finalProg = 90 + (metadata.percent * 0.1);
+                    progBar.style.width = `${finalProg}%`;
+                });
+
+                saveAs(content, "Tech_Fete_2K26_All_Submissions.zip");
+
+                titleEl.innerText = "Download Complete!";
+                descEl.innerText = "All submissions have been packaged into a single ZIP file.";
+                document.getElementById('zip-spinner').classList.add('hidden');
+                document.getElementById('zip-success-icon').classList.remove('hidden');
+                closeBtn.classList.remove('hidden');
+
+            } catch (error) {
+                console.error(error);
+                alert("An error occurred while compiling the submissions. Check the console for details.");
+                window.resetZipUI();
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-wait');
+            }
+        };
+
+        window.resetZipUI = function() {
+            document.getElementById('zip-status').classList.add('hidden');
+            const btn = document.getElementById('download-subs-btn');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50', 'cursor-wait');
         };
     </script>
 </body>
