@@ -128,10 +128,10 @@
             <div class="flex items-center text-blue-300 font-bold text-xs md:text-sm tracking-widest uppercase">
                 <i data-lucide="timer" class="w-4 h-4 md:w-5 md:h-5 mr-2 animate-pulse"></i> 
                 <span id="timer-sassy-text" class="hidden md:inline">Time to prepare! </span>
-                Registration Closes (26th March):
+                <span id="timer-main-text">Registration Closes (27th March):</span>
             </div>
             
-            <div class="flex gap-2 md:gap-4">
+            <div id="timer-blocks" class="flex gap-2 md:gap-4">
                 <div class="bg-slate-950/50 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 flex items-center justify-center min-w-[50px] md:min-w-[60px]">
                     <span id="timer-d" class="brand-font text-xl md:text-2xl font-black text-white">00</span>
                     <span class="text-[8px] md:text-[10px] text-blue-400 font-bold ml-1 uppercase">Days</span>
@@ -710,7 +710,7 @@
     <!-- JavaScript For Events -->
     <script>
         // REGISTRATION LOCKDOWN LOGIC
-        const LOCKDOWN_DATE = new Date("March 26, 2026 23:59:59").getTime();
+        const LOCKDOWN_DATE = new Date("March 27, 2026 23:59:59").getTime();
         const urlParams = new URLSearchParams(window.location.search);
         
         // Secret URL parameter to bypass lockdown for on-spot registrations
@@ -2014,7 +2014,7 @@
 
         // NEW: Live Timer Countdown Logic
         function startLiveTimer() {
-            const destDate = new Date("March 26, 2026 23:59:59").getTime();
+            const destDate = new Date("March 27, 2026 23:59:59").getTime();
             
             const elDays = document.getElementById('timer-d');
             const elHrs = document.getElementById('timer-h');
@@ -2035,19 +2035,20 @@
 
                 if (distance < 0) {
                     clearInterval(interval);
-                    elDays.innerText = "00";
-                    elHrs.innerText = "00";
-                    elMins.innerText = "00";
-                    elSecs.innerText = "00";
+                    const timerBlocks = document.getElementById('timer-blocks');
+                    const mainText = document.getElementById('timer-main-text');
+                    if(timerBlocks) timerBlocks.style.display = 'none';
                     
                     if (!isOnSpotAdmin) {
-                        elSassyText.innerText = "Online Registration Closed. ";
+                        elSassyText.innerText = "";
+                        if(mainText) mainText.innerText = "Online Registrations Closed. On-Spot Available!";
                         banner.classList.replace('from-blue-950/90', 'from-slate-900/90');
                         banner.classList.replace('to-indigo-950/90', 'to-slate-900/90');
                         banner.classList.replace('border-blue-500/20', 'border-slate-500/30');
                     } else {
                         // Admin specific timer appearance
-                        elSassyText.innerText = "Admin On-Spot Mode Enabled. ";
+                        elSassyText.innerText = "";
+                        if(mainText) mainText.innerText = "Admin On-Spot Mode Enabled.";
                         banner.classList.replace('from-blue-950/90', 'from-emerald-950/90');
                         banner.classList.replace('to-indigo-950/90', 'to-emerald-900/90');
                         banner.classList.replace('border-blue-500/20', 'border-emerald-500/30');
